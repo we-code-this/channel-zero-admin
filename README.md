@@ -1,3 +1,9 @@
+# ChannelZero Admin
+
+Source code for the official ChannelZero admin
+
+_(Work in progress. Heavily in development.)_
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
