@@ -7,6 +7,8 @@ class Index extends Component {
   constructor(props) {
     super(props);
 
+    this._isMounted = false;
+
     this.state = {
       artists: [],
       pageCount: 0,
@@ -16,11 +18,16 @@ class Index extends Component {
   }
 
   async componentDidMount() {
+    this._isMounted = true;
     await this.getArtists();
   }
 
   async componentDidUpdate() {
     await this.getArtists();
+  }
+
+  componentWillUnmount() {
+    this._isMounted = false;
   }
 
   async getArtists() {
@@ -33,7 +40,9 @@ class Index extends Component {
     });
     const pageCount = Math.ceil((await count()) / this.state.perPage);
 
-    this.setState({ ...this.state, artists, pageCount });
+    if (this._isMounted) {
+      this.setState({ ...this.state, artists, pageCount });
+    }
   }
 
   render() {
