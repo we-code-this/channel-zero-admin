@@ -1,5 +1,6 @@
 @import "vendor";
 @import "variables";
+@import "icons";
 
 .admin {
   background: #fff;
@@ -29,13 +30,20 @@
         .svg-icon {
           width: 6rem;
           height: 3rem;
-          fill: currentColor;
         }
       }
     }
 
     @media (min-width: $tablet) {
       align-items: center;
+    }
+  }
+
+  .admin-menu {
+    .navbar-item {
+      &.is-active {
+        background-color: #eee;
+      }
     }
   }
 

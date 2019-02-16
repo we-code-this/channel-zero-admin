@@ -1,15 +1,15 @@
 import React from "react";
 import Helmet from "react-helmet";
-import Icons from "../Icons";
-import Header from "../Header";
-import Nav from "../Nav";
+import Icons from "../common/Icons";
+import Header from "../common/Header";
+import Nav from "../common/Nav";
 
 const Layout = ({ children, page = "Admin", title = "Channel Zero Admin" }) => {
   return (
     <React.Fragment>
-      <Helmet>
+      <Helmet titleTemplate={`%s - ${title}`}>
         <meta charSet="utf-8" />
-        <title>{title}</title>
+        <title>Default</title>
         <meta
           name="viewport"
           content="width=device-width, initial-scale=1, viewport-fit=cover"
