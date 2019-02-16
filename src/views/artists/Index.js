@@ -13,7 +13,7 @@ class Index extends Component {
       artists: [],
       pageCount: 0,
       perPage: 10,
-      path: "/artists"
+      path: props.match.path
     };
   }
 
