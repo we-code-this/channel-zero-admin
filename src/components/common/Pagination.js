@@ -58,6 +58,7 @@ class Pagination extends Component {
   links() {
     const link = this.link;
     const path = this.state.path;
+
     return (
       <React.Fragment>
         {this.previous(this.props.currentPage, path)}

@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import Helmet from "react-helmet";
 import ArtistTable from "../../components/artists/ArtistTable";
 import ActionMenu from "../../components/common/ActionMenu";
+import Breadcrumbs from "../../components/common/Breadcrumbs";
+import Breadcrumb from "../../components/common/Breadcrumb";
 import IconButton from "../../components/common/IconButton";
 import { get, count } from "../../models/artists";
 
@@ -15,7 +17,7 @@ class Index extends Component {
       artists: [],
       pageCount: 0,
       perPage: 10,
-      path: props.match.path
+      path: "/artists"
     };
   }
 
@@ -61,6 +63,12 @@ class Index extends Component {
             label="Artist"
           />
         </ActionMenu>
+        <Breadcrumbs>
+          <Breadcrumb to="/">Dashboard</Breadcrumb>
+          <Breadcrumb to="/artists" active>
+            Artists
+          </Breadcrumb>
+        </Breadcrumbs>
         <ArtistTable {...this.state} />
       </div>
     );

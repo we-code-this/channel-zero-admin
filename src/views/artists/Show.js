@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import Helmet from "react-helmet";
 import Markdown from "markdown-to-jsx";
+import Breadcrumbs from "../../components/common/Breadcrumbs";
+import Breadcrumb from "../../components/common/Breadcrumb";
 import IconButton from "../../components/common/IconButton";
 import ActionMenu from "../../components/common/ActionMenu";
 import { findBySlug } from "../../models/artists";
@@ -8,8 +10,6 @@ import { findBySlug } from "../../models/artists";
 class Show extends Component {
   constructor(props) {
     super(props);
-
-    console.log("props", props);
 
     this._isMounted = false;
 
@@ -42,7 +42,7 @@ class Show extends Component {
           </Helmet>
           <ActionMenu>
             <IconButton
-              to="#"
+              to={`${this.props.match.url}/edit`}
               className="is-primary"
               icon="edit"
               label="Edit"
@@ -54,6 +54,13 @@ class Show extends Component {
               label="Delete"
             />
           </ActionMenu>
+          <Breadcrumbs>
+            <Breadcrumb to="/">Dashboard</Breadcrumb>
+            <Breadcrumb to="/artists">Artists</Breadcrumb>
+            <Breadcrumb to={`/artist/${artist.slug}`} active>
+              {artist.name}
+            </Breadcrumb>
+          </Breadcrumbs>
           <h2 className="title is-2">{artist.name}</h2>
           <Markdown>{artist.description}</Markdown>
         </div>

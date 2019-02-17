@@ -11,12 +11,12 @@ const Header = props => (
       >
         <Icon>
           <svg className="svg-icon">
-            <use xlinkHref="#icon-cz" />
+            <use xlinkHref="#icon-cz-mini" />
           </svg>
         </Icon>
       </a>
     </div>
-    <div className="title is-4">{props.title}</div>
+    <div className="title is-5">{props.title}</div>
   </header>
 );
 

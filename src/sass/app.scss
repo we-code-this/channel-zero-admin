@@ -1,6 +1,7 @@
 @import "vendor";
 @import "variables";
 @import "icons";
+@import "mde";
 
 p {
   margin-bottom: 1rem;
@@ -26,7 +27,7 @@ p {
     display: flex;
     background-color: #333;
     padding: 0.5rem 1rem;
-    min-height: 3.75rem;
+    min-height: 2.75rem;
 
     &,
     a,
@@ -43,8 +44,8 @@ p {
         height: auto;
 
         .svg-icon {
-          width: 6rem;
-          height: 3rem;
+          width: 1.5rem;
+          height: 1.5rem;
         }
       }
     }
