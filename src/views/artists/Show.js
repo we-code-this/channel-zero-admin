@@ -1,5 +1,8 @@
 import React, { Component } from "react";
 import Helmet from "react-helmet";
+import Markdown from "markdown-to-jsx";
+import IconButton from "../../components/common/IconButton";
+import ActionMenu from "../../components/common/ActionMenu";
 import { findBySlug } from "../../models/artists";
 
 class Show extends Component {
@@ -29,18 +32,34 @@ class Show extends Component {
   }
 
   render() {
-    console.log("this.state.artist", this.state.artist);
-    if (this.state.artist) {
+    const artist = this.state.artist;
+
+    if (artist) {
       return (
         <div>
           <Helmet>
-            <title>{this.state.artist.name}</title>
+            <title>{artist.name}</title>
           </Helmet>
-          <p>{this.state.artist.name}</p>
+          <ActionMenu>
+            <IconButton
+              to="#"
+              className="is-primary"
+              icon="edit"
+              label="Edit"
+            />
+            <IconButton
+              to="#"
+              className="is-danger"
+              icon="minus-circle"
+              label="Delete"
+            />
+          </ActionMenu>
+          <h2 className="title is-2">{artist.name}</h2>
+          <Markdown>{artist.description}</Markdown>
         </div>
       );
     } else {
-      return <div>Loading</div>;
+      return <div />;
     }
   }
 }

@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import Helmet from "react-helmet";
 import ArtistTable from "../../components/artists/ArtistTable";
+import ActionMenu from "../../components/common/ActionMenu";
+import IconButton from "../../components/common/IconButton";
 import { get, count } from "../../models/artists";
 
 class Index extends Component {
@@ -51,6 +53,14 @@ class Index extends Component {
         <Helmet>
           <title>Artists</title>
         </Helmet>
+        <ActionMenu>
+          <IconButton
+            to="#"
+            className="is-primary"
+            icon="plus"
+            label="Artist"
+          />
+        </ActionMenu>
         <ArtistTable {...this.state} />
       </div>
     );

@@ -7,6 +7,7 @@
   },
   "dependencies": {
     "bulma": "^0.7.4",
+    "markdown-to-jsx": "^6.9.1",
     "node-sass": "^4.11.0",
     "normalize.css": "^8.0.1",
     "react": "^16.8.2",

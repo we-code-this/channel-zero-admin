@@ -2,6 +2,20 @@
 @import "variables";
 @import "icons";
 
+p {
+  margin-bottom: 1rem;
+}
+
+.action-menu {
+  background-color: #eee;
+  margin: -1rem -1rem 2rem -1rem;
+
+  .button {
+    margin-bottom: 0;
+    border-radius: 0;
+  }
+}
+
 .admin {
   background: #fff;
   display: flex;
@@ -12,6 +26,7 @@
     display: flex;
     background-color: #333;
     padding: 0.5rem 1rem;
+    min-height: 3.75rem;
 
     &,
     a,
@@ -56,12 +71,14 @@
 
       .admin-menu {
         background-color: #ddd;
-        flex-basis: 20%;
+        flex-basis: 15%;
       }
 
       .page-content {
+        flex-basis: 85%;
         flex-grow: 1;
-        max-width: 64rem;
+
+        // max-width: 64rem;
         overflow-y: scroll;
       }
 
