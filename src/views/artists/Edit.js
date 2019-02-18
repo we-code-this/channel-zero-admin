@@ -11,7 +11,8 @@ class Edit extends Component {
     this._isMounted = false;
 
     this.state = {
-      artist: undefined
+      artist: undefined,
+      errors: undefined
     };
   }
 
@@ -20,13 +21,23 @@ class Edit extends Component {
     const artist = await findBySlug(this.props.match.params.slug);
 
     if (this._isMounted) {
-      this.setState({ ...this.state, artist, name: artist.name });
+      this.setState({ ...this.state, artist });
     }
   }
 
   async componentWillUnmount() {
     this._isMounted = false;
   }
+
+  handleSubmit = e => {
+    e.preventDefault();
+
+    // validate data
+
+    // if valid, make POST API request
+    // catch error and add view level error
+    // else set error state
+  };
 
   render() {
     const artist = this.state.artist;
@@ -41,7 +52,11 @@ class Edit extends Component {
             Edit “{artist.name}”
           </Breadcrumb>
         </Breadcrumbs>
-        <ArtistForm artist={artist} />
+        <ArtistForm
+          artist={artist}
+          onSubmit={this.handleSubmit}
+          errors={this.state.errors}
+        />
       </div>
     ) : (
       ""

@@ -16,7 +16,6 @@ class ArtistForm extends Component {
   }
 
   handleNameChange = e => {
-    console.log("handleNameChange", e.target.value);
     const artist = { ...this.state.artist, name: e.target.value };
     this.setState({ ...this.state, artist });
   };
@@ -24,14 +23,6 @@ class ArtistForm extends Component {
   handleDescriptionChange = value => {
     const artist = { ...this.state.artist, description: value };
     this.setState({ ...this.state, artist });
-  };
-
-  handleSubmit = e => {
-    e.preventDefault();
-
-    // validate data
-
-    // make POST API request
   };
 
   handleCancelClick = () => {
@@ -42,7 +33,7 @@ class ArtistForm extends Component {
     const artist = this.state.artist;
 
     return (
-      <form onSubmit={this.handleSubmit}>
+      <form onSubmit={this.props.onSubmit}>
         <TextInput
           label="Name"
           value={artist.name}
