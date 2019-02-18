@@ -1,4 +1,10 @@
+@import "~bulma/sass/utilities/derived-variables";
+
 .mde-text {
   font-size: 1rem;
   line-height: 1.5;
+}
+
+.react-mde.is-danger {
+  border-color: $danger;
 }

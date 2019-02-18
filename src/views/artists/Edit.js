@@ -11,9 +11,7 @@ class Edit extends Component {
     this._isMounted = false;
 
     this.state = {
-      artist: undefined,
-      name: "",
-      tab: "write"
+      artist: undefined
     };
   }
 
@@ -30,24 +28,6 @@ class Edit extends Component {
     this._isMounted = false;
   }
 
-  handleNameChange = e => {
-    const artist = { ...this.state.artist, name: e.target.value };
-    this.setState({ ...this.state, artist });
-  };
-
-  handleDescriptionChange = value => {
-    const artist = { ...this.state.artist, description: value };
-    this.setState({ ...this.state, artist });
-  };
-
-  handleSubmit = e => {
-    e.preventDefault();
-
-    // validate data
-
-    // make POST API request
-  };
-
   render() {
     const artist = this.state.artist;
 
@@ -56,19 +36,12 @@ class Edit extends Component {
         <Breadcrumbs>
           <Breadcrumb to="/">Dashboard</Breadcrumb>
           <Breadcrumb to="/artists">Artists</Breadcrumb>
-          <Breadcrumb to={`/artist/${artist.slug}`}>
-            {this.state.name}
-          </Breadcrumb>
+          <Breadcrumb to={`/artist/${artist.slug}`}>{artist.name}</Breadcrumb>
           <Breadcrumb to={`/artist/${artist.slug}/edit`} active>
-            Edit “{this.state.name}”
+            Edit “{artist.name}”
           </Breadcrumb>
         </Breadcrumbs>
-        <ArtistForm
-          artist={artist}
-          handleSubmit={this.handleSubmit}
-          handleNameChange={this.handleNameChange}
-          handleDescriptionChange={this.handleDescriptionChange}
-        />
+        <ArtistForm artist={artist} />
       </div>
     ) : (
       ""

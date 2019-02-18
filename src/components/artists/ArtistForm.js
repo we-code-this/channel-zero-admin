@@ -1,80 +1,59 @@
 import React, { Component } from "react";
-import ReactMde from "react-mde";
-import * as Showdown from "showdown";
-import { editorCommands } from "../../utilities/mde";
 import { withRouter } from "react-router";
+import TextInput from "../../components/common/forms/TextInput";
+import MarkdownEditor from "../../components/common/forms/MarkdownEditor";
+import SubmitWithCancel from "../../components/common/forms/SubmitWithCancel";
 
 class ArtistForm extends Component {
   constructor(props) {
     super(props);
 
-    console.log("ArtistForm props", props);
-
-    this.converter = new Showdown.Converter({
-      simplifiedAutoLink: true
-    });
+    const artist = props.artist ? props.artist : { name: "", description: "" };
 
     this.state = {
-      tab: "write"
+      artist
     };
   }
+
+  handleNameChange = e => {
+    console.log("handleNameChange", e.target.value);
+    const artist = { ...this.state.artist, name: e.target.value };
+    this.setState({ ...this.state, artist });
+  };
+
+  handleDescriptionChange = value => {
+    const artist = { ...this.state.artist, description: value };
+    this.setState({ ...this.state, artist });
+  };
+
+  handleSubmit = e => {
+    e.preventDefault();
+
+    // validate data
+
+    // make POST API request
+  };
 
   handleCancelClick = () => {
     this.props.history.goBack();
   };
 
-  handleTabChange = tab => {
-    this.setState({ tab });
-  };
-
   render() {
-    const artist = this.props.artist
-      ? this.props.artist
-      : { name: "", description: "" };
+    const artist = this.state.artist;
 
     return (
-      <form onSubmit={this.props.handleSubmit}>
-        <div className="field">
-          <label className="label">Name</label>
-          <div className="control">
-            <input
-              className="input"
-              type="text"
-              value={artist.name}
-              onChange={this.props.handleNameChange}
-            />
-          </div>
-        </div>
-
-        <div className="field">
-          <label className="label">Description</label>
-          <div className="control">
-            <ReactMde
-              commands={editorCommands()}
-              onChange={this.props.handleDescriptionChange}
-              onTabChange={this.handleTabChange}
-              value={artist.description}
-              generateMarkdownPreview={markdown =>
-                Promise.resolve(this.converter.makeHtml(markdown))
-              }
-              selectedTab={this.state.tab}
-              minEditorHeight="20rem"
-            />
-          </div>
-        </div>
-
-        <div className="field is-grouped">
-          <div className="control">
-            <button className="button is-link" type="submit">
-              Submit
-            </button>
-          </div>
-          <div className="control">
-            <button className="button is-text" onClick={this.handleCancelClick}>
-              Cancel
-            </button>
-          </div>
-        </div>
+      <form onSubmit={this.handleSubmit}>
+        <TextInput
+          label="Name"
+          value={artist.name}
+          onChange={this.handleNameChange}
+        />
+        <MarkdownEditor
+          label="Description"
+          onChange={this.handleDescriptionChange}
+          value={artist.description}
+        />
+        <SubmitWithCancel onClick={this.handleCancelClick} />
       </form>
     );
   }
