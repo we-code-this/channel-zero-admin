@@ -14,6 +14,7 @@ class Index extends Component {
 
     this.state = {
       artists: [],
+      page: 1,
       pageCount: 0,
       perPage: 10,
       path: "/artists"
@@ -35,7 +36,7 @@ class Index extends Component {
 
   async getArtists() {
     const currentPage = this.props.match.params.page
-      ? this.props.match.params.page
+      ? parseInt(this.props.match.params.page)
       : 1;
     const artists = await get({
       start: (currentPage - 1) * this.state.perPage,
@@ -44,7 +45,7 @@ class Index extends Component {
     const pageCount = Math.ceil((await count()) / this.state.perPage);
 
     if (this._isMounted) {
-      this.setState({ ...this.state, artists, pageCount });
+      this.setState({ ...this.state, artists, pageCount, page: currentPage });
     }
   }
 

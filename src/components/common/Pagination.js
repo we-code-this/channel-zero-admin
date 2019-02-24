@@ -5,12 +5,7 @@ class Pagination extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      currentPage: props.currentPage,
-      count: props.count,
-      perPage: props.perPage,
-      path: props.path
-    };
+    this.link = this.link.bind(this);
   }
 
   previous(page, path) {
@@ -35,11 +30,25 @@ class Pagination extends Component {
     );
   }
 
-  link(page, totalPages, path) {
+  isPaginationLink(pageNumber, currentPage, totalPages) {
+    return (
+      pageNumber === 1 ||
+      pageNumber === totalPages ||
+      (pageNumber >= currentPage - 2 && pageNumber <= currentPage + 2)
+    );
+  }
+
+  isEllipsis(pageNumber, currentPage, totalPages) {
+    return (
+      (pageNumber === currentPage - 3 && pageNumber !== 1) ||
+      (pageNumber === currentPage + 3 && pageNumber !== totalPages)
+    );
+  }
+
+  link(page, currentPage, totalPages, path) {
     const pageNumber = parseInt(page) + 1;
-    return page === 1 ||
-      page === totalPages ||
-      (page >= page - 2 && page <= page + 2) ? (
+
+    return this.isPaginationLink(pageNumber, currentPage, totalPages) ? (
       <li key={`page-${page}`}>
         <Link
           prefetch="true"
@@ -50,6 +59,10 @@ class Pagination extends Component {
           {pageNumber}
         </Link>
       </li>
+    ) : this.isEllipsis(pageNumber, currentPage, totalPages) ? (
+      <li key={`ellipsis-${page}`}>
+        <span className="pagination-ellipsis">&hellip;</span>
+      </li>
     ) : (
       ""
     );
@@ -57,7 +70,7 @@ class Pagination extends Component {
 
   links() {
     const link = this.link;
-    const path = this.state.path;
+    const path = this.props.path;
 
     return (
       <React.Fragment>
@@ -65,7 +78,12 @@ class Pagination extends Component {
         {this.next(this.props.currentPage, this.props.pageCount, path)}
         <ul className="pagination-list">
           {Array.from(Array(this.props.pageCount).keys()).map(page => {
-            return link(page, this.props.pageCount, path);
+            return link(
+              page,
+              this.props.currentPage,
+              this.props.pageCount,
+              path
+            );
           })}
         </ul>
       </React.Fragment>
@@ -74,13 +92,15 @@ class Pagination extends Component {
 
   render() {
     return (
-      <nav
-        className="pagination is-centered"
-        role="navigation"
-        aria-label="pagination"
-      >
-        {this.links()}
-      </nav>
+      this.props.pageCount > 1 && (
+        <nav
+          className="pagination is-centered"
+          role="navigation"
+          aria-label="pagination"
+        >
+          {this.links()}
+        </nav>
+      )
     );
   }
 }
