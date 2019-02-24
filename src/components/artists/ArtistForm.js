@@ -11,8 +11,20 @@ class ArtistForm extends Component {
     const artist = props.artist ? props.artist : { name: "", description: "" };
 
     this.state = {
-      artist
+      artist,
+      errors: props.errors
     };
+  }
+
+  static getDerivedStateFromProps(props, state) {
+    if (
+      props.errors.name !== state.errors.name ||
+      props.errors.description !== state.errors.description
+    ) {
+      return { ...state, artist: props.artist, errors: props.errors };
+    }
+
+    return null;
   }
 
   handleNameChange = e => {
@@ -38,11 +50,13 @@ class ArtistForm extends Component {
           label="Name"
           value={artist.name}
           onChange={this.handleNameChange}
+          error={this.state.errors.name}
         />
         <MarkdownEditor
           label="Description"
           onChange={this.handleDescriptionChange}
           value={artist.description}
+          error={this.state.errors.description}
         />
         <SubmitWithCancel onClick={this.handleCancelClick} />
       </form>

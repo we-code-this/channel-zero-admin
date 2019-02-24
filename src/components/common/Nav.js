@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { NavLink as Link } from "react-router-dom";
+import { indexPath as artistIndex } from "../../models/artists";
 
 class Nav extends Component {
   constructor(props) {
@@ -27,7 +28,7 @@ class Nav extends Component {
 
           <li>
             <Link
-              to="/artists"
+              to={artistIndex()}
               className="navbar-item"
               activeClassName="is-active"
             >

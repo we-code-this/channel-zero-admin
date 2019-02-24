@@ -1,8 +1,14 @@
 import React, { Component } from "react";
-import Breadcrumbs from "../../components/common/Breadcrumbs";
+import { Redirect } from "react-router";
+import ArtistBreadcrumbs from "../../components/artists/ArtistBreadcrumbs";
 import Breadcrumb from "../../components/common/Breadcrumb";
 import ArtistForm from "../../components/artists/ArtistForm";
-import { findBySlug } from "../../models/artists";
+import {
+  findBySlug,
+  updateBySlug,
+  showPath,
+  editPath
+} from "../../models/artists";
 
 class Edit extends Component {
   constructor(props) {
@@ -11,8 +17,12 @@ class Edit extends Component {
     this._isMounted = false;
 
     this.state = {
+      redirectToArtist: false,
       artist: undefined,
-      errors: undefined
+      errors: {
+        name: undefined,
+        description: undefined
+      }
     };
   }
 
@@ -29,29 +39,80 @@ class Edit extends Component {
     this._isMounted = false;
   }
 
-  handleSubmit = e => {
+  handleSubmit = async e => {
     e.preventDefault();
 
-    // validate data
+    const newName = e.target.name.value;
+    const newDescription = e.target.description.value;
 
-    // if valid, make POST API request
-    // catch error and add view level error
-    // else set error state
+    const result = await updateBySlug(this.state.artist.slug, {
+      name: newName,
+      description: newDescription
+    });
+
+    if (result.errors) {
+      const resultErrors = {};
+
+      result.errors.map(error => {
+        resultErrors[error.field] = error.message;
+        return error;
+      });
+
+      this.setState({
+        ...this.state,
+        artist: {
+          ...this.state.artist,
+          name: newName,
+          description: newDescription
+        },
+        errors: {
+          ...this.state.errors,
+          ...resultErrors
+        }
+      });
+    } else {
+      // redirect
+      // this.props.history.goBack();
+      this.setState({
+        ...this.state,
+        redirectToArtist: true
+      });
+    }
   };
+
+  redirect() {
+    return (
+      this.state.redirectToArtist && (
+        <Redirect
+          to={{
+            pathname: `/artist/${this.state.artist.slug}`,
+            updated: true
+          }}
+        />
+      )
+    );
+  }
+
+  breadcrumbs() {
+    return (
+      <ArtistBreadcrumbs>
+        <Breadcrumb to={showPath(this.state.artist.slug)}>
+          {this.state.artist.name}
+        </Breadcrumb>
+        <Breadcrumb to={editPath(this.state.artist.slug)} active>
+          Edit “{this.state.artist.name}”
+        </Breadcrumb>
+      </ArtistBreadcrumbs>
+    );
+  }
 
   render() {
     const artist = this.state.artist;
 
     return artist ? (
       <div>
-        <Breadcrumbs>
-          <Breadcrumb to="/">Dashboard</Breadcrumb>
-          <Breadcrumb to="/artists">Artists</Breadcrumb>
-          <Breadcrumb to={`/artist/${artist.slug}`}>{artist.name}</Breadcrumb>
-          <Breadcrumb to={`/artist/${artist.slug}/edit`} active>
-            Edit “{artist.name}”
-          </Breadcrumb>
-        </Breadcrumbs>
+        {this.redirect()}
+        {this.breadcrumbs()}
         <ArtistForm
           artist={artist}
           onSubmit={this.handleSubmit}

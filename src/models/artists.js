@@ -24,3 +24,32 @@ export async function findBySlug(slug) {
   const res = await fetch(`${host}/artist/${slug}`);
   return await res.json();
 }
+
+export async function updateBySlug(slug, data) {
+  const res = await fetch(`${host}/artist/${slug}`, {
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json"
+    },
+    method: "POST",
+    body: JSON.stringify(data)
+  });
+
+  return await res.json();
+}
+
+export function indexPath() {
+  return "/artists";
+}
+
+export function showPath(slug) {
+  return `/artist/${slug}`;
+}
+
+export function editPath(slug) {
+  return `/artist/${slug}/edit`;
+}
+
+export function deletePath() {
+  return "/artist";
+}

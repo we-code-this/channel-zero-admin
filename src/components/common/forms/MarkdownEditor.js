@@ -31,6 +31,7 @@ class MarkdownEditor extends Component {
         help={this.props.help}
       >
         <ReactMde
+          textAreaProps={{ name: this.props.label.toLowerCase() }}
           className={mdeClass}
           commands={editorCommands()}
           onChange={this.props.onChange}

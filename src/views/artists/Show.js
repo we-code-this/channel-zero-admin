@@ -1,11 +1,17 @@
 import React, { Component } from "react";
 import Helmet from "react-helmet";
 import Markdown from "markdown-to-jsx";
-import Breadcrumbs from "../../components/common/Breadcrumbs";
+import ArtistBreadcrumbs from "../../components/artists/ArtistBreadcrumbs";
 import Breadcrumb from "../../components/common/Breadcrumb";
 import IconButton from "../../components/common/IconButton";
 import ActionMenu from "../../components/common/ActionMenu";
-import { findBySlug } from "../../models/artists";
+import Notification from "../../components/common/Notification";
+import {
+  findBySlug,
+  editPath,
+  showPath,
+  deletePath
+} from "../../models/artists";
 
 class Show extends Component {
   constructor(props) {
@@ -13,9 +19,14 @@ class Show extends Component {
 
     this._isMounted = false;
 
+    const updated = props.location.updated ? props.location.updated : false;
+
     this.state = {
+      updated,
       artist: undefined
     };
+
+    this.handleDismiss = this.handleDismiss.bind(this);
   }
 
   async componentDidMount() {
@@ -23,12 +34,45 @@ class Show extends Component {
     const artist = await findBySlug(this.props.match.params.slug);
 
     if (this._isMounted) {
-      this.setState({ artist });
+      this.setState({ ...this.state, artist });
     }
   }
 
   async componentWillUnmount() {
     this._isMounted = false;
+  }
+
+  handleDismiss() {
+    this.setState({ ...this.state, updated: false });
+  }
+
+  actionMenu() {
+    return (
+      <ActionMenu>
+        <IconButton
+          to={editPath(this.state.artist.slug)}
+          className="is-primary"
+          icon="edit"
+          label="Edit"
+        />
+        <IconButton
+          to={deletePath()}
+          className="is-danger"
+          icon="minus-circle"
+          label="Delete"
+        />
+      </ActionMenu>
+    );
+  }
+
+  breadcrumbs() {
+    return (
+      <ArtistBreadcrumbs>
+        <Breadcrumb to={showPath(this.state.artist.slug)} active>
+          {this.state.artist.name}
+        </Breadcrumb>
+      </ArtistBreadcrumbs>
+    );
   }
 
   render() {
@@ -40,27 +84,15 @@ class Show extends Component {
           <Helmet>
             <title>{artist.name}</title>
           </Helmet>
-          <ActionMenu>
-            <IconButton
-              to={`${this.props.match.url}/edit`}
-              className="is-primary"
-              icon="edit"
-              label="Edit"
-            />
-            <IconButton
-              to="#"
-              className="is-danger"
-              icon="minus-circle"
-              label="Delete"
-            />
-          </ActionMenu>
-          <Breadcrumbs>
-            <Breadcrumb to="/">Dashboard</Breadcrumb>
-            <Breadcrumb to="/artists">Artists</Breadcrumb>
-            <Breadcrumb to={`/artist/${artist.slug}`} active>
-              {artist.name}
-            </Breadcrumb>
-          </Breadcrumbs>
+          {this.actionMenu()}
+          {this.breadcrumbs()}
+          <Notification
+            show={this.state.updated}
+            color="success"
+            onDismiss={this.handleDismiss}
+          >
+            <strong>{artist.name}</strong> successfully updated!
+          </Notification>
           <h2 className="title is-2">{artist.name}</h2>
           <Markdown>{artist.description}</Markdown>
         </div>

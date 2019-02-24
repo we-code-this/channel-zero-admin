@@ -1,6 +1,6 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import Pagination from "../common/Pagination";
+import ArtistRow from "./ArtistRow";
 
 const ArtistTable = props => {
   return (
@@ -15,18 +15,9 @@ const ArtistTable = props => {
           </tr>
         </thead>
         <tbody>
-          {props.artists.map(artist => {
-            return (
-              <tr key={artist.id}>
-                <td>{artist.id}</td>
-                <td>
-                  <Link to={`/artist/${artist.slug}`}>{artist.name}</Link>
-                </td>
-                <td>{artist.created_at}</td>
-                <td>Actions</td>
-              </tr>
-            );
-          })}
+          {props.artists.map(artist => (
+            <ArtistRow artist={artist} key={artist.id} />
+          ))}
         </tbody>
       </table>
       <Pagination
