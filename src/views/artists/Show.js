@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
 import Helmet from "react-helmet";
 import Markdown from "markdown-to-jsx";
+import { Columns, Card, Content } from "react-bulma-components";
 import ArtistBreadcrumbs from "../../components/artists/ArtistBreadcrumbs";
 import Breadcrumb from "../../components/common/Breadcrumb";
 import IconButton from "../../components/common/IconButton";
@@ -15,7 +16,10 @@ import {
   showPath,
   deleteArtist
 } from "../../models/artists";
-import { createPath as imageCreatePath } from "../../models/artist_images";
+import {
+  createPath as imageCreatePath,
+  imageUrl
+} from "../../models/artist_images";
 
 class Show extends Component {
   constructor(props) {
@@ -133,6 +137,7 @@ class Show extends Component {
       return <Redirect to={indexPath()} />;
     } else {
       if (artist) {
+        console.log("artist:", artist);
         return (
           <div>
             <Helmet>
@@ -152,7 +157,29 @@ class Show extends Component {
               {this.notificationMessage()}
             </Notification>
             <h2 className="title is-2">{artist.name}</h2>
-            <Markdown>{artist.description}</Markdown>
+            <Columns>
+              <Columns.Column
+                tablet={{ size: "half" }}
+                desktop={{ size: "one-third" }}
+              >
+                <Card.Image
+                  key={`artist-image-${artist.images[0].id}`}
+                  src={imageUrl(artist.images[0].filename)}
+                  alt={`${artist.name}`}
+                />
+                {artist.images.slice(1).map(image => (
+                  <img
+                    key={`artist-image-${image.id}`}
+                    src={imageUrl(image.filename)}
+                    alt={`${artist.name}`}
+                    className="thumb"
+                  />
+                ))}
+              </Columns.Column>
+              <Columns.Column>
+                <Markdown>{artist.description}</Markdown>
+              </Columns.Column>
+            </Columns>
           </div>
         );
       } else {

@@ -30,3 +30,7 @@ export async function create(data) {
 export function createPath(slug) {
   return `/artist/${slug}/image/create`;
 }
+
+export function imageUrl(filename) {
+  return `/files/artists/${filename}`;
+}

@@ -73,6 +73,10 @@ p {
     }
   }
 
+  .thumb {
+    height: 50px;
+  }
+
   @media (min-width: $tablet) {
     .admin-main {
       display: flex;
