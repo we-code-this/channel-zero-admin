@@ -1,10 +1,20 @@
 @import "variables";
 @import "vendor";
 @import "icons";
+@import "forms";
 @import "mde";
 
 p {
   margin-bottom: 1rem;
+}
+
+.switch-wrapper {
+  position: relative;
+
+  & > div {
+    position: absolute;
+    width: 100%;
+  }
 }
 
 .action-menu {

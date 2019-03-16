@@ -4,7 +4,7 @@ import ArtistTable from "../../components/artists/ArtistTable";
 import ActionMenu from "../../components/common/ActionMenu";
 import ArtistBreadcrumbs from "../../components/artists/ArtistBreadcrumbs";
 import IconButton from "../../components/common/IconButton";
-import { get, count } from "../../models/artists";
+import { get, count, createPath } from "../../models/artists";
 
 class Index extends Component {
   constructor(props) {
@@ -57,7 +57,7 @@ class Index extends Component {
         </Helmet>
         <ActionMenu>
           <IconButton
-            to="#"
+            to={createPath()}
             className="is-primary"
             icon="plus"
             label="Artist"

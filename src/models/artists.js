@@ -20,6 +20,19 @@ export async function count() {
   return (await res.json())[0].count;
 }
 
+export async function create(data) {
+  const res = await fetch(`${host}/artist`, {
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json"
+    },
+    method: "POST",
+    body: JSON.stringify(data)
+  });
+
+  return await res.json();
+}
+
 export async function findBySlug(slug) {
   const res = await fetch(`${host}/artist/${slug}`);
   return await res.json();
@@ -46,10 +59,23 @@ export function showPath(slug) {
   return `/artist/${slug}`;
 }
 
+export function createPath() {
+  return `/artist/create`;
+}
+
 export function editPath(slug) {
   return `/artist/${slug}/edit`;
 }
 
-export function deletePath() {
-  return "/artist";
+export async function deleteArtist(id) {
+  const res = await fetch(`${host}/artist`, {
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json"
+    },
+    method: "DELETE",
+    body: JSON.stringify({ id })
+  });
+
+  return await res.json();
 }

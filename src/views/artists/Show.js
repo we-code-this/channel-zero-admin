@@ -1,17 +1,21 @@
 import React, { Component } from "react";
+import { Redirect } from "react-router-dom";
 import Helmet from "react-helmet";
 import Markdown from "markdown-to-jsx";
 import ArtistBreadcrumbs from "../../components/artists/ArtistBreadcrumbs";
 import Breadcrumb from "../../components/common/Breadcrumb";
 import IconButton from "../../components/common/IconButton";
+import IconDeleteButton from "../../components/common/IconDeleteButton";
 import ActionMenu from "../../components/common/ActionMenu";
 import Notification from "../../components/common/Notification";
 import {
   findBySlug,
+  indexPath,
   editPath,
   showPath,
-  deletePath
+  deleteArtist
 } from "../../models/artists";
+import { createPath as imageCreatePath } from "../../models/artist_images";
 
 class Show extends Component {
   constructor(props) {
@@ -20,13 +24,18 @@ class Show extends Component {
     this._isMounted = false;
 
     const updated = props.location.updated ? props.location.updated : false;
+    const created = props.location.created ? props.location.created : false;
+    const image_added = props.location.image_added
+      ? props.location.image_added
+      : false;
 
     this.state = {
+      deleted: false,
       updated,
+      created,
+      image_added,
       artist: undefined
     };
-
-    this.handleDismiss = this.handleDismiss.bind(this);
   }
 
   async componentDidMount() {
@@ -42,11 +51,23 @@ class Show extends Component {
     this._isMounted = false;
   }
 
-  handleDismiss() {
-    this.setState({ ...this.state, updated: false });
-  }
+  handleDismiss = () => {
+    this.setState({
+      ...this.state,
+      updated: false,
+      created: false,
+      image_added: false
+    });
+  };
 
-  actionMenu() {
+  handleDelete = async e => {
+    e.preventDefault();
+    await deleteArtist(this.state.artist.id);
+    this.setState({ ...this.state, deleted: true });
+    this.forceUpdate();
+  };
+
+  actionMenu = () => {
     return (
       <ActionMenu>
         <IconButton
@@ -55,17 +76,23 @@ class Show extends Component {
           icon="edit"
           label="Edit"
         />
-        <IconButton
-          to={deletePath()}
+        <IconDeleteButton
           className="is-danger"
           icon="minus-circle"
           label="Delete"
+          onSubmit={this.handleDelete}
+        />
+        <IconButton
+          to={imageCreatePath(this.state.artist.slug)}
+          className="is-success"
+          icon="plus"
+          label="Image"
         />
       </ActionMenu>
     );
-  }
+  };
 
-  breadcrumbs() {
+  breadcrumbs = () => {
     return (
       <ArtistBreadcrumbs>
         <Breadcrumb to={showPath(this.state.artist.slug)} active>
@@ -73,32 +100,64 @@ class Show extends Component {
         </Breadcrumb>
       </ArtistBreadcrumbs>
     );
-  }
+  };
+
+  notificationMessage = () => {
+    let action = "";
+
+    if (this.state.created) {
+      action = "created";
+    }
+
+    if (this.state.updated) {
+      action = "updated";
+    }
+
+    if (this.state.created || this.state.updated) {
+      return (
+        <span>
+          <strong>{this.state.artist.name}</strong> successfully {action}!
+        </span>
+      );
+    } else if (this.state.image_added) {
+      return <span>Image successfully added!</span>;
+    } else {
+      return "";
+    }
+  };
 
   render() {
     const artist = this.state.artist;
 
-    if (artist) {
-      return (
-        <div>
-          <Helmet>
-            <title>{artist.name}</title>
-          </Helmet>
-          {this.actionMenu()}
-          {this.breadcrumbs()}
-          <Notification
-            show={this.state.updated}
-            color="success"
-            onDismiss={this.handleDismiss}
-          >
-            <strong>{artist.name}</strong> successfully updated!
-          </Notification>
-          <h2 className="title is-2">{artist.name}</h2>
-          <Markdown>{artist.description}</Markdown>
-        </div>
-      );
+    if (this.state.deleted) {
+      return <Redirect to={indexPath()} />;
     } else {
-      return <div />;
+      if (artist) {
+        return (
+          <div>
+            <Helmet>
+              <title>{artist.name}</title>
+            </Helmet>
+            {this.actionMenu()}
+            {this.breadcrumbs()}
+            <Notification
+              show={
+                this.state.updated ||
+                this.state.created ||
+                this.state.image_added
+              }
+              color="success"
+              onDismiss={this.handleDismiss}
+            >
+              {this.notificationMessage()}
+            </Notification>
+            <h2 className="title is-2">{artist.name}</h2>
+            <Markdown>{artist.description}</Markdown>
+          </div>
+        );
+      } else {
+        return <div />;
+      }
     }
   }
 }

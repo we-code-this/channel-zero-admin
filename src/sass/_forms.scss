@@ -1,0 +1,33 @@
+.image-preview {
+  background-color: #efefef;
+  height: 200px;
+  margin-bottom: 0.75rem;
+  overflow: hidden;
+
+  img {
+    height: 100%;
+    width: auto;
+  }
+
+  .preview-icon {
+    display: block;
+    width: 200px;
+    height: 200px;
+    border-right: 1px dashed #ccc;
+
+    &,
+    & .icon {
+      width: 200px;
+      height: 200px;
+    }
+
+    .icon {
+      color: #ccc;
+
+      .svg-icon {
+        width: 6rem;
+        height: 6rem;
+      }
+    }
+  }
+}

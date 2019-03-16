@@ -1,43 +1,26 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router";
-import Helmet from "react-helmet";
 import ArtistBreadcrumbs from "../../components/artists/ArtistBreadcrumbs";
 import Breadcrumb from "../../components/common/Breadcrumb";
 import ArtistForm from "../../components/artists/ArtistForm";
-import {
-  findBySlug,
-  updateBySlug,
-  showPath,
-  editPath
-} from "../../models/artists";
+import { create, createPath } from "../../models/artists";
 
-class Edit extends Component {
+class Create extends Component {
   constructor(props) {
     super(props);
 
-    this._isMounted = false;
-
     this.state = {
       redirectToArtist: false,
-      artist: undefined,
+      artist: {
+        name: "",
+        description: "",
+        slug: ""
+      },
       errors: {
         name: undefined,
         description: undefined
       }
     };
-  }
-
-  async componentDidMount() {
-    this._isMounted = true;
-    const artist = await findBySlug(this.props.match.params.slug);
-
-    if (this._isMounted) {
-      this.setState({ ...this.state, artist });
-    }
-  }
-
-  async componentWillUnmount() {
-    this._isMounted = false;
   }
 
   handleSubmit = async e => {
@@ -46,7 +29,7 @@ class Edit extends Component {
     const newName = e.target.name.value;
     const newDescription = e.target.description.value;
 
-    const result = await updateBySlug(this.state.artist.slug, {
+    const result = await create({
       name: newName,
       description: newDescription
     });
@@ -72,10 +55,12 @@ class Edit extends Component {
         }
       });
     } else {
-      // redirect
-      // this.props.history.goBack();
       this.setState({
         ...this.state,
+        artist: {
+          ...this.state.artist,
+          slug: result.slug
+        },
         redirectToArtist: true
       });
     }
@@ -87,7 +72,7 @@ class Edit extends Component {
         <Redirect
           to={{
             pathname: `/artist/${this.state.artist.slug}`,
-            updated: true
+            created: true
           }}
         />
       )
@@ -97,11 +82,8 @@ class Edit extends Component {
   breadcrumbs() {
     return (
       <ArtistBreadcrumbs>
-        <Breadcrumb to={showPath(this.state.artist.slug)}>
-          {this.state.artist.name}
-        </Breadcrumb>
-        <Breadcrumb to={editPath(this.state.artist.slug)} active>
-          Edit “{this.state.artist.name}”
+        <Breadcrumb to={createPath()} active>
+          Create Artist
         </Breadcrumb>
       </ArtistBreadcrumbs>
     );
@@ -110,11 +92,8 @@ class Edit extends Component {
   render() {
     const artist = this.state.artist;
 
-    return artist ? (
+    return (
       <div>
-        <Helmet>
-          <title>{`Edit “${artist.name}”`}</title>
-        </Helmet>
         {this.redirect()}
         {this.breadcrumbs()}
         <ArtistForm
@@ -123,10 +102,8 @@ class Edit extends Component {
           errors={this.state.errors}
         />
       </div>
-    ) : (
-      ""
     );
   }
 }
 
-export default Edit;
+export default Create;
