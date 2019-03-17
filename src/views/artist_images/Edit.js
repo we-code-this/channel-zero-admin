@@ -5,9 +5,9 @@ import ArtistBreadcrumbs from "../../components/artists/ArtistBreadcrumbs";
 import Breadcrumb from "../../components/common/Breadcrumb";
 import ArtistImageForm from "../../components/artists/ArtistImageForm";
 import { showPath, findBySlug } from "../../models/artists";
-import { create, createPath } from "../../models/artist_images";
+import { edit, createPath } from "../../models/artist_images";
 
-class Create extends Component {
+class Edit extends Component {
   constructor(props) {
     super(props);
 
@@ -16,6 +16,7 @@ class Create extends Component {
     this.state = {
       redirectToArtist: false,
       artist: undefined,
+      image: undefined,
       errors: {
         image: undefined
       }
@@ -28,7 +29,16 @@ class Create extends Component {
     const artist = await findBySlug(this.props.match.params.slug);
 
     if (this._isMounted) {
-      this.setState({ ...this.state, artist });
+      let currentImage;
+
+      artist.images.map(image => {
+        if (image.id === parseInt(this.props.match.params.id)) {
+          currentImage = image;
+        }
+        return image;
+      });
+
+      this.setState({ ...this.state, image: currentImage, artist });
     }
   }
 
@@ -40,7 +50,7 @@ class Create extends Component {
     e.preventDefault();
 
     if (e.target.image.value) {
-      const result = await create(e.target);
+      const result = await edit(e.target);
 
       if (result.errors) {
         const resultErrors = {};
@@ -72,7 +82,7 @@ class Create extends Component {
         <Redirect
           to={{
             pathname: showPath(this.state.artist.slug),
-            image_added: true
+            image_updated: true
           }}
         />
       )
@@ -86,7 +96,7 @@ class Create extends Component {
           {this.state.artist.name}
         </Breadcrumb>
         <Breadcrumb to={createPath()} active>
-          Add Artist Image
+          Edit Artist Image
         </Breadcrumb>
       </ArtistBreadcrumbs>
     );
@@ -96,13 +106,14 @@ class Create extends Component {
     return (
       <React.Fragment>
         <Helmet>
-          <title>Add Artist Image</title>
+          <title>Edit Artist Image</title>
         </Helmet>
         {this.redirect()}
         {this.state.artist && (
           <div>
             {this.breadcrumbs()}
             <ArtistImageForm
+              image={this.state.image}
               artist_id={this.state.artist.id}
               onSubmit={this.handleSubmit}
               errors={this.state.errors}
@@ -114,4 +125,4 @@ class Create extends Component {
   }
 }
 
-export default Create;
+export default Edit;

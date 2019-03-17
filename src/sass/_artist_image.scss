@@ -1,0 +1,20 @@
+.image-gallery {
+  background-color: #f7f7f7;
+
+  .image-container {
+    align-items: center;
+    background-color: #555;
+    display: flex;
+    position: relative;
+  }
+
+  img {
+    display: block;
+  }
+
+  .buttons {
+    position: absolute;
+    right: 0.25rem;
+    top: 0.25rem;
+  }
+}

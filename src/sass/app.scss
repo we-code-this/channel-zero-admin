@@ -3,6 +3,7 @@
 @import "icons";
 @import "forms";
 @import "mde";
+@import "artist_image";
 
 p {
   margin-bottom: 1rem;
@@ -71,10 +72,6 @@ p {
         background-color: #eee;
       }
     }
-  }
-
-  .thumb {
-    height: 50px;
   }
 
   @media (min-width: $tablet) {

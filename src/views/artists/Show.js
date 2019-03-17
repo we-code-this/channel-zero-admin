@@ -2,11 +2,12 @@ import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
 import Helmet from "react-helmet";
 import Markdown from "markdown-to-jsx";
-import { Columns, Card, Content } from "react-bulma-components";
+import { Columns } from "react-bulma-components";
 import ArtistBreadcrumbs from "../../components/artists/ArtistBreadcrumbs";
 import Breadcrumb from "../../components/common/Breadcrumb";
 import IconButton from "../../components/common/IconButton";
 import IconDeleteButton from "../../components/common/IconDeleteButton";
+import ArtistImage from "../../components/artists/ArtistImage";
 import ActionMenu from "../../components/common/ActionMenu";
 import Notification from "../../components/common/Notification";
 import {
@@ -18,6 +19,7 @@ import {
 } from "../../models/artists";
 import {
   createPath as imageCreatePath,
+  deletePath as imageDeletePath,
   imageUrl
 } from "../../models/artist_images";
 
@@ -32,12 +34,16 @@ class Show extends Component {
     const image_added = props.location.image_added
       ? props.location.image_added
       : false;
+    const image_updated = props.location.image_updated
+      ? props.location.image_updated
+      : false;
 
     this.state = {
       deleted: false,
       updated,
       created,
       image_added,
+      image_updated,
       artist: undefined
     };
   }
@@ -69,6 +75,10 @@ class Show extends Component {
     await deleteArtist(this.state.artist.id);
     this.setState({ ...this.state, deleted: true });
     this.forceUpdate();
+  };
+
+  handleImageDelete = async e => {
+    e.preventDefault();
   };
 
   actionMenu = () => {
@@ -107,27 +117,40 @@ class Show extends Component {
   };
 
   notificationMessage = () => {
-    let action = "";
-
     if (this.state.created) {
-      action = "created";
+      return (
+        <span>
+          <strong>{this.state.artist.name}</strong> successfully created!
+        </span>
+      );
     }
 
     if (this.state.updated) {
-      action = "updated";
-    }
-
-    if (this.state.created || this.state.updated) {
       return (
         <span>
-          <strong>{this.state.artist.name}</strong> successfully {action}!
+          <strong>{this.state.artist.name}</strong> successfully updated!
         </span>
       );
-    } else if (this.state.image_added) {
-      return <span>Image successfully added!</span>;
-    } else {
-      return "";
     }
+
+    if (this.state.image_added) {
+      return <span>Image successfully added!</span>;
+    }
+
+    if (this.state.image_updated) {
+      return <span>Image successfully updated!</span>;
+    }
+
+    return "";
+  };
+
+  showNotification = () => {
+    return (
+      this.state.updated ||
+      this.state.created ||
+      this.state.image_added ||
+      this.state.image_updated
+    );
   };
 
   render() {
@@ -146,11 +169,7 @@ class Show extends Component {
             {this.actionMenu()}
             {this.breadcrumbs()}
             <Notification
-              show={
-                this.state.updated ||
-                this.state.created ||
-                this.state.image_added
-              }
+              show={this.showNotification()}
               color="success"
               onDismiss={this.handleDismiss}
             >
@@ -158,24 +177,35 @@ class Show extends Component {
             </Notification>
             <h2 className="title is-2">{artist.name}</h2>
             <Columns>
-              <Columns.Column
-                tablet={{ size: "half" }}
-                desktop={{ size: "one-third" }}
-              >
-                <Card.Image
-                  key={`artist-image-${artist.images[0].id}`}
-                  src={imageUrl(artist.images[0].filename)}
-                  alt={`${artist.name}`}
-                />
-                {artist.images.slice(1).map(image => (
-                  <img
-                    key={`artist-image-${image.id}`}
-                    src={imageUrl(image.filename)}
-                    alt={`${artist.name}`}
-                    className="thumb"
-                  />
-                ))}
-              </Columns.Column>
+              {artist.images.length > 0 && (
+                <Columns.Column
+                  tablet={{ size: "half" }}
+                  desktop={{ size: "one-third" }}
+                >
+                  <Columns gapless className="image-gallery">
+                    <Columns.Column size={12} className="image-container">
+                      <ArtistImage
+                        image={artist.images[0]}
+                        alt={artist.name}
+                        artistSlug={artist.slug}
+                      />
+                    </Columns.Column>
+                    {artist.images.slice(1).map(image => (
+                      <Columns.Column
+                        key={`artist-image-${image.id}`}
+                        size={3}
+                        className="image-container"
+                      >
+                        <ArtistImage
+                          image={image}
+                          alt={artist.name}
+                          artistSlug={artist.slug}
+                        />
+                      </Columns.Column>
+                    ))}
+                  </Columns>
+                </Columns.Column>
+              )}
               <Columns.Column>
                 <Markdown>{artist.description}</Markdown>
               </Columns.Column>

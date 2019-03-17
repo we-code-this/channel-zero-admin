@@ -8,6 +8,7 @@ import Artist from "./views/artists/Show";
 import EditArtist from "./views/artists/Edit";
 import CreateArtist from "./views/artists/Create";
 import CreateArtistImage from "./views/artist_images/Create";
+import EditArtistImage from "./views/artist_images/Edit";
 import Labels from "./views/labels/Index";
 import Releases from "./views/releases/Index";
 import Vendors from "./views/vendors/Index";
@@ -28,12 +29,16 @@ class App extends Component {
             <Route exact path="/artists" component={Artists} />
             <Route path="/artists/:page" component={Artists} />
             <Route path="/artist/create" component={CreateArtist} />
+            <Route exact path="/artist/:slug" component={Artist} />
             <Route
               path="/artist/:slug/image/create"
               component={CreateArtistImage}
             />
+            <Route
+              path="/artist/:slug/image/:id/edit"
+              component={EditArtistImage}
+            />
             <Route path="/artist/:slug/edit" component={EditArtist} />
-            <Route exact path="/artist/:slug" component={Artist} />
             <Route path="/labels" component={Labels} />
             <Route path="/releases" component={Releases} />
             <Route path="/vendors" component={Vendors} />
