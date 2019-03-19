@@ -61,5 +61,6 @@ export function editPath(slug, id) {
 }
 
 export function imageUrl(filename) {
-  return `/files/artists/${filename}`;
+  const hash = Date.now();
+  return `/files/artists/${filename}?${hash}`;
 }
