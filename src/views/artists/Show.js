@@ -65,7 +65,8 @@ class Show extends Component {
       ...this.state,
       updated: false,
       created: false,
-      image_added: false
+      image_added: false,
+      image_updated: false
     });
   };
 

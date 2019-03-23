@@ -68,7 +68,7 @@ class ArtistImageForm extends Component {
   render() {
     return (
       <form onSubmit={this.props.onSubmit} encType="multipart/form-data">
-        {this.state.image ? (
+        {this.props.edit ? (
           <input type="hidden" name="id" value={this.state.image.id} />
         ) : (
           <input type="hidden" name="artist_id" value={this.state.artist_id} />

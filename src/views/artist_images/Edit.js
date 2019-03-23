@@ -113,6 +113,7 @@ class Edit extends Component {
           <div>
             {this.breadcrumbs()}
             <ArtistImageForm
+              edit={true}
               image={this.state.image}
               artist_id={this.state.artist.id}
               onSubmit={this.handleSubmit}
