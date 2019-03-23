@@ -4,10 +4,6 @@ import IconDeleteButton from "../common/IconDeleteButton";
 import { editPath, imageUrl } from "../../models/artist_images";
 
 class ArtistImage extends Component {
-  handleDelete = async e => {
-    e.preventDefault();
-  };
-
   render() {
     return (
       <React.Fragment>
@@ -26,7 +22,7 @@ class ArtistImage extends Component {
             icon="minus-circle"
             label="Delete"
             showLabel={false}
-            onSubmit={this.handleDelete}
+            onSubmit={this.props.onDelete}
           />
         </div>
       </React.Fragment>

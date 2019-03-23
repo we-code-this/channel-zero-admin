@@ -58,6 +58,8 @@ class ArtistImageForm extends Component {
       if (validType === type) {
         valid = true;
       }
+
+      return validType;
     });
 
     return valid;

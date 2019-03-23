@@ -52,6 +52,24 @@ export async function edit(data) {
   }
 }
 
+export async function deleteImage(id) {
+  try {
+    const res = await fetch(`${host}/artist/image`, {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      method: "DELETE",
+      body: JSON.stringify({ id })
+    });
+
+    return await res.json();
+  } catch (e) {
+    console.error(e.stack);
+    return false;
+  }
+}
+
 export function createPath(slug) {
   return `/artist/${slug}/image/create`;
 }

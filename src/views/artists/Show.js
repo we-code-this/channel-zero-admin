@@ -19,8 +19,7 @@ import {
 } from "../../models/artists";
 import {
   createPath as imageCreatePath,
-  deletePath as imageDeletePath,
-  imageUrl
+  deleteImage
 } from "../../models/artist_images";
 
 class Show extends Component {
@@ -79,6 +78,12 @@ class Show extends Component {
 
   handleImageDelete = async e => {
     e.preventDefault();
+
+    await deleteImage(e.target.id.value);
+
+    const artist = await findBySlug(this.props.match.params.slug);
+    this.setState({ ...this.state, artist });
+    this.forceUpdate();
   };
 
   actionMenu = () => {
@@ -160,7 +165,6 @@ class Show extends Component {
       return <Redirect to={indexPath()} />;
     } else {
       if (artist) {
-        console.log("artist:", artist);
         return (
           <div>
             <Helmet>
@@ -188,6 +192,7 @@ class Show extends Component {
                         image={artist.images[0]}
                         alt={artist.name}
                         artistSlug={artist.slug}
+                        onDelete={this.handleImageDelete}
                       />
                     </Columns.Column>
                     {artist.images.slice(1).map(image => (
@@ -200,6 +205,7 @@ class Show extends Component {
                           image={image}
                           alt={artist.name}
                           artistSlug={artist.slug}
+                          onDelete={this.handleImageDelete}
                         />
                       </Columns.Column>
                     ))}
