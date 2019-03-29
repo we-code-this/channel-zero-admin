@@ -10,6 +10,7 @@ import CreateArtist from "./views/artists/Create";
 import CreateArtistImage from "./views/artist_images/Create";
 import EditArtistImage from "./views/artist_images/Edit";
 import Labels from "./views/labels/Index";
+import CreateLabel from "./views/labels/Create";
 import Releases from "./views/releases/Index";
 import Vendors from "./views/vendors/Index";
 import "./sass/app.scss";
@@ -40,6 +41,7 @@ class App extends Component {
             />
             <Route path="/artist/:slug/edit" component={EditArtist} />
             <Route path="/labels" component={Labels} />
+            <Route path="/label/create" component={CreateLabel} />
             <Route path="/releases" component={Releases} />
             <Route path="/vendors" component={Vendors} />
           </AnimatedSwitch>

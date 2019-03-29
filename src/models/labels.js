@@ -1,5 +1,18 @@
 const host = process.env.REACT_APP_DATA_API_HOST;
 
+export async function create(data) {
+  const res = await fetch(`${host}/label`, {
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json"
+    },
+    method: "POST",
+    body: JSON.stringify(data)
+  });
+
+  return await res.json();
+}
+
 export async function get(params = {}) {
   const order = params.order ? params.order : "desc";
   let url = `${host}/labels`;
@@ -24,6 +37,27 @@ export function indexPath() {
   return "/labels";
 }
 
+export function showPath(slug) {
+  return `/label/${slug}`;
+}
+
+export function editPath(slug) {
+  return `/label/${slug}/edit`;
+}
+
 export function createPath() {
   return `/label/create`;
+}
+
+export async function deleteLabel(id) {
+  const res = await fetch(`${host}/label`, {
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json"
+    },
+    method: "DELETE",
+    body: JSON.stringify({ id })
+  });
+
+  return await res.json();
 }

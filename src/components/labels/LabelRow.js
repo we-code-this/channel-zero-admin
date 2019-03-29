@@ -1,13 +1,13 @@
 import React, { Component } from "react";
 import TableActionButtons from "../common/TableActionButtons";
-// import { showPath, editPath, deleteArtist } from "../../models/artists";
+import { showPath, editPath, deleteLabel } from "../../models/labels";
 
 class LabelRow extends Component {
-  // handleDelete = async e => {
-  //   e.preventDefault();
-  //   await deleteArtist(this.props.artist.id);
-  //   this.forceUpdate();
-  // };
+  handleDelete = async e => {
+    e.preventDefault();
+    // await deleteArtist(this.props.artist.id);
+    // this.forceUpdate();
+  };
 
   render() {
     const label = this.props.label;
@@ -18,7 +18,10 @@ class LabelRow extends Component {
         <td>{label.name}</td>
         <td>{label.created_at}</td>
         <td>
-          <TableActionButtons editPath="" onSubmit={() => {}} />
+          <TableActionButtons
+            editPath={editPath(label.slug)}
+            onSubmit={this.handleDelete}
+          />
         </td>
       </tr>
     );

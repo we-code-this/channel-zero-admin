@@ -27,13 +27,19 @@ class Index extends Component {
   }
 
   async componentDidUpdate() {
-    await this.getLabels();
+    if (
+      this.props.match.params.page &&
+      this.state.page !== parseInt(this.props.match.params.page)
+    ) {
+      await this.getLabels();
+    }
   }
 
   async getLabels() {
     const currentPage = this.props.match.params.page
       ? parseInt(this.props.match.params.page)
       : 1;
+
     const labels = await get({
       start: (currentPage - 1) * this.state.perPage,
       limit: this.state.perPage

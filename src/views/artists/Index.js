@@ -27,7 +27,12 @@ class Index extends Component {
   }
 
   async componentDidUpdate() {
-    await this.getArtists();
+    if (
+      this.props.match.params.page &&
+      this.state.page !== parseInt(this.props.match.params.page)
+    ) {
+      await this.getArtists();
+    }
   }
 
   componentWillUnmount() {
@@ -38,6 +43,7 @@ class Index extends Component {
     const currentPage = this.props.match.params.page
       ? parseInt(this.props.match.params.page)
       : 1;
+
     const artists = await get({
       start: (currentPage - 1) * this.state.perPage,
       limit: this.state.perPage
