@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import _ from "lodash";
 import { withRouter } from "react-router";
 import { validTypes } from "../../config/images";
 import ImageFileInputWithPreview from "../common/forms/ImageFileInputWithPreview";
@@ -21,7 +22,7 @@ class ArtistImageForm extends Component {
   }
 
   static getDerivedStateFromProps(props, state) {
-    if (props.errors.image !== state.errors.image) {
+    if (!_.isEqual(props.errors, state.errors)) {
       return { ...state, errors: props.errors };
     }
 
@@ -80,7 +81,9 @@ class ArtistImageForm extends Component {
           name="image"
           onChange={this.handleFileSelection}
         />
-        {this.errors && <p class="help is-danger">{this.errors.image}</p>}
+        {this.state.errors && (
+          <p className="help is-danger">{this.state.errors.image}</p>
+        )}
         <SubmitWithCancel onClick={this.handleCancelClick} />
       </form>
     );

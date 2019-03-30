@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import _ from "lodash";
 import { withRouter } from "react-router";
 import TextInput from "../../components/common/forms/TextInput";
 import MarkdownEditor from "../../components/common/forms/MarkdownEditor";
@@ -17,10 +18,7 @@ class ArtistForm extends Component {
   }
 
   static getDerivedStateFromProps(props, state) {
-    if (
-      props.errors.name !== state.errors.name ||
-      props.errors.description !== state.errors.description
-    ) {
+    if (!_.isEqual(props.errors, state.errors)) {
       return { ...state, artist: props.artist, errors: props.errors };
     }
 
@@ -50,13 +48,21 @@ class ArtistForm extends Component {
           label="Name"
           value={artist.name}
           onChange={this.handleNameChange}
-          error={this.state.errors.name}
+          error={
+            this.state.errors && this.state.errors.name
+              ? this.state.errors.name
+              : undefined
+          }
         />
         <MarkdownEditor
           label="Description"
           onChange={this.handleDescriptionChange}
           value={artist.description}
-          error={this.state.errors.description}
+          error={
+            this.state.errors && this.state.errors.description
+              ? this.state.errors.description
+              : undefined
+          }
         />
         <SubmitWithCancel onClick={this.handleCancelClick} />
       </form>
