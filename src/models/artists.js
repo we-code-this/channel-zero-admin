@@ -44,7 +44,7 @@ export async function updateBySlug(slug, data) {
       Accept: "application/json",
       "Content-Type": "application/json"
     },
-    method: "POST",
+    method: "PATCH",
     body: JSON.stringify(data)
   });
 

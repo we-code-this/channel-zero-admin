@@ -1,15 +1,15 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router";
 import Helmet from "react-helmet";
-import ArtistBreadcrumbs from "../../components/artists/ArtistBreadcrumbs";
+import LabelBreadcrumbs from "../../components/labels/LabelBreadcrumbs";
 import Breadcrumb from "../../components/common/Breadcrumb";
-import ArtistForm from "../../components/artists/ArtistForm";
+import LabelForm from "../../components/labels/LabelForm";
 import {
   findBySlug,
   updateBySlug,
-  showPath,
+  indexPath,
   editPath
-} from "../../models/artists";
+} from "../../models/labels";
 
 class Edit extends Component {
   constructor(props) {
@@ -18,21 +18,20 @@ class Edit extends Component {
     this._isMounted = false;
 
     this.state = {
-      redirectToArtist: false,
-      artist: undefined,
+      redirectToLabels: false,
+      label: undefined,
       errors: {
-        name: undefined,
-        description: undefined
+        name: undefined
       }
     };
   }
 
   async componentDidMount() {
     this._isMounted = true;
-    const artist = await findBySlug(this.props.match.params.slug);
+    const label = await findBySlug(this.props.match.params.slug);
 
     if (this._isMounted) {
-      this.setState({ ...this.state, artist });
+      this.setState({ ...this.state, label });
     }
   }
 
@@ -44,11 +43,9 @@ class Edit extends Component {
     e.preventDefault();
 
     const newName = e.target.name.value;
-    const newDescription = e.target.description.value;
 
-    const result = await updateBySlug(this.state.artist.slug, {
-      name: newName,
-      description: newDescription
+    const result = await updateBySlug(this.state.label.slug, {
+      name: newName
     });
 
     if (result.errors.length) {
@@ -61,10 +58,9 @@ class Edit extends Component {
 
       this.setState({
         ...this.state,
-        artist: {
-          ...this.state.artist,
-          name: newName,
-          description: newDescription
+        label: {
+          ...this.state.label,
+          name: newName
         },
         errors: {
           ...this.state.errors,
@@ -76,17 +72,17 @@ class Edit extends Component {
       // this.props.history.goBack();
       this.setState({
         ...this.state,
-        redirectToArtist: true
+        redirectToLabels: true
       });
     }
   };
 
   redirect() {
     return (
-      this.state.redirectToArtist && (
+      this.state.redirectToLabels && (
         <Redirect
           to={{
-            pathname: `/artist/${this.state.artist.slug}`,
+            pathname: indexPath(),
             updated: true
           }}
         />
@@ -96,29 +92,26 @@ class Edit extends Component {
 
   breadcrumbs() {
     return (
-      <ArtistBreadcrumbs>
-        <Breadcrumb to={showPath(this.state.artist.slug)}>
-          {this.state.artist.name}
+      <LabelBreadcrumbs>
+        <Breadcrumb to={editPath(this.state.label.slug)} active>
+          Edit “{this.state.label.name}”
         </Breadcrumb>
-        <Breadcrumb to={editPath(this.state.artist.slug)} active>
-          Edit “{this.state.artist.name}”
-        </Breadcrumb>
-      </ArtistBreadcrumbs>
+      </LabelBreadcrumbs>
     );
   }
 
   render() {
-    const artist = this.state.artist;
+    const label = this.state.label;
 
-    return artist ? (
+    return label ? (
       <div>
         <Helmet>
-          <title>{`Edit “${artist.name}”`}</title>
+          <title>{`Edit “${label.name}”`}</title>
         </Helmet>
         {this.redirect()}
         {this.breadcrumbs()}
-        <ArtistForm
-          artist={artist}
+        <LabelForm
+          label={label}
           onSubmit={this.handleSubmit}
           errors={this.state.errors}
         />

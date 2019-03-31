@@ -5,7 +5,7 @@ import { showPath, editPath, deleteLabel } from "../../models/labels";
 class LabelRow extends Component {
   handleDelete = async e => {
     e.preventDefault();
-    // await deleteArtist(this.props.artist.id);
+    // await deleteLabel(this.props.label.id);
     // this.forceUpdate();
   };
 

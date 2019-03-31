@@ -34,7 +34,7 @@ class Create extends Component {
       description: newDescription
     });
 
-    if (result.errors) {
+    if (result.errors.length) {
       const resultErrors = {};
 
       result.errors.map(error => {

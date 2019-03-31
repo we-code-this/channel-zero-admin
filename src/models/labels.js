@@ -37,16 +37,17 @@ export function indexPath() {
   return "/labels";
 }
 
-export function showPath(slug) {
-  return `/label/${slug}`;
-}
-
 export function editPath(slug) {
   return `/label/${slug}/edit`;
 }
 
 export function createPath() {
   return `/label/create`;
+}
+
+export async function findBySlug(slug) {
+  const res = await fetch(`${host}/label/${slug}`);
+  return await res.json();
 }
 
 export async function deleteLabel(id) {
@@ -57,6 +58,19 @@ export async function deleteLabel(id) {
     },
     method: "DELETE",
     body: JSON.stringify({ id })
+  });
+
+  return await res.json();
+}
+
+export async function updateBySlug(slug, data) {
+  const res = await fetch(`${host}/label/${slug}`, {
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json"
+    },
+    method: "PATCH",
+    body: JSON.stringify(data)
   });
 
   return await res.json();
