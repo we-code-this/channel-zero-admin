@@ -16,7 +16,11 @@ const ArtistTable = props => {
         </thead>
         <tbody>
           {props.artists.map(artist => (
-            <ArtistRow artist={artist} key={artist.id} />
+            <ArtistRow
+              artist={artist}
+              key={artist.id}
+              onUpdate={props.onUpdate}
+            />
           ))}
         </tbody>
       </table>

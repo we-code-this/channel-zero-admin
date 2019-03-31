@@ -51,6 +51,10 @@ class Index extends Component {
     }
   }
 
+  handleUpdate = async e => {
+    await this.getLabels();
+  };
+
   render() {
     return (
       <div>
@@ -66,7 +70,7 @@ class Index extends Component {
           />
         </ActionMenu>
         <LabelBreadcrumbs active={true} />
-        <LabelTable {...this.state} />
+        <LabelTable {...this.state} onUpdate={this.handleUpdate} />
       </div>
     );
   }

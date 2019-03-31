@@ -55,6 +55,10 @@ class Index extends Component {
     }
   }
 
+  handleUpdate = async e => {
+    await this.getArtists();
+  };
+
   render() {
     return (
       <div>
@@ -70,7 +74,7 @@ class Index extends Component {
           />
         </ActionMenu>
         <ArtistBreadcrumbs active={true} />
-        <ArtistTable {...this.state} />
+        <ArtistTable {...this.state} onUpdate={this.handleUpdate} />
       </div>
     );
   }

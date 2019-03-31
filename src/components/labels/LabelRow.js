@@ -1,12 +1,13 @@
 import React, { Component } from "react";
 import TableActionButtons from "../common/TableActionButtons";
-import { showPath, editPath, deleteLabel } from "../../models/labels";
+import { editPath, deleteLabel } from "../../models/labels";
 
 class LabelRow extends Component {
   handleDelete = async e => {
     e.preventDefault();
-    // await deleteLabel(this.props.label.id);
-    // this.forceUpdate();
+    await deleteLabel(this.props.label.id);
+    this.props.onUpdate();
+    this.forceUpdate();
   };
 
   render() {

@@ -7,6 +7,7 @@ class ArtistRow extends Component {
   handleDelete = async e => {
     e.preventDefault();
     await deleteArtist(this.props.artist.id);
+    this.props.onUpdate();
     this.forceUpdate();
   };
 

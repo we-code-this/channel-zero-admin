@@ -16,7 +16,7 @@ const LabelTable = props => {
         </thead>
         <tbody>
           {props.labels.map(label => (
-            <LabelRow label={label} key={label.id} />
+            <LabelRow label={label} key={label.id} onUpdate={props.onUpdate} />
           ))}
         </tbody>
       </table>
