@@ -44,7 +44,8 @@ class App extends Component {
             <Route path="/labels" component={Labels} />
             <Route path="/label/create" component={CreateLabel} />
             <Route path="/label/:slug/edit" component={EditLabel} />
-            <Route path="/releases" component={Releases} />
+            <Route exact path="/releases" component={Releases} />
+            <Route path="/releases/:page" component={Releases} />
             <Route path="/vendors" component={Vendors} />
           </AnimatedSwitch>
         </Layout>

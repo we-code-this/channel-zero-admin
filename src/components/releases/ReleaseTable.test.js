@@ -2,20 +2,21 @@ import React from "react";
 import Enzyme, { shallow } from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 import { MemoryRouter } from "react-router";
-import ArtistTable from "./ArtistTable";
+import ReleaseTable from "./ReleaseTable";
 
 Enzyme.configure({ adapter: new Adapter() });
 
-describe("ArtistTable", () => {
+describe("ReleaseTable", () => {
   it("should render", () => {
     const wrapper = shallow(
       <MemoryRouter>
-        <ArtistTable
-          artists={[
+        <ReleaseTable
+          releases={[
             {
               id: 1,
-              slug: "artist-1",
-              name: "Artist 1",
+              slug: "artist-2-release-1",
+              title: "Release 1",
+              published: 1,
               created_at: "2019-01-01"
             }
           ]}
@@ -27,33 +28,33 @@ describe("ArtistTable", () => {
       </MemoryRouter>
     ).render();
 
-    console.log("wrapper:", wrapper);
-
     expect(wrapper.first().hasClass("table")).toBeTruthy();
     expect(wrapper.find("thead").length).toEqual(1);
     expect(wrapper.find("thead tr").length).toEqual(1);
-    expect(wrapper.find("thead th").length).toEqual(4);
+    expect(wrapper.find("thead th").length).toEqual(5);
     expect(wrapper.find("tbody").length).toEqual(1);
     expect(wrapper.find("tbody tr").length).toEqual(1);
-    expect(wrapper.find("tbody td").length).toEqual(4);
+    expect(wrapper.find("tbody td").length).toEqual(5);
     expect(wrapper.find(".pagination-list").length).toEqual(1);
   });
 
-  it("should render all provided artists", () => {
+  it("should render all provided releases", () => {
     const wrapper = shallow(
       <MemoryRouter>
-        <ArtistTable
-          artists={[
+        <ReleaseTable
+          releases={[
             {
               id: 1,
-              slug: "artist-1",
-              name: "Artist 1",
+              slug: "artist-2-release-1",
+              title: "Release 1",
+              published: 1,
               created_at: "2019-01-01"
             },
             {
               id: 2,
-              slug: "artist-2",
-              name: "Artist 2",
+              slug: "artist-2-release-2",
+              title: "Release 2",
+              published: 1,
               created_at: "2019-01-01"
             }
           ]}
