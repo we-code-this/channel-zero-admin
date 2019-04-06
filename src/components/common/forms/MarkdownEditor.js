@@ -11,6 +11,7 @@ class MarkdownEditor extends Component {
     this.converter = new Showdown.Converter({
       simplifiedAutoLink: true
     });
+    this.converter.setFlavor("github");
 
     this.state = {
       tab: "write"

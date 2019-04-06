@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import he from "he";
 import { Redirect } from "react-router";
 import Helmet from "react-helmet";
 import ArtistBreadcrumbs from "../../components/artists/ArtistBreadcrumbs";
@@ -98,10 +99,10 @@ class Edit extends Component {
     return (
       <ArtistBreadcrumbs>
         <Breadcrumb to={showPath(this.state.artist.slug)}>
-          {this.state.artist.name}
+          {he.decode(this.state.artist.name)}
         </Breadcrumb>
         <Breadcrumb to={editPath(this.state.artist.slug)} active>
-          Edit “{this.state.artist.name}”
+          Edit “{he.decode(this.state.artist.name)}”
         </Breadcrumb>
       </ArtistBreadcrumbs>
     );
@@ -113,7 +114,7 @@ class Edit extends Component {
     return artist ? (
       <div>
         <Helmet>
-          <title>{`Edit “${artist.name}”`}</title>
+          <title>{`Edit “${he.decode(artist.name)}”`}</title>
         </Helmet>
         {this.redirect()}
         {this.breadcrumbs()}

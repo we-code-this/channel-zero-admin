@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import he from "he";
 import { getForSelect } from "../../models/artists";
 
 class ArtistSelect extends Component {
@@ -36,7 +37,7 @@ class ArtistSelect extends Component {
               {this.state.artists.map(artist => {
                 return (
                   <option value={artist.id} key={`artist-${artist.id}`}>
-                    {artist.name}
+                    {he.decode(artist.name)}
                   </option>
                 );
               })}

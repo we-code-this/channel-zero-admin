@@ -10,6 +10,7 @@
     "enzyme": "^3.9.0",
     "enzyme-adapter-react-16": "^1.9.1",
     "form-data": "^2.3.3",
+    "he": "^1.2.0",
     "lodash": "^4.17.11",
     "markdown-to-jsx": "^6.9.1",
     "node-sass": "^4.11.0",

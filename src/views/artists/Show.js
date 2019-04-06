@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import he from "he";
 import { Redirect } from "react-router-dom";
 import Helmet from "react-helmet";
 import Markdown from "markdown-to-jsx";
@@ -116,7 +117,7 @@ class Show extends Component {
     return (
       <ArtistBreadcrumbs>
         <Breadcrumb to={showPath(this.state.artist.slug)} active>
-          {this.state.artist.name}
+          {he.decode(this.state.artist.name)}
         </Breadcrumb>
       </ArtistBreadcrumbs>
     );
@@ -180,7 +181,7 @@ class Show extends Component {
             >
               {this.notificationMessage()}
             </Notification>
-            <h2 className="title is-2">{artist.name}</h2>
+            <h2 className="title is-2">{he.decode(artist.name)}</h2>
             <Columns>
               {artist.images.length > 0 && (
                 <Columns.Column
@@ -214,7 +215,7 @@ class Show extends Component {
                 </Columns.Column>
               )}
               <Columns.Column>
-                <Markdown>{artist.description}</Markdown>
+                <Markdown>{he.decode(artist.description)}</Markdown>
               </Columns.Column>
             </Columns>
           </div>

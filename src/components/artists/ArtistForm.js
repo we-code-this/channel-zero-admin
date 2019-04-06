@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import he from "he";
 import _ from "lodash";
 import { withRouter } from "react-router";
 import TextInput from "../common/forms/TextInput";
@@ -47,7 +48,7 @@ class ArtistForm extends Component {
       <form onSubmit={this.props.onSubmit} className="form">
         <TextInput
           label="Name"
-          value={artist.name}
+          value={he.decode(artist.name)}
           onChange={this.handleNameChange}
           error={
             this.state.errors && this.state.errors.name
@@ -58,7 +59,7 @@ class ArtistForm extends Component {
         <MarkdownEditor
           label="Description"
           onChange={this.handleDescriptionChange}
-          value={artist.description}
+          value={he.decode(artist.description)}
           error={
             this.state.errors && this.state.errors.description
               ? this.state.errors.description

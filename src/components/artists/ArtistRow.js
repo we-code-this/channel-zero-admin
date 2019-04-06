@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import he from "he";
 import { Link } from "react-router-dom";
 import TableActionButtons from "../common/TableActionButtons";
 import { showPath, editPath, deleteArtist } from "../../models/artists";
@@ -18,7 +19,7 @@ class ArtistRow extends Component {
       <tr>
         <td>{artist.id}</td>
         <td>
-          <Link to={showPath(artist.slug)}>{artist.name}</Link>
+          <Link to={showPath(artist.slug)}>{he.decode(artist.name)}</Link>
         </td>
         <td>{artist.created_at}</td>
         <td>

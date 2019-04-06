@@ -57,6 +57,10 @@ export function editPath(slug) {
   return `/release/${slug}/edit`;
 }
 
+export function publishPath(slug, value) {
+  return `/release/${slug}/publish/${value}`;
+}
+
 export async function get(params = {}) {
   const order = params.order ? params.order : "desc";
   let url = `${host}/releases`;
@@ -71,15 +75,20 @@ export async function get(params = {}) {
   return await res.json();
 }
 
+export async function findBySlug(slug) {
+  const res = await fetch(`${host}/release/${slug}`);
+  return await res.json();
+}
+
+export function imageUrl(filename) {
+  const hash = Date.now();
+  return `/files/releases/${filename}?${hash}`;
+}
+
 export function indexPath() {
   return "/releases";
 }
 
 export function showPath(slug) {
   return `/release/${slug}`;
-}
-
-export function imageUrl(filename) {
-  const hash = Date.now();
-  return `/files/releases/${filename}?${hash}`;
 }
