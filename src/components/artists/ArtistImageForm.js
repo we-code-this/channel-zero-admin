@@ -1,9 +1,9 @@
-import React, { Component } from "react";
 import _ from "lodash";
+import React, { Component } from "react";
 import { withRouter } from "react-router";
 import { validTypes } from "../../config/images";
 import ImageFileInputWithPreview from "../common/forms/ImageFileInputWithPreview";
-import SubmitWithCancel from "../../components/common/forms/SubmitWithCancel";
+import SubmitWithCancel from "../common/forms/SubmitWithCancel";
 import { imageUrl } from "../../models/artist_images";
 
 class ArtistImageForm extends Component {

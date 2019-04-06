@@ -13,6 +13,7 @@ import Labels from "./views/labels/Index";
 import CreateLabel from "./views/labels/Create";
 import EditLabel from "./views/labels/Edit";
 import Releases from "./views/releases/Index";
+import CreateRelease from "./views/releases/Create";
 import Vendors from "./views/vendors/Index";
 import "./sass/app.scss";
 
@@ -46,6 +47,7 @@ class App extends Component {
             <Route path="/label/:slug/edit" component={EditLabel} />
             <Route exact path="/releases" component={Releases} />
             <Route path="/releases/:page" component={Releases} />
+            <Route path="/release/create" component={CreateRelease} />
             <Route path="/vendors" component={Vendors} />
           </AnimatedSwitch>
         </Layout>

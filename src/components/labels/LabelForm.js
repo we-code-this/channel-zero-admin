@@ -28,7 +28,8 @@ class LabelForm extends Component {
     this.setState({ ...this.state, label });
   };
 
-  handleCancelClick = () => {
+  handleCancelClick = e => {
+    e.preventDefault();
     this.props.history.goBack();
   };
 
@@ -36,7 +37,7 @@ class LabelForm extends Component {
     const label = this.state.label;
 
     return (
-      <form onSubmit={this.props.onSubmit}>
+      <form onSubmit={this.props.onSubmit} className="form">
         <TextInput
           label="Name"
           value={label.name}

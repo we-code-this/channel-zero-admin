@@ -5,25 +5,27 @@ import ArtistRow from "./ArtistRow";
 const ArtistTable = props => {
   return (
     <React.Fragment>
-      <table className="table is-fullwidth">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Created</th>
-            <th />
-          </tr>
-        </thead>
-        <tbody>
-          {props.artists.map(artist => (
-            <ArtistRow
-              artist={artist}
-              key={artist.id}
-              onUpdate={props.onUpdate}
-            />
-          ))}
-        </tbody>
-      </table>
+      <div className="table-container">
+        <table className="table is-fullwidth">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Created</th>
+              <th />
+            </tr>
+          </thead>
+          <tbody>
+            {props.artists.map(artist => (
+              <ArtistRow
+                artist={artist}
+                key={artist.id}
+                onUpdate={props.onUpdate}
+              />
+            ))}
+          </tbody>
+        </table>
+      </div>
       <Pagination
         currentPage={props.page}
         pageCount={props.pageCount}

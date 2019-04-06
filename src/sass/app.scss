@@ -1,7 +1,12 @@
 @import "variables";
 @import "vendor";
 @import "icons";
+@import "admin_menu";
+@import "action_menu";
+@import "table";
+@import "pagination";
 @import "forms";
+@import "submit_with_cancel";
 @import "mde";
 @import "artist_image";
 
@@ -15,16 +20,6 @@ p {
   & > div {
     position: absolute;
     width: 100%;
-  }
-}
-
-.action-menu {
-  background-color: #eee;
-  margin: -1rem -1rem 2rem -1rem;
-
-  .button {
-    margin-bottom: 0;
-    border-radius: 0;
   }
 }
 
@@ -66,25 +61,12 @@ p {
     }
   }
 
-  .admin-menu {
-    .navbar-item {
-      &.is-active {
-        background-color: #eee;
-      }
-    }
-  }
-
   @media (min-width: $tablet) {
     .admin-main {
       display: flex;
       flex-direction: row;
       flex-grow: 1;
       padding: 0;
-
-      .admin-menu {
-        background-color: #ddd;
-        flex-basis: 15%;
-      }
 
       .page-content {
         flex-basis: 85%;

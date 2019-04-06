@@ -1,7 +1,7 @@
 import React from "react";
 
 const SubmitWithCancel = props => (
-  <div className="field is-grouped">
+  <div className="field is-grouped submit-with-cancel">
     <div className="control">
       <button className="button is-link" type="submit">
         Submit

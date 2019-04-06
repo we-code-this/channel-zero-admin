@@ -1,0 +1,14 @@
+@import "variables";
+
+.admin-menu {
+  @media (min-width: $tablet) {
+    background-color: #ddd;
+    flex-basis: 15%;
+  }
+
+  .navbar-item {
+    &.is-active {
+      background-color: #eee;
+    }
+  }
+}

@@ -11,22 +11,46 @@ class Pagination extends Component {
   previous(page, path) {
     const prev = parseInt(page) - 1;
     return page > 1 ? (
-      <Link to={`${path}/${prev}`} className="pagination-previous">
-        Previous
+      <Link
+        to={`${path}/${prev}`}
+        className="pagination-previous"
+        aria-label="Prev page"
+      >
+        &lt;
       </Link>
     ) : (
-      undefined
+      <Link
+        to={`${path}/${prev}`}
+        className="pagination-previous"
+        aria-label="Prev page"
+        disabled
+      >
+        &lt;
+      </Link>
     );
   }
 
   next(page, totalPages, path) {
     const next = parseInt(page) + 1;
     return page < totalPages ? (
-      <Link prefetch="true" to={`${path}/${next}`} className="pagination-next">
-        Next page
+      <Link
+        prefetch="true"
+        to={`${path}/${next}`}
+        className="pagination-next"
+        aria-label="Next page"
+      >
+        &gt;
       </Link>
     ) : (
-      undefined
+      <Link
+        prefetch="true"
+        to={`${path}/${next}`}
+        className="pagination-next"
+        aria-label="Next page"
+        disabled
+      >
+        &gt;
+      </Link>
     );
   }
 

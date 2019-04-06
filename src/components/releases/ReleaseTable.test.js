@@ -28,7 +28,7 @@ describe("ReleaseTable", () => {
       </MemoryRouter>
     ).render();
 
-    expect(wrapper.first().hasClass("table")).toBeTruthy();
+    expect(wrapper.first().find(".table").length).toEqual(1);
     expect(wrapper.find("thead").length).toEqual(1);
     expect(wrapper.find("thead tr").length).toEqual(1);
     expect(wrapper.find("thead th").length).toEqual(5);

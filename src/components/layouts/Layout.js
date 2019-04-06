@@ -19,7 +19,7 @@ const Layout = ({ children, page = "Admin", title = "Channel Zero Admin" }) => {
         <Header title={page} />
         <section className="admin-main">
           <Nav />
-          <div className="page-content">
+          <div className="page-content" id="pageContentContainer">
             <div className="admin-content-panel">{children}</div>
           </div>
         </section>

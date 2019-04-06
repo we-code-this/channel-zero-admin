@@ -5,26 +5,28 @@ import ReleaseRow from "./ReleaseRow";
 const ReleaseTable = props => {
   return (
     <React.Fragment>
-      <table className="table is-fullwidth">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Title</th>
-            <th>Published</th>
-            <th>Created</th>
-            <th />
-          </tr>
-        </thead>
-        <tbody>
-          {props.releases.map(release => (
-            <ReleaseRow
-              release={release}
-              key={`release-${release.id}`}
-              onUpdate={props.onUpdate}
-            />
-          ))}
-        </tbody>
-      </table>
+      <div className="table-container">
+        <table className="table is-fullwidth">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Title</th>
+              <th>Published</th>
+              <th>Created</th>
+              <th />
+            </tr>
+          </thead>
+          <tbody>
+            {props.releases.map(release => (
+              <ReleaseRow
+                release={release}
+                key={`release-${release.id}`}
+                onUpdate={props.onUpdate}
+              />
+            ))}
+          </tbody>
+        </table>
+      </div>
       <Pagination
         currentPage={props.page}
         pageCount={props.pageCount}

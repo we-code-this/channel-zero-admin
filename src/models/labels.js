@@ -33,6 +33,11 @@ export async function count() {
   return (await res.json())[0].count;
 }
 
+export async function getForSelect() {
+  const res = await fetch(`${host}/labels/by/name`);
+  return await res.json();
+}
+
 export function indexPath() {
   return "/labels";
 }

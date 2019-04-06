@@ -14,6 +14,11 @@ export async function get(params = {}) {
   return await res.json();
 }
 
+export async function getForSelect() {
+  const res = await fetch(`${host}/artists/by/name`);
+  return await res.json();
+}
+
 export async function count() {
   const res = await fetch(`${host}/artists/count`);
 

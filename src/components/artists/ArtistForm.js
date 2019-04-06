@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import _ from "lodash";
 import { withRouter } from "react-router";
-import TextInput from "../../components/common/forms/TextInput";
-import MarkdownEditor from "../../components/common/forms/MarkdownEditor";
-import SubmitWithCancel from "../../components/common/forms/SubmitWithCancel";
+import TextInput from "../common/forms/TextInput";
+import MarkdownEditor from "../common/forms/MarkdownEditor";
+import SubmitWithCancel from "../common/forms/SubmitWithCancel";
 
 class ArtistForm extends Component {
   constructor(props) {
@@ -35,7 +35,8 @@ class ArtistForm extends Component {
     this.setState({ ...this.state, artist });
   };
 
-  handleCancelClick = () => {
+  handleCancelClick = e => {
+    e.preventDefault();
     this.props.history.goBack();
   };
 
@@ -43,7 +44,7 @@ class ArtistForm extends Component {
     const artist = this.state.artist;
 
     return (
-      <form onSubmit={this.props.onSubmit}>
+      <form onSubmit={this.props.onSubmit} className="form">
         <TextInput
           label="Name"
           value={artist.name}

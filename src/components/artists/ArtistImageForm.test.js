@@ -18,7 +18,7 @@ describe("ArtistImageForm", () => {
     expect(wrapper.find("input[name='artist_id']").val()).toEqual("1");
     expect(wrapper.find("input[name='id']").length).toEqual(0);
     expect(wrapper.find(".field .file").length).toEqual(1);
-    expect(wrapper.find(".field.is-grouped").length).toEqual(1);
+    expect(wrapper.find(".submit-with-cancel").length).toEqual(1);
     expect(wrapper.find(".is-danger").length).toEqual(0);
   });
 
