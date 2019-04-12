@@ -36,6 +36,37 @@ export async function create(data) {
   }
 }
 
+export async function update(id, data) {
+  let form = new FormData();
+  if (data.image.files.length) {
+    form.append("image", data.image.files[0]);
+  }
+  form.append("id", id);
+  form.append("artist_id", data.artist_id.value);
+  form.append("label_id", data.label_id.value);
+  form.append("title", data.title.value);
+  form.append("description", data.description.value);
+
+  let opts = {
+    method: "PATCH",
+    body: form
+  };
+
+  try {
+    const res = await fetch(`${host}/release`, opts);
+    return await res.json();
+  } catch (e) {
+    return {
+      errors: [
+        {
+          field: "image",
+          message: "An error occurred while uploading. Please try again."
+        }
+      ]
+    };
+  }
+}
+
 export function createPath() {
   return `/release/create`;
 }

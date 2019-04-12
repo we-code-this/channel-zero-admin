@@ -52,7 +52,7 @@ class Edit extends Component {
     if (e.target.image.value) {
       const result = await edit(e.target);
 
-      if (result.errors) {
+      if (result.errors.length) {
         const resultErrors = {};
 
         result.errors.map(error => {

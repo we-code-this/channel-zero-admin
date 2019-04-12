@@ -15,6 +15,7 @@ import EditLabel from "./views/labels/Edit";
 import Releases from "./views/releases/Index";
 import CreateRelease from "./views/releases/Create";
 import Release from "./views/releases/Show";
+import EditRelease from "./views/releases/Edit";
 import Vendors from "./views/vendors/Index";
 import "./sass/app.scss";
 
@@ -50,6 +51,7 @@ class App extends Component {
             <Route path="/releases/:page" component={Releases} />
             <Route path="/release/create" component={CreateRelease} />
             <Route exact path="/release/:slug" component={Release} />
+            <Route path="/release/:slug/edit" component={EditRelease} />
             <Route path="/vendors" component={Vendors} />
           </AnimatedSwitch>
         </Layout>

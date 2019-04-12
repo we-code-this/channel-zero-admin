@@ -25,9 +25,9 @@ class ReleaseForm extends Component {
 
     this.state = {
       release,
-      image: this.props.image,
-      preview_url: this.props.image
-        ? imageUrl(this.props.image.filename)
+      image: undefined,
+      preview_url: this.props.release.filename
+        ? imageUrl(this.props.release.filename)
         : undefined,
       wrong_format: false,
       errors: props.errors
@@ -48,15 +48,11 @@ class ReleaseForm extends Component {
   };
 
   handleArtistChange = e => {
-    console.log("handleArtistChange");
-    console.log("artist_id:", e.target.value);
     const release = { ...this.state.release, artist_id: e.target.value };
     this.setState({ ...this.state, release });
   };
 
   handleLabelChange = e => {
-    console.log("handleLabelChange");
-    console.log("label_id:", e.target.value);
     const release = { ...this.state.release, label_id: e.target.value };
     this.setState({ ...this.state, release });
   };

@@ -33,16 +33,20 @@ class Show extends Component {
       deleted: false,
       updated,
       created,
-      release: undefined
+      release: this.props.release ? this.props.release : undefined
     };
   }
 
   async componentDidMount() {
+    let release;
     this._isMounted = true;
-    const release = await findBySlug(this.props.match.params.slug);
 
-    if (this._isMounted) {
-      this.setState({ ...this.state, release });
+    if (!this.props.release) {
+      release = await findBySlug(this.props.match.params.slug);
+
+      if (this._isMounted) {
+        this.setState({ ...this.state, release });
+      }
     }
   }
 
@@ -166,7 +170,7 @@ class Show extends Component {
                     />
                   </Columns.Column>
                 </Columns>
-                <ul>
+                <ul className="metadata">
                   <li>
                     <strong>Label:</strong> {he.decode(release.label.name)}
                   </li>
@@ -176,7 +180,7 @@ class Show extends Component {
                   </li>
                 </ul>
               </Columns.Column>
-              <Columns.Column>
+              <Columns.Column className="description">
                 <Markdown>{he.decode(release.description)}</Markdown>
               </Columns.Column>
             </Columns>
