@@ -17,6 +17,7 @@ import {
   editPath,
   showPath,
   togglePublish,
+  deleteRelease,
   imageUrl
 } from "../../models/releases";
 import { showPath as showArtistPath } from "../../models/artists";
@@ -113,6 +114,9 @@ class Show extends Component {
 
   handleDelete = async e => {
     e.preventDefault();
+    await deleteRelease(this.state.release.id);
+    this.setState({ ...this.state, deleted: true });
+    this.forceUpdate();
   };
 
   handlePublish = async e => {

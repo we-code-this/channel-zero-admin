@@ -71,7 +71,7 @@ export function createPath() {
   return `/release/create`;
 }
 
-export async function deleteLabel(id) {
+export async function deleteRelease(id) {
   const res = await fetch(`${host}/release`, {
     headers: {
       Accept: "application/json",
