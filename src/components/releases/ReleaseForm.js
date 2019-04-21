@@ -26,9 +26,7 @@ class ReleaseForm extends Component {
     this.state = {
       release,
       image: undefined,
-      preview_url: this.props.release.filename
-        ? imageUrl(this.props.release.filename)
-        : undefined,
+      preview_url: release.filename ? imageUrl(release.filename) : undefined,
       wrong_format: false,
       errors: props.errors
     };

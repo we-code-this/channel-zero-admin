@@ -88,10 +88,6 @@ export function editPath(slug) {
   return `/release/${slug}/edit`;
 }
 
-export function publishPath(slug, value) {
-  return `/release/${slug}/publish/${value}`;
-}
-
 export async function get(params = {}) {
   const order = params.order ? params.order : "desc";
   let url = `${host}/releases`;
@@ -122,4 +118,20 @@ export function indexPath() {
 
 export function showPath(slug) {
   return `/release/${slug}`;
+}
+
+export async function togglePublish(id, published) {
+  const path = published ? "release/unpublish" : "release/publish";
+
+  const res = await fetch(`${host}/${path}`, {
+    method: "PATCH",
+    body: JSON.stringify({
+      id
+    }),
+    headers: {
+      "Content-Type": "application/json"
+    }
+  });
+
+  return await res.json();
 }

@@ -8,6 +8,7 @@ import ActionMenu from "../../components/common/ActionMenu";
 import Breadcrumb from "../../components/common/Breadcrumb";
 import IconButton from "../../components/common/IconButton";
 import IconDeleteButton from "../../components/common/IconDeleteButton";
+import PublishButton from "../../components/common/PublishButton";
 import Notification from "../../components/common/Notification";
 import ReleaseBreadcrumbs from "../../components/releases/ReleaseBreadcrumbs";
 import {
@@ -15,7 +16,7 @@ import {
   indexPath,
   editPath,
   showPath,
-  publishPath,
+  togglePublish,
   imageUrl
 } from "../../models/releases";
 import { showPath as showArtistPath } from "../../models/artists";
@@ -51,22 +52,6 @@ class Show extends Component {
   }
 
   actionMenu = () => {
-    const publishButton = this.state.release.published ? (
-      <IconButton
-        to={publishPath(this.state.release.slug, "false")}
-        className="is-warning"
-        icon="file-minus"
-        label="Unpublish"
-      />
-    ) : (
-      <IconButton
-        to={publishPath(this.state.release.slug, "true")}
-        className="is-info"
-        icon="file-plus"
-        label="Publish"
-      />
-    );
-
     return (
       <ActionMenu>
         <IconButton
@@ -81,7 +66,10 @@ class Show extends Component {
           label="Delete"
           onSubmit={this.handleDelete}
         />
-        {publishButton}
+        <PublishButton
+          published={this.state.release.published}
+          onSubmit={this.handlePublish}
+        />
       </ActionMenu>
     );
   };
@@ -125,6 +113,16 @@ class Show extends Component {
 
   handleDelete = async e => {
     e.preventDefault();
+  };
+
+  handlePublish = async e => {
+    e.preventDefault();
+    const release = await togglePublish(
+      this.state.release.id,
+      this.state.release.published
+    );
+    this.setState({ ...this.state, release, updated: true });
+    this.forceUpdate();
   };
 
   handleDismiss = () => {
