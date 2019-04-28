@@ -15,6 +15,7 @@ import EditLabel from "./views/labels/Edit";
 import Releases from "./views/releases/Index";
 import CreateRelease from "./views/releases/Create";
 import CreateVendor from "./views/vendors/Create";
+import EditVendor from "./views/vendors/Edit";
 import Release from "./views/releases/Show";
 import EditRelease from "./views/releases/Edit";
 import Vendors from "./views/vendors/Index";
@@ -54,7 +55,8 @@ class App extends Component {
             <Route exact path="/release/:slug" component={Release} />
             <Route path="/release/:slug/edit" component={EditRelease} />
             <Route path="/vendors" component={Vendors} />
-            <Route exact path="/vendor/create" component={CreateVendor} />
+            <Route path="/vendor/create" component={CreateVendor} />
+            <Route path="/vendor/:id/edit" component={EditVendor} />
           </AnimatedSwitch>
         </Layout>
       </BrowserRouter>

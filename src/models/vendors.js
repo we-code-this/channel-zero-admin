@@ -27,6 +27,11 @@ export function editPath(id) {
   return `/vendor/${id}/edit`;
 }
 
+export async function findById(id) {
+  const res = await fetch(`${host}/vendor/${id}`);
+  return await res.json();
+}
+
 export async function get(params = {}) {
   const order = params.order ? params.order : "desc";
   const url = `${host}/vendors/range/${params.start}/${params.limit}/${order}`;
@@ -37,4 +42,17 @@ export async function get(params = {}) {
 
 export function indexPath() {
   return "/vendors";
+}
+
+export async function update(id, data) {
+  const res = await fetch(`${host}/vendor/${id}`, {
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json"
+    },
+    method: "PATCH",
+    body: JSON.stringify(data)
+  });
+
+  return await res.json();
 }
