@@ -7,7 +7,7 @@ const TextInput = props => {
   return (
     <Field label={props.label} help={props.help} error={props.error}>
       <input
-        name={props.label.toLowerCase()}
+        name={props.label.toLowerCase().replace(" ", "_")}
         className={inputClass}
         type="text"
         value={props.value}

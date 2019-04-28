@@ -6,7 +6,7 @@ import { indexPath } from "../../models/vendors";
 const VendorBreadcrumbs = ({ children, active }) => (
   <Breadcrumbs>
     <Breadcrumb to={indexPath()} active={active}>
-      Releases
+      Vendors
     </Breadcrumb>
     {children}
   </Breadcrumbs>

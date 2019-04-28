@@ -29,7 +29,7 @@ class Create extends Component {
     if (e.target.image.value) {
       const result = await create(e.target);
 
-      if (result.errors.length) {
+      if (result.errors && result.errors.length) {
         const resultErrors = {};
 
         result.errors.map(error => {

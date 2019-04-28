@@ -6,8 +6,21 @@ export async function count() {
   return (await res.json())[0].count;
 }
 
+export async function create(data) {
+  const res = await fetch(`${host}/vendor`, {
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json"
+    },
+    method: "POST",
+    body: JSON.stringify(data)
+  });
+
+  return await res.json();
+}
+
 export function createPath() {
-  return `/vendors/create`;
+  return `/vendor/create`;
 }
 
 export function editPath(id) {
@@ -15,7 +28,6 @@ export function editPath(id) {
 }
 
 export async function get(params = {}) {
-  console.log("vendor params:", params);
   const order = params.order ? params.order : "desc";
   const url = `${host}/vendors/range/${params.start}/${params.limit}/${order}`;
 
