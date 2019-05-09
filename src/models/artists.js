@@ -44,13 +44,13 @@ export async function findBySlug(slug) {
 }
 
 export async function updateBySlug(slug, data) {
-  const res = await fetch(`${host}/artist/${slug}`, {
+  const res = await fetch(`${host}/artist`, {
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json"
     },
     method: "PATCH",
-    body: JSON.stringify(data)
+    body: JSON.stringify({ slug: slug, ...data })
   });
 
   return await res.json();
