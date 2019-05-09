@@ -58,13 +58,13 @@ export function indexPath() {
 }
 
 export async function update(id, data) {
-  const res = await fetch(`${host}/vendor/${id}`, {
+  const res = await fetch(`${host}/vendor`, {
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json"
     },
     method: "PATCH",
-    body: JSON.stringify(data)
+    body: JSON.stringify({ id, ...data })
   });
 
   return await res.json();
