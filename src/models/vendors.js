@@ -23,6 +23,19 @@ export function createPath() {
   return `/vendor/create`;
 }
 
+export async function deleteVendor(id) {
+  const res = await fetch(`${host}/vendor`, {
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json"
+    },
+    method: "DELETE",
+    body: JSON.stringify({ id })
+  });
+
+  return await res.json();
+}
+
 export function editPath(id) {
   return `/vendor/${id}/edit`;
 }

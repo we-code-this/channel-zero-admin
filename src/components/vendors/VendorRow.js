@@ -5,9 +5,9 @@ import { editPath, deleteVendor } from "../../models/vendors";
 class VendorRow extends Component {
   handleDelete = async e => {
     e.preventDefault();
-    // await deleteVendor(this.props.vendor.id);
-    // this.props.onUpdate();
-    // this.forceUpdate();
+    await deleteVendor(this.props.vendor.id);
+    this.props.onUpdate();
+    this.forceUpdate();
   };
 
   render() {
