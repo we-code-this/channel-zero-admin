@@ -4,4 +4,10 @@
   .pagination-list {
     flex-grow: 0;
   }
+
+  .pagination-link[aria-current="page"] {
+    background-color: #3273dc;
+    border-color: #3273dc;
+    color: #fff;
+  }
 }

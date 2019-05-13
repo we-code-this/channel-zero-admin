@@ -79,6 +79,7 @@ class Pagination extends Component {
           to={`${path}/${pageNumber}`}
           className="pagination-link"
           aria-label={`Go to page ${pageNumber}`}
+          aria-current={pageNumber === currentPage ? "page" : undefined}
         >
           {pageNumber}
         </Link>
