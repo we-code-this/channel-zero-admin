@@ -3,19 +3,14 @@ import { Icon } from "react-bulma-components";
 
 const Header = props => (
   <header>
-    <div className="brand">
-      <a
-        href={process.env.REACT_APP_PUBLIC_HOST}
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        <Icon>
-          <svg className="svg-icon">
-            <use xlinkHref="#icon-cz-mini" />
-          </svg>
-        </Icon>
-      </a>
-    </div>
+    <button className="nav-open" onClick={props.onOpenMenu}>
+      <Icon>
+        <svg className="svg-icon">
+          <use xlinkHref="#icon-bars" />
+        </svg>
+      </Icon>
+    </button>
+
     <div className="title is-5">{props.title}</div>
   </header>
 );

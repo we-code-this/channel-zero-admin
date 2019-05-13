@@ -1,14 +1,79 @@
 @import "variables";
 
 .admin-menu {
-  @media (min-width: $tablet) {
-    background-color: #ddd;
-    flex-basis: 15%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+
+  &.hide {
+    display: none;
   }
 
-  .navbar-item {
-    &.is-active {
-      background-color: #eee;
+  &,
+  & nav {
+    min-height: 100vh;
+  }
+
+  nav {
+    overflow-y: scroll;
+    background-color: #ddd;
+    width: 240px;
+
+    .brand {
+      a {
+        display: block;
+        text-align: center;
+        padding: 1rem;
+        color: #000;
+      }
+
+      .icon {
+        width: auto;
+        height: auto;
+
+        .svg-icon {
+          width: 2.25rem;
+          height: 2.25rem;
+        }
+      }
+    }
+
+    .navbar-item {
+      &.is-active {
+        background-color: #eee;
+      }
+    }
+  }
+
+  .nav-close {
+    position: absolute;
+    top: 8px;
+    left: 208px;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    text-align: center;
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+    transition: background-color 200ms ease-in-out;
+    padding: 4px;
+
+    &:hover,
+    &:focus {
+      background-color: #fff;
+    }
+
+    .icon {
+      width: auto;
+      height: auto;
+
+      .svg-icon {
+        width: 16px;
+        height: 16px;
+      }
     }
   }
 }
