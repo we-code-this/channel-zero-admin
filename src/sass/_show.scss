@@ -1,0 +1,26 @@
+@import "variables";
+
+.notification {
+  margin: 0 1rem 2rem 1rem;
+
+  @media (min-width: $tablet) {
+    margin: 0 0 2rem 0;
+  }
+}
+
+.title,
+.metadata {
+  padding: 0 1rem;
+
+  @media (min-width: $tablet) {
+    padding: 0;
+  }
+}
+
+.description {
+  padding: 0 2rem;
+
+  @media (min-width: $tablet) {
+    padding: 0;
+  }
+}

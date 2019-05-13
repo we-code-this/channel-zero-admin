@@ -1,12 +1,9 @@
 @import "variables";
 
-.table-container {
+.breadcrumb {
   padding: 0 1rem;
-  overflow: hidden;
 
   @media (min-width: $tablet) {
     padding: 0;
-    min-height: 30.0625rem;
-    overflow: visible;
   }
 }

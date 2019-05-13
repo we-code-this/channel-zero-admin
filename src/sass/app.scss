@@ -5,10 +5,12 @@
 @import "action_menu";
 @import "table";
 @import "pagination";
+@import "breadcrumbs";
 @import "forms";
 @import "submit_with_cancel";
 @import "mde";
 @import "artist_image";
+@import "show";
 
 .no-scroll {
   overflow: hidden;
@@ -16,6 +18,11 @@
 
 p {
   margin-bottom: 1rem;
+}
+
+img {
+  width: 100%;
+  height: auto;
 }
 
 .switch-wrapper {
@@ -85,17 +92,11 @@ p {
       .page-content {
         flex-basis: 85%;
         flex-grow: 1;
-
-        // overflow-y: scroll;
       }
 
       .admin-content-panel {
         padding: 1rem;
       }
     }
-
-    // width: 100vw;
-    // height: 100vh;
-    // overflow: hidden;
   }
 }
