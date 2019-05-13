@@ -40,6 +40,8 @@ class Show extends Component {
 
     this.state = {
       deleted: false,
+      has_releases_error: false,
+      has_releases_error_message: undefined,
       updated,
       created,
       image_added,
@@ -67,14 +69,27 @@ class Show extends Component {
       updated: false,
       created: false,
       image_added: false,
-      image_updated: false
+      image_updated: false,
+      has_releases_error: false,
+      has_releases_error_message: undefined
     });
   };
 
   handleDelete = async e => {
     e.preventDefault();
-    await deleteArtist(this.state.artist.id);
-    this.setState({ ...this.state, deleted: true });
+
+    const deleteResponse = await deleteArtist(this.state.artist.id);
+
+    if (deleteResponse.error) {
+      this.setState({
+        ...this.state,
+        has_releases_error: true,
+        has_releases_error_message: deleteResponse.error
+      });
+    } else {
+      this.setState({ ...this.state, deleted: true });
+    }
+
     this.forceUpdate();
   };
 
@@ -124,6 +139,10 @@ class Show extends Component {
   };
 
   notificationMessage = () => {
+    if (this.state.has_releases_error) {
+      return <span>{this.state.has_releases_error_message}</span>;
+    }
+
     if (this.state.created) {
       return (
         <span>
@@ -153,6 +172,7 @@ class Show extends Component {
 
   showNotification = () => {
     return (
+      this.state.has_releases_error ||
       this.state.updated ||
       this.state.created ||
       this.state.image_added ||
@@ -176,7 +196,7 @@ class Show extends Component {
             {this.breadcrumbs()}
             <Notification
               show={this.showNotification()}
-              color="success"
+              color={this.state.has_releases_error ? "warning" : "success"}
               onDismiss={this.handleDismiss}
             >
               {this.notificationMessage()}

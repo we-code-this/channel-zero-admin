@@ -5,21 +5,38 @@ import TableActionButtons from "../common/TableActionButtons";
 import { showPath, editPath, deleteArtist } from "../../models/artists";
 
 class ArtistRow extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      artist: props.artist,
+      error: undefined
+    };
+  }
+
   handleDelete = async e => {
     e.preventDefault();
-    await deleteArtist(this.props.artist.id);
+    const deleteResponse = await deleteArtist(this.props.artist.id);
+
+    if (deleteResponse.error) {
+      this.setState({ ...this.state, error: deleteResponse.error });
+    }
+
     this.props.onUpdate();
     this.forceUpdate();
   };
 
   render() {
-    const artist = this.props.artist;
+    const artist = this.state.artist;
 
     return (
       <tr>
         <td>{artist.id}</td>
         <td>
-          <Link to={showPath(artist.slug)}>{he.decode(artist.name)}</Link>
+          <Link to={showPath(artist.slug)}>{he.decode(artist.name)}</Link>{" "}
+          {this.state.error && (
+            <span class="tag is-warning">{this.state.error}</span>
+          )}
         </td>
         <td>{artist.created_at}</td>
         <td>
