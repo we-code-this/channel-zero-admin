@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import TableActionButtons from "../common/TableActionButtons";
+import { human } from "../../utilities/date";
 import { editPath, deleteLabel } from "../../models/labels";
 
 class LabelRow extends Component {
@@ -17,7 +18,7 @@ class LabelRow extends Component {
       <tr>
         <td>{label.id}</td>
         <td>{label.name}</td>
-        <td>{label.created_at}</td>
+        <td>{human(label.created_at)}</td>
         <td>
           <TableActionButtons
             editPath={editPath(label.slug)}

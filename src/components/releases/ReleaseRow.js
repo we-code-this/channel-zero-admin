@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import TableActionButtons from "../common/TableActionButtons";
+import { human } from "../../utilities/date";
 import { showPath, editPath, deleteRelease } from "../../models/releases";
 
 class ReleaseRow extends Component {
@@ -21,7 +22,7 @@ class ReleaseRow extends Component {
           <Link to={showPath(release.slug)}>{release.title}</Link>
         </td>
         <td>{release.published ? "Yes" : "No"}</td>
-        <td>{release.created_at}</td>
+        <td>{human(release.created_at)}</td>
         <td>
           <TableActionButtons
             editPath={editPath(release.slug)}

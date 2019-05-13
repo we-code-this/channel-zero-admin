@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import he from "he";
 import { Link } from "react-router-dom";
 import TableActionButtons from "../common/TableActionButtons";
+import { human } from "../../utilities/date";
 import { showPath, editPath, deleteArtist } from "../../models/artists";
 
 class ArtistRow extends Component {
@@ -38,7 +39,7 @@ class ArtistRow extends Component {
             <span class="tag is-warning">{this.state.error}</span>
           )}
         </td>
-        <td>{artist.created_at}</td>
+        <td>{human(artist.created_at)}</td>
         <td>
           <TableActionButtons
             editPath={editPath(artist.slug)}

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import TableActionButtons from "../common/TableActionButtons";
+import { human } from "../../utilities/date";
 import { editPath, deleteVendor } from "../../models/vendors";
 
 class VendorRow extends Component {
@@ -18,7 +19,7 @@ class VendorRow extends Component {
         <td>{vendor.id}</td>
         <td>{vendor.name}</td>
         <td>{vendor.icon_class}</td>
-        <td>{vendor.created_at}</td>
+        <td>{human(vendor.created_at)}</td>
         <td>
           <TableActionButtons
             editPath={editPath(vendor.id)}
