@@ -18,9 +18,25 @@
 }
 
 .description {
-  padding: 0 2rem;
+  padding: 0 1rem;
 
   @media (min-width: $tablet) {
     padding: 0;
+  }
+}
+
+.show-columns {
+  margin: -0.75rem 0;
+
+  @media (min-width: $tablet) {
+    margin: -0.75rem;
+  }
+}
+
+.left-column {
+  padding: 0 0 1rem;
+
+  @media (min-width: $tablet) {
+    padding: 0 1rem 1rem;
   }
 }

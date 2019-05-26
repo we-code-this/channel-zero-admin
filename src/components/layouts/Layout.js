@@ -8,10 +8,12 @@ class Layout extends Component {
   constructor(props) {
     super(props);
 
+    const pageName = "Channel Zero Admin";
+
     this.state = {
       children: props.children,
-      page: props.page ? props.page : "Admin",
-      title: props.title ? props.title : "Channel Zero Admin",
+      page: props.page ? props.page : pageName,
+      title: props.title ? props.title : pageName,
       nav: false
     };
   }

@@ -7,9 +7,9 @@ import { showPath, editPath, deleteRelease } from "../../models/releases";
 class ReleaseRow extends Component {
   handleDelete = async e => {
     e.preventDefault();
-    // await deleteLabel(this.props.label.id);
-    // this.props.onUpdate();
-    // this.forceUpdate();
+    await deleteRelease(this.props.release.id);
+    this.props.onUpdate();
+    this.forceUpdate();
   };
 
   render() {

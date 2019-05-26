@@ -2,13 +2,11 @@ import React, { Component } from "react";
 import he from "he";
 import { Redirect } from "react-router-dom";
 import Helmet from "react-helmet";
-import Markdown from "markdown-to-jsx";
-import { Columns } from "react-bulma-components";
 import ArtistBreadcrumbs from "../../components/artists/ArtistBreadcrumbs";
+import ArtistShowColumns from "../../components/artists/ArtistShowColumns";
 import Breadcrumb from "../../components/common/Breadcrumb";
 import IconButton from "../../components/common/IconButton";
 import IconDeleteButton from "../../components/common/IconDeleteButton";
-import ArtistImage from "../../components/artists/ArtistImage";
 import ActionMenu from "../../components/common/ActionMenu";
 import Notification from "../../components/common/Notification";
 import {
@@ -202,42 +200,10 @@ class Show extends Component {
               {this.notificationMessage()}
             </Notification>
             <h2 className="title is-2">{he.decode(artist.name)}</h2>
-            <Columns>
-              {artist.images.length > 0 && (
-                <Columns.Column
-                  tablet={{ size: "half" }}
-                  desktop={{ size: "one-third" }}
-                >
-                  <Columns gapless className="image-gallery">
-                    <Columns.Column size={12} className="image-container">
-                      <ArtistImage
-                        image={artist.images[0]}
-                        alt={artist.name}
-                        artistSlug={artist.slug}
-                        onDelete={this.handleImageDelete}
-                      />
-                    </Columns.Column>
-                    {artist.images.slice(1).map(image => (
-                      <Columns.Column
-                        key={`artist-image-${image.id}`}
-                        size={3}
-                        className="image-container"
-                      >
-                        <ArtistImage
-                          image={image}
-                          alt={artist.name}
-                          artistSlug={artist.slug}
-                          onDelete={this.handleImageDelete}
-                        />
-                      </Columns.Column>
-                    ))}
-                  </Columns>
-                </Columns.Column>
-              )}
-              <Columns.Column>
-                <Markdown>{he.decode(artist.description)}</Markdown>
-              </Columns.Column>
-            </Columns>
+            <ArtistShowColumns
+              artist={artist}
+              onImageDelete={this.handleImageDelete}
+            />
           </div>
         );
       } else {

@@ -12,12 +12,20 @@ class Nav extends Component {
     };
   }
 
+  handleEscape = event => {
+    if (event.keyCode === 27) {
+      this.props.onCloseMenu(event);
+    }
+  };
+
   componentDidMount() {
     document.body.className = "no-scroll";
+    document.addEventListener("keydown", this.handleEscape, false);
   }
 
   componentWillUnmount() {
     document.body.className = "";
+    document.removeEventListener("keydown", this.handleEscape, false);
   }
 
   render() {

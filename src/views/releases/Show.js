@@ -1,9 +1,6 @@
 import React, { Component } from "react";
-import he from "he";
 import { Redirect } from "react-router-dom";
 import Helmet from "react-helmet";
-import { Columns } from "react-bulma-components";
-import Markdown from "markdown-to-jsx";
 import ActionMenu from "../../components/common/ActionMenu";
 import Breadcrumb from "../../components/common/Breadcrumb";
 import IconButton from "../../components/common/IconButton";
@@ -11,14 +8,14 @@ import IconDeleteButton from "../../components/common/IconDeleteButton";
 import PublishButton from "../../components/common/PublishButton";
 import Notification from "../../components/common/Notification";
 import ReleaseBreadcrumbs from "../../components/releases/ReleaseBreadcrumbs";
+import ReleaseShowColumns from "../../components/releases/ReleaseShowColumns";
 import {
   findBySlug,
   indexPath,
   editPath,
   showPath,
   togglePublish,
-  deleteRelease,
-  imageUrl
+  deleteRelease
 } from "../../models/releases";
 import { showPath as showArtistPath } from "../../models/artists";
 
@@ -159,33 +156,7 @@ class Show extends Component {
               {this.notificationMessage()}
             </Notification>
             <h2 className="title is-2">{release.title}</h2>
-            <Columns>
-              <Columns.Column
-                tablet={{ size: "half" }}
-                desktop={{ size: "one-third" }}
-              >
-                <Columns gapless className="image-gallery">
-                  <Columns.Column size={12} className="image-container">
-                    <img
-                      src={imageUrl(release.filename)}
-                      alt={`Cover of ${release.title}`}
-                    />
-                  </Columns.Column>
-                </Columns>
-                <ul className="metadata">
-                  <li>
-                    <strong>Label:</strong> {he.decode(release.label.name)}
-                  </li>
-                  <li>
-                    <strong>Published:</strong>{" "}
-                    {release.published ? "Yes" : "No"}
-                  </li>
-                </ul>
-              </Columns.Column>
-              <Columns.Column className="description">
-                <Markdown>{he.decode(release.description)}</Markdown>
-              </Columns.Column>
-            </Columns>
+            <ReleaseShowColumns release={release} />
           </div>
         );
       } else {

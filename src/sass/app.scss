@@ -82,8 +82,12 @@ img {
     }
   }
 
-  @media (min-width: $tablet) {
-    .admin-main {
+  .admin-main {
+    .admin-content-panel {
+      padding: 1rem 0 0 0;
+    }
+
+    @media (min-width: $tablet) {
       display: flex;
       flex-direction: column;
       flex-grow: 1;

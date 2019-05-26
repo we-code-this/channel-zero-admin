@@ -1,5 +1,23 @@
+@import "variables";
+
 .form {
+  padding: 0 1rem;
   margin-bottom: 5rem;
+
+  @media (min-width: $tablet) {
+    padding: 0;
+  }
+
+  .select {
+    &,
+    & > select {
+      width: 100%;
+    }
+
+    &:not(.is-multiple):not(.is-loading)::after {
+      border-color: #999;
+    }
+  }
 }
 
 .image-preview {
