@@ -19,9 +19,11 @@
 
 .description {
   padding: 0 1rem;
+}
 
+.left-column + .description {
   @media (min-width: $tablet) {
-    padding: 0;
+    padding-left: 0;
   }
 }
 

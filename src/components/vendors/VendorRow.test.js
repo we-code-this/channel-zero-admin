@@ -24,7 +24,7 @@ describe("VendorRow", () => {
     expect(wrapper.find("td:first-child").text()).toEqual("1");
     expect(wrapper.find("td:nth-child(2)").text()).toEqual("Vendor 1");
     expect(wrapper.find("td:nth-child(3)").text()).toEqual("test");
-    expect(wrapper.find("td:nth-child(4)").text()).toEqual("2019-01-01");
+    expect(wrapper.find("td:nth-child(4)").text()).toEqual("January 1st, 2019");
     expect(
       wrapper.find("td:nth-child(5) .table-action-buttons").length
     ).toEqual(1);

@@ -1,36 +1,20 @@
 import React from "react";
-import he from "he";
-import Markdown from "markdown-to-jsx";
 import { Columns } from "react-bulma-components";
-import { imageUrl } from "../../models/releases";
+import ShowColumns from "../common/ShowColumns";
+import Metadata from "../common/Metadata";
+import ReleaseImageGallery from "./ReleaseImageGallery";
 
 const ReleaseShowColumns = props => (
   <Columns className="show-columns">
-    <Columns.Column
-      tablet={{ size: "half" }}
-      desktop={{ size: "one-third" }}
-      className="left-column"
-    >
-      <Columns gapless className="image-gallery">
-        <Columns.Column size={12} className="image-container">
-          <img
-            src={imageUrl(props.release.filename)}
-            alt={`Cover of ${props.release.title}`}
-          />
-        </Columns.Column>
-      </Columns>
-      <ul className="metadata">
-        <li>
-          <strong>Label:</strong> {he.decode(props.release.label.name)}
-        </li>
-        <li>
-          <strong>Published:</strong> {props.release.published ? "Yes" : "No"}
-        </li>
-      </ul>
-    </Columns.Column>
-    <Columns.Column className="description">
-      <Markdown>{he.decode(props.release.description)}</Markdown>
-    </Columns.Column>
+    <ShowColumns description={props.release.description}>
+      <ReleaseImageGallery release={props.release} />
+      <Metadata
+        data={[
+          { key: "Label", value: props.release.label.name },
+          { key: "Published", value: props.release.published ? "Yes" : "No" }
+        ]}
+      />
+    </ShowColumns>
   </Columns>
 );
 

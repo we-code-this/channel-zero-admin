@@ -23,7 +23,7 @@ describe("ArtistRow", () => {
 
     expect(wrapper.find("td:first-child").text()).toEqual("1");
     expect(wrapper.find("td:nth-child(2) a").text()).toEqual("Artist");
-    expect(wrapper.find("td:nth-child(3)").text()).toEqual("2019-01-01");
+    expect(wrapper.find("td:nth-child(3)").text()).toEqual("January 1st, 2019");
     expect(
       wrapper.find("td:nth-child(4) .table-action-buttons").length
     ).toEqual(1);
