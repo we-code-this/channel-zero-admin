@@ -13,9 +13,11 @@ class Edit extends Component {
 
     this._isMounted = false;
 
+    const vendor = props.vendor ? props.vendor : undefined;
+
     this.state = {
       redirectToVendors: false,
-      vendor: undefined,
+      vendor,
       errors: {
         name: undefined,
         icon_class: undefined
