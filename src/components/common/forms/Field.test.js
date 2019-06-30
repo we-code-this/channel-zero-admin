@@ -37,4 +37,24 @@ describe("Field", () => {
 
     expect(wrapper.find(".is-danger").length).toEqual(1);
   });
+
+  it("should render label with is-sr-only class when srOnly prop used", () => {
+    const wrapper = shallow(
+      <Field label="Test" onChange={() => {}} error="error" srOnly>
+        <p>Child</p>
+      </Field>
+    ).render();
+
+    expect(wrapper.find('label.is-sr-only').length).toEqual(1);
+  });
+
+  it("should not render label with is-sr-only class when srOnly prop not used", () => {
+    const wrapper = shallow(
+      <Field label="Test" onChange={() => {}} error="error">
+        <p>Child</p>
+      </Field>
+    ).render();
+
+    expect(wrapper.find('label.is-sr-only').length).toEqual(0);
+  });
 });

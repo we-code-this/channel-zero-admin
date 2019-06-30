@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { withRouter } from "react-router-dom";
 import Helmet from "react-helmet";
 import Icons from "../common/Icons";
 import Header from "../common/Header";
@@ -11,6 +12,7 @@ class Layout extends Component {
     const pageName = "Channel Zero Admin";
 
     this.state = {
+      isLogin: false,
       children: props.children,
       page: props.page ? props.page : pageName,
       title: props.title ? props.title : pageName,
@@ -18,8 +20,46 @@ class Layout extends Component {
     };
   }
 
+  componentDidMount() {
+    if (this.props.location.pathname === '/login') {
+      this.setState({ ...this.state, isLogin: true });
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.location !== prevProps.location) {
+      if (this.props.location.pathname !== '/login') {
+        this.setState({ ...this.state, isLogin: false });
+      }
+    }
+  }
+
   toggleNav = () => {
     this.setState({ ...this.state, nav: !this.state.nav });
+  };
+
+  renderAdmin = () => {
+    return (
+      <React.Fragment>
+        <div className="admin">
+          <Header title={this.state.page} onOpenMenu={this.toggleNav} />
+          <section className="admin-main">
+            <div className="page-content" id="pageContentContainer">
+              <div className="admin-content-panel">{this.state.children}</div>
+            </div>
+          </section>
+        </div>
+        {this.state.nav && <Nav onCloseMenu={this.toggleNav} />}
+      </React.Fragment>
+    );
+  };
+
+  renderLogin = () => {
+    return (
+      <div className="login">
+        {this.state.children}
+      </div>
+    );
   };
 
   render() {
@@ -33,19 +73,11 @@ class Layout extends Component {
             content="width=device-width, initial-scale=1, viewport-fit=cover"
           />
         </Helmet>
-        <div className="admin">
-          <Header title={this.state.page} onOpenMenu={this.toggleNav} />
-          <section className="admin-main">
-            <div className="page-content" id="pageContentContainer">
-              <div className="admin-content-panel">{this.state.children}</div>
-            </div>
-          </section>
-        </div>
-        {this.state.nav && <Nav onCloseMenu={this.toggleNav} />}
+        {this.state.isLogin ? this.renderLogin() : this.renderAdmin() }
         <Icons />
       </React.Fragment>
     );
   }
 }
 
-export default Layout;
+export default withRouter(Layout);

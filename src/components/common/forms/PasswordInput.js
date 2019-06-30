@@ -1,7 +1,7 @@
 import React from "react";
 import Field from "./Field";
 
-const TextInput = props => {
+const PasswordInput = props => {
   const inputClass = props.error ? "input is-danger" : "input";
   const srOnly = props.placeholder ? true : false;
   const placeholder = props.placeholder ? props.label : undefined;
@@ -11,7 +11,7 @@ const TextInput = props => {
       <input
         name={props.label.toLowerCase().replace(" ", "_")}
         className={inputClass}
-        type="text"
+        type="password"
         value={props.value}
         onChange={props.onChange}
         placeholder={placeholder}
@@ -20,4 +20,4 @@ const TextInput = props => {
   );
 };
 
-export default TextInput;
+export default PasswordInput;
