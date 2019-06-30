@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component } from "reactn";
 import { withRouter } from "react-router-dom";
 import Helmet from "react-helmet";
 import Icons from "../common/Icons";
@@ -12,26 +12,11 @@ class Layout extends Component {
     const pageName = "Channel Zero Admin";
 
     this.state = {
-      isLogin: false,
       children: props.children,
       page: props.page ? props.page : pageName,
       title: props.title ? props.title : pageName,
       nav: false
     };
-  }
-
-  componentDidMount() {
-    if (this.props.location.pathname === '/login') {
-      this.setState({ ...this.state, isLogin: true });
-    }
-  }
-
-  componentDidUpdate(prevProps) {
-    if (this.props.location !== prevProps.location) {
-      if (this.props.location.pathname !== '/login') {
-        this.setState({ ...this.state, isLogin: false });
-      }
-    }
   }
 
   toggleNav = () => {
@@ -73,7 +58,7 @@ class Layout extends Component {
             content="width=device-width, initial-scale=1, viewport-fit=cover"
           />
         </Helmet>
-        {this.state.isLogin ? this.renderLogin() : this.renderAdmin() }
+        {this.global.token ? this.renderAdmin() : this.renderLogin() }
         <Icons />
       </React.Fragment>
     );
