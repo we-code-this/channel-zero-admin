@@ -1,8 +1,9 @@
 import React, { Component } from "reactn";
-import { Redirect } from "react-router";
+import Cookies from 'universal-cookie';
 import { Icon } from "react-bulma-components";
 import TextInput from "../common/forms/TextInput";
 import PasswordInput from "../common/forms/PasswordInput";
+const host = process.env.REACT_APP_DATA_API_HOST;
 
 class LoginForm extends Component {
     constructor(props) {
@@ -26,12 +27,31 @@ class LoginForm extends Component {
         this.setState({...this.state, password: e.target.value});
     };
 
-    handleSubmit = (e) => {
+    handleSubmit = async (e) => {
         e.preventDefault();
 
-        this.setGlobal({
-            token: 'sometoken'
+        const response = await fetch(`${host}/login`, {
+            headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json"
+            },
+            method: "POST",
+            body: JSON.stringify({
+                email: this.state.email,
+                password: this.state.password
+            })
         });
+
+        const payload = await response.json();
+
+        if (payload.token && this.state.email === payload.result) {
+            this.setGlobal({
+                token: payload.token
+            });
+
+            const cookies = new Cookies();
+            cookies.set('channelzero', payload.token);
+        }
     };
 
     render() {
