@@ -5,6 +5,7 @@ import IconButton from "../../components/common/IconButton";
 import VendorBreadcrumbs from "../../components/vendors/VendorBreadcrumbs";
 import VendorTable from "../../components/vendors/VendorTable";
 import { get, count, indexPath, createPath } from "../../models/vendors";
+import authUser from "../../components/auth/authUser";
 
 class Index extends Component {
   constructor(props) {
@@ -81,4 +82,4 @@ class Index extends Component {
   }
 }
 
-export default Index;
+export default authUser(Index);

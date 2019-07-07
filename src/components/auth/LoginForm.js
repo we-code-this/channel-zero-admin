@@ -1,4 +1,5 @@
-import React, { Component } from "react";
+import React, { Component } from "reactn";
+import { Redirect } from "react-router";
 import { Icon } from "react-bulma-components";
 import TextInput from "../common/forms/TextInput";
 import PasswordInput from "../common/forms/PasswordInput";
@@ -27,7 +28,10 @@ class LoginForm extends Component {
 
     handleSubmit = (e) => {
         e.preventDefault();
-        // submit request to API
+
+        this.setGlobal({
+            token: 'sometoken'
+        });
     };
 
     render() {

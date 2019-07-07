@@ -5,6 +5,7 @@ import IconButton from "../../components/common/IconButton";
 import LabelTable from "../../components/labels/LabelTable";
 import LabelBreadcrumbs from "../../components/labels/LabelBreadcrumbs";
 import { get, count, createPath } from "../../models/labels";
+import authUser from "../../components/auth/authUser";
 
 class Index extends Component {
   constructor(props) {
@@ -76,4 +77,4 @@ class Index extends Component {
   }
 }
 
-export default Index;
+export default authUser(Index);

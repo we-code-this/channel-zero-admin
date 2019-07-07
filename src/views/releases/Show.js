@@ -18,6 +18,7 @@ import {
   deleteRelease
 } from "../../models/releases";
 import { showPath as showArtistPath } from "../../models/artists";
+import authUser from "../../components/auth/authUser";
 
 class Show extends Component {
   constructor(props) {
@@ -166,4 +167,4 @@ class Show extends Component {
   }
 }
 
-export default Show;
+export default authUser(Show);

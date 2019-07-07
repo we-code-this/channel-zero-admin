@@ -5,6 +5,7 @@ import Breadcrumb from "../../components/common/Breadcrumb";
 import ReleaseForm from "../../components/releases/ReleaseForm";
 import { create, createPath } from "../../models/releases";
 import { scrollToTop } from "../../utilities/scroll";
+import authUser from "../../components/auth/authUser";
 
 class Create extends Component {
   constructor(props) {
@@ -112,4 +113,4 @@ class Create extends Component {
   }
 }
 
-export default Create;
+export default authUser(Create);

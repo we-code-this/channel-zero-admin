@@ -5,6 +5,7 @@ import ArtistBreadcrumbs from "../../components/artists/ArtistBreadcrumbs";
 import Breadcrumb from "../../components/common/Breadcrumb";
 import ArtistImageForm from "../../components/artists/ArtistImageForm";
 import { showPath, findBySlug } from "../../models/artists";
+import authUser from "../../components/auth/authUser";
 import { edit, createPath } from "../../models/artist_images";
 
 class Edit extends Component {
@@ -126,4 +127,4 @@ class Edit extends Component {
   }
 }
 
-export default Edit;
+export default authUser(Edit);

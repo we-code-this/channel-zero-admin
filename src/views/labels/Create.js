@@ -4,6 +4,7 @@ import LabelBreadcrumbs from "../../components/labels/LabelBreadcrumbs";
 import Breadcrumb from "../../components/common/Breadcrumb";
 import LabelForm from "../../components/labels/LabelForm";
 import { create, createPath } from "../../models/labels";
+import authUser from "../../components/auth/authUser";
 
 class Create extends Component {
   constructor(props) {
@@ -97,4 +98,4 @@ class Create extends Component {
   }
 }
 
-export default Create;
+export default authUser(Create);

@@ -1,8 +1,9 @@
-import React, { Component } from "react";
+import React, { Component } from "reactn";
 import { Redirect } from "react-router";
 import ArtistBreadcrumbs from "../../components/artists/ArtistBreadcrumbs";
 import Breadcrumb from "../../components/common/Breadcrumb";
 import ArtistForm from "../../components/artists/ArtistForm";
+import authUser from "../../components/auth/authUser";
 import { create, createPath } from "../../models/artists";
 
 class Create extends Component {
@@ -106,4 +107,4 @@ class Create extends Component {
   }
 }
 
-export default Create;
+export default authUser(Create);

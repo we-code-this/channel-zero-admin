@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component } from "reactn";
 import he from "he";
 import { Redirect } from "react-router-dom";
 import Helmet from "react-helmet";
@@ -9,6 +9,7 @@ import IconButton from "../../components/common/IconButton";
 import IconDeleteButton from "../../components/common/IconDeleteButton";
 import ActionMenu from "../../components/common/ActionMenu";
 import Notification from "../../components/common/Notification";
+import authUser from "../../components/auth/authUser";
 import {
   findBySlug,
   indexPath,
@@ -213,4 +214,4 @@ class Show extends Component {
   }
 }
 
-export default Show;
+export default authUser(Show);

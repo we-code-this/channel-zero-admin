@@ -1,9 +1,10 @@
-import React, { Component } from "react";
+import React, { Component } from "reactn";
 import Helmet from "react-helmet";
 import ArtistTable from "../../components/artists/ArtistTable";
 import ActionMenu from "../../components/common/ActionMenu";
 import ArtistBreadcrumbs from "../../components/artists/ArtistBreadcrumbs";
 import IconButton from "../../components/common/IconButton";
+import authUser from "../../components/auth/authUser";
 import { get, count, createPath } from "../../models/artists";
 
 class Index extends Component {
@@ -80,4 +81,4 @@ class Index extends Component {
   }
 }
 
-export default Index;
+export default authUser(Index);

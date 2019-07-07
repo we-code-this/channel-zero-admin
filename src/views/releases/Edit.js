@@ -7,6 +7,7 @@ import Breadcrumb from "../../components/common/Breadcrumb";
 import ReleaseForm from "../../components/releases/ReleaseForm";
 import { findBySlug, update, showPath, editPath } from "../../models/releases";
 import { scrollToTop } from "../../utilities/scroll";
+import authUser from "../../components/auth/authUser";
 
 class Edit extends Component {
   constructor(props) {
@@ -116,4 +117,4 @@ class Edit extends Component {
   }
 }
 
-export default Edit;
+export default authUser(Edit);

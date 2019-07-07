@@ -6,6 +6,7 @@ import Breadcrumb from "../../components/common/Breadcrumb";
 import ArtistImageForm from "../../components/artists/ArtistImageForm";
 import { showPath, findBySlug } from "../../models/artists";
 import { create, createPath } from "../../models/artist_images";
+import authUser from "../../components/auth/authUser";
 
 class Create extends Component {
   constructor(props) {
@@ -114,4 +115,4 @@ class Create extends Component {
   }
 }
 
-export default Create;
+export default authUser(Create);

@@ -11,6 +11,7 @@ import {
   showPath,
   editPath
 } from "../../models/artists";
+import authUser from "../../components/auth/authUser";
 
 class Edit extends Component {
   constructor(props) {
@@ -130,4 +131,4 @@ class Edit extends Component {
   }
 }
 
-export default Edit;
+export default authUser(Edit);
