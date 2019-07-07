@@ -1,4 +1,7 @@
+import Cookies from 'universal-cookie';
+
 const host = process.env.REACT_APP_DATA_API_HOST;
+const cookies = new Cookies();
 
 export async function count() {
   const res = await fetch(`${host}/vendors/count`);
@@ -7,10 +10,13 @@ export async function count() {
 }
 
 export async function create(data) {
+  const token = cookies.get(process.env.REACT_APP_COOKIE_NAME);
+
   const res = await fetch(`${host}/vendor`, {
     headers: {
       Accept: "application/json",
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
+      authorization: `Bearer ${token}`
     },
     method: "POST",
     body: JSON.stringify(data)
@@ -24,10 +30,13 @@ export function createPath() {
 }
 
 export async function deleteVendor(id) {
+  const token = cookies.get(process.env.REACT_APP_COOKIE_NAME);
+
   const res = await fetch(`${host}/vendor`, {
     headers: {
       Accept: "application/json",
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
+      authorization: `Bearer ${token}`
     },
     method: "DELETE",
     body: JSON.stringify({ id })
@@ -58,10 +67,13 @@ export function indexPath() {
 }
 
 export async function update(id, data) {
+  const token = cookies.get(process.env.REACT_APP_COOKIE_NAME);
+
   const res = await fetch(`${host}/vendor`, {
     headers: {
       Accept: "application/json",
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
+      authorization: `Bearer ${token}`
     },
     method: "PATCH",
     body: JSON.stringify({ id, ...data })

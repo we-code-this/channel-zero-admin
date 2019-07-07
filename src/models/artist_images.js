@@ -1,14 +1,21 @@
 import FormData from "form-data";
+import Cookies from 'universal-cookie';
 
 const host = process.env.REACT_APP_DATA_API_HOST;
+const cookies = new Cookies();
 
 export async function create(data) {
   let form = new FormData();
   form.append("image", data.image.files[0]);
   form.append("artist_id", data.artist_id.value);
 
+  const token = cookies.get(process.env.REACT_APP_COOKIE_NAME);
+
   let opts = {
     method: "POST",
+    headers: {
+      authorization: `Bearer ${token}`
+    },
     body: form
   };
 
@@ -32,8 +39,13 @@ export async function edit(data) {
   form.append("image", data.image.files[0]);
   form.append("id", data.id.value);
 
+  const token = cookies.get(process.env.REACT_APP_COOKIE_NAME);
+
   let opts = {
     method: "PATCH",
+    headers: {
+      authorization: `Bearer ${token}`
+    },
     body: form
   };
 
@@ -53,11 +65,14 @@ export async function edit(data) {
 }
 
 export async function deleteImage(id) {
+  const token = cookies.get(process.env.REACT_APP_COOKIE_NAME);
+
   try {
     const res = await fetch(`${host}/artist/image`, {
       headers: {
         Accept: "application/json",
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        authorization: `Bearer ${token}`
       },
       method: "DELETE",
       body: JSON.stringify({ id })

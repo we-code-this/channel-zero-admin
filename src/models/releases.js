@@ -1,6 +1,8 @@
 import FormData from "form-data";
+import Cookies from 'universal-cookie';
 
 const host = process.env.REACT_APP_DATA_API_HOST;
+const cookies = new Cookies();
 
 export async function count() {
   const res = await fetch(`${host}/releases/count`);
@@ -16,8 +18,13 @@ export async function create(data) {
   form.append("title", data.title.value);
   form.append("description", data.description.value);
 
+  const token = cookies.get(process.env.REACT_APP_COOKIE_NAME);
+
   let opts = {
     method: "POST",
+    headers: {
+      authorization: `Bearer ${token}`
+    },
     body: form
   };
 
@@ -47,8 +54,13 @@ export async function update(id, data) {
   form.append("title", data.title.value);
   form.append("description", data.description.value);
 
+  const token = cookies.get(process.env.REACT_APP_COOKIE_NAME);
+
   let opts = {
     method: "PATCH",
+    headers: {
+      authorization: `Bearer ${token}`
+    },
     body: form
   };
 
@@ -72,10 +84,13 @@ export function createPath() {
 }
 
 export async function deleteRelease(id) {
+  const token = cookies.get(process.env.REACT_APP_COOKIE_NAME);
+
   const res = await fetch(`${host}/release`, {
     headers: {
       Accept: "application/json",
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
+      authorization: `Bearer ${token}`
     },
     method: "DELETE",
     body: JSON.stringify({ id })
@@ -121,6 +136,7 @@ export function showPath(slug) {
 }
 
 export async function togglePublish(id, published) {
+  const token = cookies.get(process.env.REACT_APP_COOKIE_NAME);
   const path = published ? "release/unpublish" : "release/publish";
 
   const res = await fetch(`${host}/${path}`, {
@@ -129,7 +145,8 @@ export async function togglePublish(id, published) {
       id
     }),
     headers: {
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
+      authorization: `Bearer ${token}`
     }
   });
 

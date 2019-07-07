@@ -1,10 +1,16 @@
+import Cookies from 'universal-cookie';
+
 const host = process.env.REACT_APP_DATA_API_HOST;
+const cookies = new Cookies();
 
 export async function create(data) {
+  const token = cookies.get(process.env.REACT_APP_COOKIE_NAME);
+
   const res = await fetch(`${host}/label`, {
     headers: {
       Accept: "application/json",
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
+      authorization: `Bearer ${token}`
     },
     method: "POST",
     body: JSON.stringify(data)
@@ -56,10 +62,13 @@ export async function findBySlug(slug) {
 }
 
 export async function deleteLabel(id) {
+  const token = cookies.get(process.env.REACT_APP_COOKIE_NAME);
+
   const res = await fetch(`${host}/label`, {
     headers: {
       Accept: "application/json",
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
+      authorization: `Bearer ${token}`
     },
     method: "DELETE",
     body: JSON.stringify({ id })
@@ -69,10 +78,13 @@ export async function deleteLabel(id) {
 }
 
 export async function updateBySlug(slug, data) {
+  const token = cookies.get(process.env.REACT_APP_COOKIE_NAME);
+
   const res = await fetch(`${host}/label/${slug}`, {
     headers: {
       Accept: "application/json",
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
+      authorization: `Bearer ${token}`
     },
     method: "PATCH",
     body: JSON.stringify(data)

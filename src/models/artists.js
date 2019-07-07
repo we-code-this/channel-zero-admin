@@ -1,4 +1,7 @@
+import Cookies from 'universal-cookie';
+
 const host = process.env.REACT_APP_DATA_API_HOST;
+const cookies = new Cookies();
 
 export async function get(params = {}) {
   const order = params.order ? params.order : "desc";
@@ -26,10 +29,13 @@ export async function count() {
 }
 
 export async function create(data) {
+  const token = cookies.get(process.env.REACT_APP_COOKIE_NAME);
+
   const res = await fetch(`${host}/artist`, {
     headers: {
       Accept: "application/json",
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
+      authorization: `Bearer ${token}`
     },
     method: "POST",
     body: JSON.stringify(data)
@@ -44,10 +50,13 @@ export async function findBySlug(slug) {
 }
 
 export async function updateBySlug(slug, data) {
+  const token = cookies.get(process.env.REACT_APP_COOKIE_NAME);
+
   const res = await fetch(`${host}/artist`, {
     headers: {
       Accept: "application/json",
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
+      authorization: `Bearer ${token}`
     },
     method: "PATCH",
     body: JSON.stringify({ slug: slug, ...data })
@@ -73,10 +82,13 @@ export function editPath(slug) {
 }
 
 export async function deleteArtist(id) {
+  const token = cookies.get(process.env.REACT_APP_COOKIE_NAME);
+
   const res = await fetch(`${host}/artist`, {
     headers: {
       Accept: "application/json",
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
+      authorization: `Bearer ${token}`
     },
     method: "DELETE",
     body: JSON.stringify({ id })
