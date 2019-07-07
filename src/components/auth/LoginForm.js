@@ -50,7 +50,7 @@ class LoginForm extends Component {
             });
 
             const cookies = new Cookies();
-            cookies.set('channelzero', payload.token);
+            cookies.set(process.env.REACT_APP_COOKIE_NAME, payload.token);
         }
     };
 

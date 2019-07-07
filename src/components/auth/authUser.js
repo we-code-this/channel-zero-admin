@@ -7,7 +7,7 @@ function authUser(Component) {
         render() {
             if (!this.global.token) {
                 const cookies = new Cookies();
-                const token = cookies.get('channelzero');
+                const token = cookies.get(process.env.REACT_APP_COOKIE_NAME);
 
                 if (token) {
                     setGlobal({
