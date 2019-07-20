@@ -1,5 +1,6 @@
 import React, { setGlobal } from "reactn";
 import Cookies from 'universal-cookie';
+import jwtDecode from 'jwt-decode';
 import Login from "../../views/auth/Login";
 
 function authUser(Component) {
@@ -10,15 +11,22 @@ function authUser(Component) {
                 const token = cookies.get(process.env.REACT_APP_COOKIE_NAME);
 
                 if (token) {
+                    const decoded = jwtDecode(token);
+
                     setGlobal({
-                        token
+                        token,
+                        groups: decoded.groups
                     });
                 }
             }
         }
 
         render() {
-            return this.global.token ? <Component {...this.props} /> : <Login />;
+            if (this.global.token) {
+                return <Component {...this.props} />
+            } else {
+                return <Login />;
+            }
         }
     }
 }

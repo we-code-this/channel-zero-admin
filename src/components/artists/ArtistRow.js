@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component } from "reactn";
 import he from "he";
 import { Link } from "react-router-dom";
 import TableActionButtons from "../common/TableActionButtons";
@@ -29,7 +29,7 @@ class ArtistRow extends Component {
 
   render() {
     const artist = this.state.artist;
-
+    
     return (
       <tr>
         <td>{artist.id}</td>
@@ -41,10 +41,12 @@ class ArtistRow extends Component {
         </td>
         <td>{human(artist.created_at)}</td>
         <td>
-          <TableActionButtons
-            editPath={editPath(artist.slug)}
-            onSubmit={this.handleDelete}
-          />
+          {this.props.showActions && (
+            <TableActionButtons
+              editPath={editPath(artist.slug)}
+              onSubmit={this.handleDelete}
+            />
+          )}
         </td>
       </tr>
     );

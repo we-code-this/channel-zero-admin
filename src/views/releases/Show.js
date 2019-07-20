@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component } from "reactn";
 import { Redirect } from "react-router-dom";
 import Helmet from "react-helmet";
 import ActionMenu from "../../components/common/ActionMenu";
@@ -19,11 +19,13 @@ import {
 } from "../../models/releases";
 import { showPath as showArtistPath } from "../../models/artists";
 import authUser from "../../components/auth/authUser";
+import { isAdmin } from "../../utilities/user";
 
 class Show extends Component {
   constructor(props) {
     super(props);
 
+    this._isAdmin = false;
     this._isMounted = false;
 
     const updated = props.location.updated ? props.location.updated : false;
@@ -39,6 +41,7 @@ class Show extends Component {
 
   async componentDidMount() {
     let release;
+    this._isAdmin = isAdmin(this.global.groups);
     this._isMounted = true;
 
     if (!this.props.release) {
@@ -48,6 +51,10 @@ class Show extends Component {
         this.setState({ ...this.state, release });
       }
     }
+  }
+
+  componentWillUnmount() {
+    this._isAdmin = false;
   }
 
   actionMenu = () => {
@@ -112,19 +119,23 @@ class Show extends Component {
 
   handleDelete = async e => {
     e.preventDefault();
-    await deleteRelease(this.state.release.id);
-    this.setState({ ...this.state, deleted: true });
-    this.forceUpdate();
+    if (this._isAdmin) {
+      await deleteRelease(this.state.release.id);
+      this.setState({ ...this.state, deleted: true });
+      this.forceUpdate();
+    }
   };
 
   handlePublish = async e => {
     e.preventDefault();
-    const release = await togglePublish(
-      this.state.release.id,
-      this.state.release.published
-    );
-    this.setState({ ...this.state, release, updated: true });
-    this.forceUpdate();
+    if (this._isAdmin) {
+      const release = await togglePublish(
+        this.state.release.id,
+        this.state.release.published
+      );
+      this.setState({ ...this.state, release, updated: true });
+      this.forceUpdate();
+    }
   };
 
   handleDismiss = () => {
@@ -147,7 +158,7 @@ class Show extends Component {
             <Helmet>
               <title>{`${release.artist.name} - ${release.title}`}</title>
             </Helmet>
-            {this.actionMenu()}
+            {this._isAdmin && this.actionMenu()}
             {this.breadcrumbs()}
             <Notification
               show={this.showNotification()}

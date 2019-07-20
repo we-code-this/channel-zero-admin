@@ -20,10 +20,12 @@ class LabelRow extends Component {
         <td>{label.name}</td>
         <td>{human(label.created_at)}</td>
         <td>
-          <TableActionButtons
-            editPath={editPath(label.slug)}
-            onSubmit={this.handleDelete}
-          />
+          {this.props.showActions && (
+            <TableActionButtons
+              editPath={editPath(label.slug)}
+              onSubmit={this.handleDelete}
+            />
+          )}
         </td>
       </tr>
     );

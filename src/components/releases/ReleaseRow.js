@@ -24,10 +24,12 @@ class ReleaseRow extends Component {
         <td>{release.published ? "Yes" : "No"}</td>
         <td>{human(release.created_at)}</td>
         <td>
-          <TableActionButtons
-            editPath={editPath(release.slug)}
-            onSubmit={this.handleDelete}
-          />
+          {this.props.showActions && (
+            <TableActionButtons
+              editPath={editPath(release.slug)}
+              onSubmit={this.handleDelete}
+            />
+          )}
         </td>
       </tr>
     );

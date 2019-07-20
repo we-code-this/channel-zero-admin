@@ -1,10 +1,12 @@
 import React, { Component } from "reactn";
 import { Redirect } from "react-router";
+import Helmet from "react-helmet";
 import ArtistBreadcrumbs from "../../components/artists/ArtistBreadcrumbs";
 import Breadcrumb from "../../components/common/Breadcrumb";
 import ArtistForm from "../../components/artists/ArtistForm";
 import authUser from "../../components/auth/authUser";
 import { create, createPath } from "../../models/artists";
+import isAdmin from "../../components/auth/isAdmin";
 
 class Create extends Component {
   constructor(props) {
@@ -95,6 +97,9 @@ class Create extends Component {
 
     return (
       <div>
+        <Helmet>
+          <title>Create Artist</title>
+        </Helmet>
         {this.redirect()}
         {this.breadcrumbs()}
         <ArtistForm
@@ -107,4 +112,4 @@ class Create extends Component {
   }
 }
 
-export default authUser(Create);
+export default authUser(isAdmin(Create));

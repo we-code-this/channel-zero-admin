@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component } from "reactn";
 import Helmet from "react-helmet";
 import ActionMenu from "../../components/common/ActionMenu";
 import IconButton from "../../components/common/IconButton";
@@ -6,6 +6,7 @@ import LabelTable from "../../components/labels/LabelTable";
 import LabelBreadcrumbs from "../../components/labels/LabelBreadcrumbs";
 import { get, count, createPath } from "../../models/labels";
 import authUser from "../../components/auth/authUser";
+import { isAdmin } from "../../utilities/user";
 
 class Index extends Component {
   constructor(props) {
@@ -57,21 +58,25 @@ class Index extends Component {
   };
 
   render() {
+    const admin = isAdmin(this.global.groups);
+
     return (
       <div>
         <Helmet>
           <title>Labels</title>
         </Helmet>
-        <ActionMenu>
-          <IconButton
-            to={createPath()}
-            className="is-primary"
-            icon="plus"
-            label="Label"
-          />
-        </ActionMenu>
+        {admin && (
+          <ActionMenu>
+            <IconButton
+              to={createPath()}
+              className="is-primary"
+              icon="plus"
+              label="Label"
+            />
+          </ActionMenu>
+        )}
         <LabelBreadcrumbs active={true} />
-        <LabelTable {...this.state} onUpdate={this.handleUpdate} />
+        <LabelTable {...this.state} onUpdate={this.handleUpdate} showActions={admin} />
       </div>
     );
   }

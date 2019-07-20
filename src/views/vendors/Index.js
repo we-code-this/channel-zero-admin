@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component } from "reactn";
 import Helmet from "react-helmet";
 import ActionMenu from "../../components/common/ActionMenu";
 import IconButton from "../../components/common/IconButton";
@@ -6,6 +6,7 @@ import VendorBreadcrumbs from "../../components/vendors/VendorBreadcrumbs";
 import VendorTable from "../../components/vendors/VendorTable";
 import { get, count, indexPath, createPath } from "../../models/vendors";
 import authUser from "../../components/auth/authUser";
+import { isAdmin } from "../../utilities/user";
 
 class Index extends Component {
   constructor(props) {
@@ -62,21 +63,25 @@ class Index extends Component {
   };
 
   render() {
+    const admin = isAdmin(this.global.groups);
+
     return (
       <div>
         <Helmet>
           <title>Vendors</title>
         </Helmet>
-        <ActionMenu>
-          <IconButton
-            to={createPath()}
-            className="is-primary"
-            icon="plus"
-            label="Vendor"
-          />
-        </ActionMenu>
+        {admin && (
+          <ActionMenu>
+            <IconButton
+              to={createPath()}
+              className="is-primary"
+              icon="plus"
+              label="Vendor"
+            />
+          </ActionMenu>
+        )}
         <VendorBreadcrumbs active={true} />
-        <VendorTable {...this.state} onUpdate={this.handleUpdate} />
+        <VendorTable {...this.state} onUpdate={this.handleUpdate} showActions={admin} />
       </div>
     );
   }

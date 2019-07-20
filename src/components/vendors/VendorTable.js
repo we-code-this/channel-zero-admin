@@ -21,6 +21,7 @@ const VendorTable = props => {
               <VendorRow
                 vendor={vendor}
                 key={`vendor-${vendor.id}`}
+                showActions={props.showActions}
                 onUpdate={props.onUpdate}
               />
             ))}

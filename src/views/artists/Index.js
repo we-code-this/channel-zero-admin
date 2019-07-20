@@ -6,6 +6,7 @@ import ArtistBreadcrumbs from "../../components/artists/ArtistBreadcrumbs";
 import IconButton from "../../components/common/IconButton";
 import authUser from "../../components/auth/authUser";
 import { get, count, createPath } from "../../models/artists";
+import { isAdmin } from "../../utilities/user";
 
 class Index extends Component {
   constructor(props) {
@@ -61,12 +62,14 @@ class Index extends Component {
   };
 
   render() {
+    const admin = isAdmin(this.global.groups);
     return (
       <div>
         <Helmet>
           <title>Artists</title>
         </Helmet>
-        <ActionMenu>
+        {admin && (
+          <ActionMenu>
           <IconButton
             to={createPath()}
             className="is-primary"
@@ -74,8 +77,9 @@ class Index extends Component {
             label="Artist"
           />
         </ActionMenu>
+        )}
         <ArtistBreadcrumbs active={true} />
-        <ArtistTable {...this.state} onUpdate={this.handleUpdate} />
+        <ArtistTable {...this.state} onUpdate={this.handleUpdate} showActions={admin} />
       </div>
     );
   }

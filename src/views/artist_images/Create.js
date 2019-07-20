@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component } from "reactn";
 import { Redirect } from "react-router";
 import Helmet from "react-helmet";
 import ArtistBreadcrumbs from "../../components/artists/ArtistBreadcrumbs";
@@ -7,6 +7,7 @@ import ArtistImageForm from "../../components/artists/ArtistImageForm";
 import { showPath, findBySlug } from "../../models/artists";
 import { create, createPath } from "../../models/artist_images";
 import authUser from "../../components/auth/authUser";
+import isAdmin from "../../components/auth/isAdmin";
 
 class Create extends Component {
   constructor(props) {
@@ -107,7 +108,7 @@ class Create extends Component {
               artist_id={this.state.artist.id}
               onSubmit={this.handleSubmit}
               errors={this.state.errors}
-            />
+            />            
           </div>
         )}
       </React.Fragment>
@@ -115,4 +116,4 @@ class Create extends Component {
   }
 }
 
-export default authUser(Create);
+export default authUser(isAdmin(Create));

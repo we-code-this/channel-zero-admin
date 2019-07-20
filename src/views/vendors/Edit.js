@@ -7,6 +7,7 @@ import Breadcrumb from "../../components/common/Breadcrumb";
 import VendorForm from "../../components/vendors/VendorForm";
 import { findById, update, editPath } from "../../models/vendors";
 import authUser from "../../components/auth/authUser";
+import isAdmin from "../../components/auth/isAdmin";
 
 class Edit extends Component {
   constructor(props) {
@@ -123,4 +124,4 @@ class Edit extends Component {
   }
 }
 
-export default authUser(Edit);
+export default authUser(isAdmin(Edit));

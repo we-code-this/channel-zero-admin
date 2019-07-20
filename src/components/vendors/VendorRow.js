@@ -21,10 +21,12 @@ class VendorRow extends Component {
         <td>{vendor.icon_class}</td>
         <td>{human(vendor.created_at)}</td>
         <td>
-          <TableActionButtons
-            editPath={editPath(vendor.id)}
-            onSubmit={this.handleDelete}
-          />
+          {this.props.showActions && (
+            <TableActionButtons
+              editPath={editPath(vendor.id)}
+              onSubmit={this.handleDelete}
+            />  
+          )}
         </td>
       </tr>
     );

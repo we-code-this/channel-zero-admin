@@ -11,6 +11,7 @@ import {
   editPath
 } from "../../models/labels";
 import authUser from "../../components/auth/authUser";
+import isAdmin from "../../components/auth/isAdmin";
 
 class Edit extends Component {
   constructor(props) {
@@ -123,4 +124,4 @@ class Edit extends Component {
   }
 }
 
-export default authUser(Edit);
+export default authUser(isAdmin(Edit));

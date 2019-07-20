@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component } from "reactn";
 import he from "he";
 import { Redirect } from "react-router";
 import Helmet from "react-helmet";
@@ -12,6 +12,7 @@ import {
   editPath
 } from "../../models/artists";
 import authUser from "../../components/auth/authUser";
+import isAdmin from "../../components/auth/isAdmin";
 
 class Edit extends Component {
   constructor(props) {
@@ -131,4 +132,4 @@ class Edit extends Component {
   }
 }
 
-export default authUser(Edit);
+export default authUser(isAdmin(Edit));

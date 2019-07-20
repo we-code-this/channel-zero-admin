@@ -21,6 +21,7 @@ import {
   createPath as imageCreatePath,
   deleteImage
 } from "../../models/artist_images";
+import { isAdmin } from "../../utilities/user";
 
 class Show extends Component {
   constructor(props) {
@@ -103,7 +104,8 @@ class Show extends Component {
   };
 
   actionMenu = () => {
-    return (
+    const admin = isAdmin(this.global.groups);
+    return admin ? (
       <ActionMenu>
         <IconButton
           to={editPath(this.state.artist.slug)}
@@ -124,7 +126,7 @@ class Show extends Component {
           label="Image"
         />
       </ActionMenu>
-    );
+    ) : null;
   };
 
   breadcrumbs = () => {
