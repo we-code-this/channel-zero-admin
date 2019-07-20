@@ -16,19 +16,18 @@ import EditRelease from "./views/releases/Edit";
 import EditVendor from "./views/vendors/Edit";
 import Labels from "./views/labels/Index";
 import Layout from "./components/layouts/Layout";
-import Login from "./views/auth/Login";
 import Release from "./views/releases/Show";
 import Releases from "./views/releases/Index";
 import Vendors from "./views/vendors/Index";
 import "./sass/app.scss";
 
 setGlobal({
-  token: undefined
+  token: undefined,
+  groups: undefined
 });
 
 class App extends Component {
   render() {
-    console.log('render called and this.global.token is:', this.global.token);
     return (
       <BrowserRouter>
         <Layout>
@@ -39,7 +38,6 @@ class App extends Component {
             className="switch-wrapper"
           >
             <Route exact path="/" component={Dashboard} />
-            <Route exact path="/login" component={Login} />
             <Route exact path="/artists" component={Artists} />
             <Route path="/artists/:page" component={Artists} />
             <Route path="/artist/create" component={CreateArtist} />

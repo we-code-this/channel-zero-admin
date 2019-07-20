@@ -10,9 +10,9 @@ class Login extends Component {
                 <Helmet>
                   <title>Login</title>
                 </Helmet>
-                <LoginForm />                
+                <LoginForm />
             </div>
-        );
+        );        
     }
 }
 

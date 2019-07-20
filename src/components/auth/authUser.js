@@ -1,10 +1,10 @@
 import React, { setGlobal } from "reactn";
-import { Redirect } from "react-router-dom";
 import Cookies from 'universal-cookie';
+import Login from "../../views/auth/Login";
 
 function authUser(Component) {
     return class extends React.Component {
-        render() {
+        componentDidMount() {
             if (!this.global.token) {
                 const cookies = new Cookies();
                 const token = cookies.get(process.env.REACT_APP_COOKIE_NAME);
@@ -15,8 +15,10 @@ function authUser(Component) {
                     });
                 }
             }
+        }
 
-            return this.global.token ? <Component {...this.props} /> : <Redirect to="/login" />;
+        render() {
+            return this.global.token ? <Component {...this.props} /> : <Login />;
         }
     }
 }

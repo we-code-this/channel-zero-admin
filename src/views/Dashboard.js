@@ -3,6 +3,7 @@ import Helmet from "react-helmet";
 import authUser from "../components/auth/authUser";
 
 const Dashboard = () => {
+  console.log('Dashboard');
   return (
     <div>
       <Helmet>

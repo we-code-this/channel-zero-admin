@@ -4,6 +4,7 @@ import Helmet from "react-helmet";
 import Icons from "../common/Icons";
 import Header from "../common/Header";
 import Nav from "../common/Nav";
+import logout from "../../utilities/logout";
 
 class Layout extends Component {
   constructor(props) {
@@ -12,12 +13,16 @@ class Layout extends Component {
     const pageName = "Channel Zero Admin";
 
     this.state = {
-      children: props.children,
       page: props.page ? props.page : pageName,
       title: props.title ? props.title : pageName,
       nav: false
     };
   }
+
+  logout = async (e) => {
+    e.preventDefault();
+    await logout(this);
+  };
 
   toggleNav = () => {
     this.setState({ ...this.state, nav: !this.state.nav });
@@ -27,10 +32,10 @@ class Layout extends Component {
     return (
       <React.Fragment>
         <div className="admin">
-          <Header title={this.state.page} onOpenMenu={this.toggleNav} />
+          <Header title={this.state.page} onOpenMenu={this.toggleNav} onLogout={this.logout} />
           <section className="admin-main">
             <div className="page-content" id="pageContentContainer">
-              <div className="admin-content-panel">{this.state.children}</div>
+              <div className="admin-content-panel">{this.props.children}</div>
             </div>
           </section>
         </div>
@@ -42,7 +47,7 @@ class Layout extends Component {
   renderLogin = () => {
     return (
       <div className="login">
-        {this.state.children}
+        {this.props.children}
       </div>
     );
   };

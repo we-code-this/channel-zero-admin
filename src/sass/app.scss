@@ -54,6 +54,10 @@ img {
       color: #eee;
     }
 
+    .title {
+      margin-bottom: 0;
+    }
+
     .nav-open {
       padding: 0;
       background-color: transparent;
@@ -75,6 +79,24 @@ img {
           width: 1.2rem;
           height: 1.2rem;
         }
+      }
+    }
+
+    .btn-logout {
+      margin-left: auto;
+      color: #999;
+      cursor: pointer;
+      padding: 0;
+      border: none;
+      background-color: transparent;
+      transition: all 200ms ease-in-out;
+
+      &:hover, &:active {
+        color: #fff;
+      }
+
+      .svg-icon {
+        font-size: 1rem;
       }
     }
 

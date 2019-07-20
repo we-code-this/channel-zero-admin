@@ -1,5 +1,6 @@
 import React, { Component } from "reactn";
 import Cookies from 'universal-cookie';
+import jwtDecode from 'jwt-decode';
 import { Icon } from "react-bulma-components";
 import TextInput from "../common/forms/TextInput";
 import PasswordInput from "../common/forms/PasswordInput";
@@ -45,8 +46,12 @@ class LoginForm extends Component {
         const payload = await response.json();
 
         if (payload.token && this.state.email === payload.result) {
+            const decoded = jwtDecode(payload.token);
+
             this.setGlobal({
-                token: payload.token
+                ...this.global,
+                token: payload.token,
+                groups: decoded.groups
             });
 
             const cookies = new Cookies();

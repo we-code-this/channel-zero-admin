@@ -12,6 +12,13 @@ const Header = props => (
     </button>
 
     <div className="title is-5">{props.title}</div>
+    <button onClick={props.onLogout} className="btn-logout" aria-label="Logout">
+      <Icon>
+          <svg className="svg-icon">
+            <use xlinkHref="#icon-power-off" />
+          </svg>
+      </Icon>
+    </button>
   </header>
 );
 
