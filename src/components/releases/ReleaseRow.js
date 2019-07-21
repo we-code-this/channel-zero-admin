@@ -1,8 +1,9 @@
-import React, { Component } from "react";
+import React, { Component } from "reactn";
 import { Link } from "react-router-dom";
 import TableActionButtons from "../common/TableActionButtons";
 import { human } from "../../utilities/date";
 import { showPath, editPath, deleteRelease } from "../../models/releases";
+import { canEditOrDelete } from "../../utilities/user";
 
 class ReleaseRow extends Component {
   handleDelete = async e => {
@@ -24,7 +25,7 @@ class ReleaseRow extends Component {
         <td>{release.published ? "Yes" : "No"}</td>
         <td>{human(release.created_at)}</td>
         <td>
-          {this.props.showActions && (
+          {canEditOrDelete(this.global.token, this.global.groups, release.user_id) && (
             <TableActionButtons
               editPath={editPath(release.slug)}
               onSubmit={this.handleDelete}

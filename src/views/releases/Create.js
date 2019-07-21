@@ -6,7 +6,7 @@ import ReleaseForm from "../../components/releases/ReleaseForm";
 import { create, createPath } from "../../models/releases";
 import { scrollToTop } from "../../utilities/scroll";
 import authUser from "../../components/auth/authUser";
-import isAdmin from "../../components/auth/isAdmin";
+import isAuthor from "../../components/auth/isAuthor";
 
 class Create extends Component {
   constructor(props) {
@@ -114,4 +114,4 @@ class Create extends Component {
   }
 }
 
-export default authUser(isAdmin(Create));
+export default authUser(isAuthor(Create));

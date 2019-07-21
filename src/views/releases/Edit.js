@@ -1,19 +1,22 @@
-import React, { Component } from "react";
+import React, { Component } from "reactn";
 import he from "he";
 import { Redirect } from "react-router";
 import Helmet from "react-helmet";
 import ReleaseBreadcrumbs from "../../components/releases/ReleaseBreadcrumbs";
 import Breadcrumb from "../../components/common/Breadcrumb";
 import ReleaseForm from "../../components/releases/ReleaseForm";
+import NoAccess from "../../components/auth/NoAccess";
 import { findBySlug, update, showPath, editPath } from "../../models/releases";
 import { scrollToTop } from "../../utilities/scroll";
 import authUser from "../../components/auth/authUser";
-import isAdmin from "../../components/auth/isAdmin";
+import isAuthor from "../../components/auth/isAuthor";
+import { canEditOrDelete } from "../../utilities/user";
 
 class Edit extends Component {
   constructor(props) {
     super(props);
 
+    this._canEditOrDelete = false;
     this._isMounted = false;
 
     this.state = {
@@ -29,44 +32,49 @@ class Edit extends Component {
 
   async componentDidMount() {
     this._isMounted = true;
-    const release = await findBySlug(this.props.match.params.slug);
-
+    
     if (this._isMounted) {
+      const release = await findBySlug(this.props.match.params.slug);
+      this._canEditOrDelete = canEditOrDelete(this.global.token, this.global.groups, release.user_id);
+
       this.setState({ ...this.state, release });
     }
   }
 
   async componentWillUnmount() {
+    this._canEditOrDelete = false;
     this._isMounted = false;
   }
 
   handleSubmit = async e => {
     e.preventDefault();
 
-    const result = await update(this.state.release.id, e.target);
+    if (this._canEditOrDelete) {
+      const result = await update(this.state.release.id, e.target);
 
-    if (result.errors.length) {
-      const resultErrors = {};
-
-      result.errors.map(error => {
-        resultErrors[error.field] = error.message;
-        return error;
-      });
-
-      this.setState({
-        ...this.state,
-        errors: {
-          ...this.state.errors,
-          ...resultErrors
-        }
-      });
-
-      scrollToTop();
-    } else {
-      this.setState({
-        ...this.state,
-        redirectToRelease: true
-      });
+      if (result.errors.length) {
+        const resultErrors = {};
+  
+        result.errors.map(error => {
+          resultErrors[error.field] = error.message;
+          return error;
+        });
+  
+        this.setState({
+          ...this.state,
+          errors: {
+            ...this.state.errors,
+            ...resultErrors
+          }
+        });
+  
+        scrollToTop();
+      } else {
+        this.setState({
+          ...this.state,
+          redirectToRelease: true
+        });
+      }
     }
   };
 
@@ -96,7 +104,7 @@ class Edit extends Component {
     );
   }
 
-  render() {
+  renderForm() {
     const release = this.state.release;
 
     return release ? (
@@ -106,6 +114,7 @@ class Edit extends Component {
         </Helmet>
         {this.redirect()}
         {this.breadcrumbs()}
+
         <ReleaseForm
           release={release}
           onSubmit={this.handleSubmit}
@@ -116,6 +125,10 @@ class Edit extends Component {
       ""
     );
   }
+
+  render() {
+    return this._canEditOrDelete ? this.renderForm() : <NoAccess />;
+  }
 }
 
-export default authUser(isAdmin(Edit));
+export default authUser(isAuthor(Edit));

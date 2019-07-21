@@ -13,7 +13,27 @@
         align-items: center;
         justify-content: center;
         margin-bottom: 0;
-        padding-bottom: 7rem;
+        padding: 7% 0 20%;
+
+        & > div {
+            width: 90%;
+
+            @media (min-width: 26.25rem) {
+                width: 70%;
+            }
+
+            @media (min-width: 37.5rem) {
+                width: 50%;
+            }
+
+            @media (min-width: 48rem) {
+                width: 40%;
+            }
+
+            @media (min-width: 64rem) {
+                width: 25%;
+            }
+        }
     }
 
     form {

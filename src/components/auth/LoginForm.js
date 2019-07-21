@@ -55,7 +55,7 @@ class LoginForm extends Component {
             });
 
             const cookies = new Cookies();
-            cookies.set(process.env.REACT_APP_COOKIE_NAME, payload.token);
+            cookies.set(process.env.REACT_APP_COOKIE_NAME, payload.token, { path: '/' });
         }
     };
 

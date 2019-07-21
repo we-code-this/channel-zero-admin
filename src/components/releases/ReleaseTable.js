@@ -21,7 +21,6 @@ const ReleaseTable = props => {
               <ReleaseRow
                 release={release}
                 key={`release-${release.id}`}
-                showActions={props.showActions}
                 onUpdate={props.onUpdate}
               />
             ))}
