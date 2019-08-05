@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import TableActionButtons from "../common/TableActionButtons";
 import { human } from "../../utilities/date";
 import { showPath, editPath, deleteArtist } from "../../models/artists";
+import { canEditOrDelete } from "../../utilities/user";
 
 class ArtistRow extends Component {
   constructor(props) {
@@ -41,7 +42,7 @@ class ArtistRow extends Component {
         </td>
         <td>{human(artist.created_at)}</td>
         <td>
-          {this.props.showActions && (
+          {canEditOrDelete(this.global.token, this.global.groups, artist.user_id) && (
             <TableActionButtons
               editPath={editPath(artist.slug)}
               onSubmit={this.handleDelete}

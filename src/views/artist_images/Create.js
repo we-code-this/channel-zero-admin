@@ -7,7 +7,8 @@ import ArtistImageForm from "../../components/artists/ArtistImageForm";
 import { showPath, findBySlug } from "../../models/artists";
 import { create, createPath } from "../../models/artist_images";
 import authUser from "../../components/auth/authUser";
-import isAdmin from "../../components/auth/isAdmin";
+import isAuthor from "../../components/auth/isAuthor";
+import { canEditOrDelete } from "../../utilities/user";
 
 class Create extends Component {
   constructor(props) {
@@ -95,25 +96,34 @@ class Create extends Component {
   }
 
   render() {
-    return (
-      <React.Fragment>
-        <Helmet>
-          <title>Add Artist Image</title>
-        </Helmet>
-        {this.redirect()}
-        {this.state.artist && (
-          <div>
-            {this.breadcrumbs()}
-            <ArtistImageForm
-              artist_id={this.state.artist.id}
-              onSubmit={this.handleSubmit}
-              errors={this.state.errors}
-            />            
-          </div>
-        )}
-      </React.Fragment>
-    );
+
+    if (this.state.artist) {
+      if (canEditOrDelete(this.global.token, this.global.groups, this.state.artist.user_id)) {
+        return (
+          <React.Fragment>
+            <Helmet>
+              <title>Add Artist Image</title>
+            </Helmet>
+            {this.redirect()}
+            {this.state.artist && (
+              <div>
+                {this.breadcrumbs()}
+                <ArtistImageForm
+                  artist_id={this.state.artist.id}
+                  onSubmit={this.handleSubmit}
+                  errors={this.state.errors}
+                />            
+              </div>
+            )}
+          </React.Fragment>
+        );
+      } else {
+        return <Redirect to="/artists" />;
+      }
+    } else {
+      return "";
+    }
   }
 }
 
-export default authUser(isAdmin(Create));
+export default authUser(isAuthor(Create));

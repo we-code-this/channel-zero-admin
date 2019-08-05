@@ -6,7 +6,7 @@ import ReleaseBreadcrumbs from "../../components/releases/ReleaseBreadcrumbs";
 import ReleaseTable from "../../components/releases/ReleaseTable";
 import { get, count, indexPath, createPath } from "../../models/releases";
 import authUser from "../../components/auth/authUser";
-import { isAdmin, isAuthor, isEditor } from "../../utilities/user";
+import { canCreate } from "../../utilities/user";
 
 class Index extends Component {
   constructor(props) {
@@ -61,21 +61,13 @@ class Index extends Component {
     await this.getReleases();
   };
 
-  canCreate = () => {
-    const admin = isAdmin(this.global.groups);
-    const editor = isEditor(this.global.groups);
-    const author = isAuthor(this.global.groups);
-
-    return (admin || editor || author);
-  };
-
   render() {    
     return (
       <div>
         <Helmet>
           <title>Releases</title>
         </Helmet>
-        {this.canCreate() && (
+        {canCreate(this.global.groups) && (
           <ActionMenu>
             <IconButton
               to={createPath()}

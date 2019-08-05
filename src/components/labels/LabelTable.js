@@ -20,7 +20,6 @@ const LabelTable = props => {
               <LabelRow
                 label={label}
                 key={label.id}
-                showActions={props.showActions}
                 onUpdate={props.onUpdate}
               />
             ))}

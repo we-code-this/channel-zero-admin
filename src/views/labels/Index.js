@@ -6,7 +6,7 @@ import LabelTable from "../../components/labels/LabelTable";
 import LabelBreadcrumbs from "../../components/labels/LabelBreadcrumbs";
 import { get, count, createPath } from "../../models/labels";
 import authUser from "../../components/auth/authUser";
-import { isAdmin } from "../../utilities/user";
+import { canCreate } from "../../utilities/user";
 
 class Index extends Component {
   constructor(props) {
@@ -58,14 +58,13 @@ class Index extends Component {
   };
 
   render() {
-    const admin = isAdmin(this.global.groups);
 
     return (
       <div>
         <Helmet>
           <title>Labels</title>
         </Helmet>
-        {admin && (
+        {canCreate(this.global.groups) && (
           <ActionMenu>
             <IconButton
               to={createPath()}
@@ -76,7 +75,7 @@ class Index extends Component {
           </ActionMenu>
         )}
         <LabelBreadcrumbs active={true} />
-        <LabelTable {...this.state} onUpdate={this.handleUpdate} showActions={admin} />
+        <LabelTable {...this.state} onUpdate={this.handleUpdate} />
       </div>
     );
   }

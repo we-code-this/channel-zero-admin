@@ -18,12 +18,18 @@ export const id = (token) => {
     return decoded.id;
 };
 
-export const canEditOrDelete = (token, groups, instanceUserId) => {
+export const canCreate = (groups) => {
     const admin = isAdmin(groups);
     const editor = isEditor(groups);
     const author = isAuthor(groups);
 
-    console.log('groups:', groups);
+    return (admin || editor || author);
+};
+
+export const canEditOrDelete = (token, groups, instanceUserId) => {
+    const admin = isAdmin(groups);
+    const editor = isEditor(groups);
+    const author = isAuthor(groups);
 
     return (admin || editor) || (author && (id(token) === instanceUserId));
 };

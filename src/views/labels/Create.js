@@ -5,7 +5,7 @@ import Breadcrumb from "../../components/common/Breadcrumb";
 import LabelForm from "../../components/labels/LabelForm";
 import { create, createPath } from "../../models/labels";
 import authUser from "../../components/auth/authUser";
-import isAdmin from "../../components/auth/isAdmin";
+import isEditor from "../../components/auth/isEditor";
 
 class Create extends Component {
   constructor(props) {
@@ -99,4 +99,4 @@ class Create extends Component {
   }
 }
 
-export default authUser(isAdmin(Create));
+export default authUser(isEditor(Create));

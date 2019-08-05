@@ -5,7 +5,6 @@ import Helmet from "react-helmet";
 import ReleaseBreadcrumbs from "../../components/releases/ReleaseBreadcrumbs";
 import Breadcrumb from "../../components/common/Breadcrumb";
 import ReleaseForm from "../../components/releases/ReleaseForm";
-import NoAccess from "../../components/auth/NoAccess";
 import { findBySlug, update, showPath, editPath } from "../../models/releases";
 import { scrollToTop } from "../../utilities/scroll";
 import authUser from "../../components/auth/authUser";
@@ -107,7 +106,7 @@ class Edit extends Component {
   renderForm() {
     const release = this.state.release;
 
-    return release ? (
+    return (
       <div>
         <Helmet>
           <title>{`Edit “${he.decode(release.title)}”`}</title>
@@ -121,13 +120,17 @@ class Edit extends Component {
           errors={this.state.errors}
         />
       </div>
-    ) : (
-      ""
     );
   }
 
   render() {
-    return this._canEditOrDelete ? this.renderForm() : <NoAccess />;
+    const release = this.state.release;
+
+    if (release) {
+      return this._canEditOrDelete ? this.renderForm() : <Redirect to="/releases" />;
+    } else {
+      return "";
+    }
   }
 }
 

@@ -20,7 +20,6 @@ const ArtistTable = props => {
               <ArtistRow
                 artist={artist}
                 key={artist.id}
-                showActions={props.showActions}
                 onUpdate={props.onUpdate}
               />
             ))}

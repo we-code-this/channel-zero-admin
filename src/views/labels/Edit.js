@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component } from "reactn";
 import { Redirect } from "react-router";
 import Helmet from "react-helmet";
 import LabelBreadcrumbs from "../../components/labels/LabelBreadcrumbs";
@@ -11,12 +11,14 @@ import {
   editPath
 } from "../../models/labels";
 import authUser from "../../components/auth/authUser";
-import isAdmin from "../../components/auth/isAdmin";
+import isAuthor from "../../components/auth/isAuthor";
+import { canEditOrDelete } from "../../utilities/user";
 
 class Edit extends Component {
   constructor(props) {
     super(props);
 
+    this._canEditOrDelete = false;
     this._isMounted = false;
 
     this.state = {
@@ -30,52 +32,55 @@ class Edit extends Component {
 
   async componentDidMount() {
     this._isMounted = true;
-    const label = await findBySlug(this.props.match.params.slug);
-
+    
     if (this._isMounted) {
+      const label = await findBySlug(this.props.match.params.slug);
+      this._canEditOrDelete = canEditOrDelete(this.global.token, this.global.groups, label.user_id);
+
       this.setState({ ...this.state, label });
     }
   }
 
   async componentWillUnmount() {
     this._isMounted = false;
+    this._canEditOrDelete = false;
   }
 
   handleSubmit = async e => {
     e.preventDefault();
 
-    const newName = e.target.name.value;
+    if (this._canEditOrDelete) {
+      const newName = e.target.name.value;
 
-    const result = await updateBySlug(this.state.label.slug, {
-      name: newName
-    });
-
-    if (result.errors.length) {
-      const resultErrors = {};
-
-      result.errors.map(error => {
-        resultErrors[error.field] = error.message;
-        return error;
+      const result = await updateBySlug(this.state.label.slug, {
+        name: newName
       });
-
-      this.setState({
-        ...this.state,
-        label: {
-          ...this.state.label,
-          name: newName
-        },
-        errors: {
-          ...this.state.errors,
-          ...resultErrors
-        }
-      });
-    } else {
-      // redirect
-      // this.props.history.goBack();
-      this.setState({
-        ...this.state,
-        redirectToLabels: true
-      });
+  
+      if (result.errors.length) {
+        const resultErrors = {};
+  
+        result.errors.map(error => {
+          resultErrors[error.field] = error.message;
+          return error;
+        });
+  
+        this.setState({
+          ...this.state,
+          label: {
+            ...this.state.label,
+            name: newName
+          },
+          errors: {
+            ...this.state.errors,
+            ...resultErrors
+          }
+        });
+      } else {
+        this.setState({
+          ...this.state,
+          redirectToLabels: true
+        });
+      }
     }
   };
 
@@ -102,10 +107,10 @@ class Edit extends Component {
     );
   }
 
-  render() {
+  renderForm() {
     const label = this.state.label;
 
-    return label ? (
+    return (
       <div>
         <Helmet>
           <title>{`Edit “${label.name}”`}</title>
@@ -118,10 +123,19 @@ class Edit extends Component {
           errors={this.state.errors}
         />
       </div>
-    ) : (
-      ""
     );
+  }
+
+  render() {
+    const label = this.state.label;
+
+    if (label) {
+      return this._canEditOrDelete ? this.renderForm() : <Redirect to="/labels" />;
+    } else {
+      return "";
+    }
+
   }
 }
 
-export default authUser(isAdmin(Edit));
+export default authUser(isAuthor(Edit));

@@ -1,7 +1,8 @@
-import React, { Component } from "react";
+import React, { Component } from "reactn";
 import TableActionButtons from "../common/TableActionButtons";
 import { human } from "../../utilities/date";
 import { editPath, deleteLabel } from "../../models/labels";
+import { canEditOrDelete } from "../../utilities/user";
 
 class LabelRow extends Component {
   handleDelete = async e => {
@@ -20,7 +21,7 @@ class LabelRow extends Component {
         <td>{label.name}</td>
         <td>{human(label.created_at)}</td>
         <td>
-          {this.props.showActions && (
+          {canEditOrDelete(this.global.token, this.global.groups, label.user_id) && (
             <TableActionButtons
               editPath={editPath(label.slug)}
               onSubmit={this.handleDelete}

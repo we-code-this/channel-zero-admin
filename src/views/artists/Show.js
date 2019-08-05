@@ -21,7 +21,7 @@ import {
   createPath as imageCreatePath,
   deleteImage
 } from "../../models/artist_images";
-import { isAdmin } from "../../utilities/user";
+import { canEditOrDelete } from "../../utilities/user";
 
 class Show extends Component {
   constructor(props) {
@@ -104,7 +104,8 @@ class Show extends Component {
   };
 
   actionMenu = () => {
-    const admin = isAdmin(this.global.groups);
+    const admin = canEditOrDelete(this.global.token, this.global.groups, this.state.artist.user_id);
+
     return admin ? (
       <ActionMenu>
         <IconButton

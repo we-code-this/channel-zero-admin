@@ -1,4 +1,5 @@
 import React, { Component } from "reactn";
+import { Redirect } from "react-router";
 import { withRouter } from "react-router-dom";
 import Helmet from "react-helmet";
 import Icons from "../common/Icons";
@@ -21,7 +22,10 @@ class Layout extends Component {
 
   logout = async (e) => {
     e.preventDefault();
+    console.log('this.global:', this.global);
     await logout(this);
+    console.log('this.global:', this.global);
+    return <Redirect to="/" />;
   };
 
   toggleNav = () => {
