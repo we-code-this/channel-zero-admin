@@ -1,8 +1,11 @@
 import React, { Component, setGlobal } from "reactn";
 import { BrowserRouter, Route } from "react-router-dom";
 import { AnimatedSwitch } from "react-router-transition";
+import Article from "./views/articles/Show";
+import Articles from "./views/articles/Index";
 import Artist from "./views/artists/Show";
 import Artists from "./views/artists/Index";
+import CreateArticle from "./views/articles/Create";
 import CreateArtist from "./views/artists/Create";
 import CreateArtistImage from "./views/artist_images/Create";
 import CreateLabel from "./views/labels/Create";
@@ -38,6 +41,10 @@ class App extends Component {
             className="switch-wrapper"
           >
             <Route exact path="/" component={Dashboard} />
+            <Route exact path="/articles" component={Articles} />
+            <Route path="/articles/:page" component={Articles} />
+            <Route path="/article/create" component={CreateArticle} />
+            <Route exact path="/article/:slug" component={Article} />
             <Route exact path="/artists" component={Artists} />
             <Route path="/artists/:page" component={Artists} />
             <Route path="/artist/create" component={CreateArtist} />

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { NavLink as Link } from "react-router-dom";
 import { Icon } from "react-bulma-components";
+import { indexPath as articleIndex } from "../../models/articles";
 import { indexPath as artistIndex } from "../../models/artists";
 
 class Nav extends Component {
@@ -55,6 +56,17 @@ class Nav extends Component {
                 onClick={this.props.onCloseMenu}
               >
                 Dashboard
+              </Link>
+            </li>
+
+            <li>
+              <Link
+                to={articleIndex()}
+                className="navbar-item"
+                activeClassName="is-active"
+                onClick={this.props.onCloseMenu}
+              >
+                Articles
               </Link>
             </li>
 

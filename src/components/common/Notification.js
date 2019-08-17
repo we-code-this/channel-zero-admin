@@ -16,7 +16,7 @@ const transitionStyles = {
     opacity: 0,
     height: 0,
     padding: "0 2.5rem 0 1.5rem",
-    "margin-bottom": 0
+    marginBottom: 0
   },
   entered: {
     opacity: 1,

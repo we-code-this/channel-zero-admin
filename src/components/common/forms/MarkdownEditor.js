@@ -24,6 +24,7 @@ class MarkdownEditor extends Component {
 
   render() {
     const mdeClass = this.props.error ? "is-danger" : "";
+    const editorHeight = this.props.editorHeight ? this.props.editorHeight : "20rem";
 
     return (
       <Field
@@ -42,7 +43,7 @@ class MarkdownEditor extends Component {
             Promise.resolve(this.converter.makeHtml(markdown))
           }
           selectedTab={this.state.tab}
-          minEditorHeight="20rem"
+          minEditorHeight={editorHeight}
         />
       </Field>
     );
