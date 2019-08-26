@@ -118,3 +118,38 @@ export async function togglePublish(id, published) {
 
   return await res.json();
 }
+
+export async function update(id, data) {
+  let form = new FormData();
+  if (data.image.files.length) {
+    form.append("image", data.image.files[0]);
+  }
+  form.append("id", id);
+  form.append("title", data.title.value);
+  form.append("summary", data.summary.value);
+  form.append("description", data.description.value);
+
+  const token = cookies.get(process.env.REACT_APP_COOKIE_NAME);
+
+  let opts = {
+    method: "PATCH",
+    headers: {
+      authorization: `Bearer ${token}`
+    },
+    body: form
+  };
+
+  try {
+    const res = await fetch(`${host}/article`, opts);
+    return await res.json();
+  } catch (e) {
+    return { 
+      errors: [
+        {
+          field: "image",
+          message: "An error occurred while uploading. Please try again."
+        }
+      ]
+    };
+  }
+}

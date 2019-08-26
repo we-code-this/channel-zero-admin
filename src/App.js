@@ -16,6 +16,7 @@ import EditArtist from "./views/artists/Edit";
 import EditArtistImage from "./views/artist_images/Edit";
 import EditLabel from "./views/labels/Edit";
 import EditRelease from "./views/releases/Edit";
+import EditArticle from "./views/articles/Edit";
 import EditVendor from "./views/vendors/Edit";
 import Labels from "./views/labels/Index";
 import Layout from "./components/layouts/Layout";
@@ -45,6 +46,7 @@ class App extends Component {
             <Route path="/articles/:page" component={Articles} />
             <Route path="/article/create" component={CreateArticle} />
             <Route exact path="/article/:slug" component={Article} />
+            <Route path="/article/:slug/edit" component={EditArticle} />
             <Route exact path="/artists" component={Artists} />
             <Route path="/artists/:page" component={Artists} />
             <Route path="/artist/create" component={CreateArtist} />
