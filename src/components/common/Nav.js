@@ -113,6 +113,17 @@ class Nav extends Component {
                 Vendors
               </Link>
             </li>
+
+            <li>
+              <Link
+                to="/videos"
+                className="navbar-item"
+                activeClassName="is-active"
+                onClick={this.props.onCloseMenu}
+              >
+                Videos
+              </Link>
+            </li>
           </ul>
         </nav>
         <button className="nav-close" onClick={this.props.onCloseMenu}>

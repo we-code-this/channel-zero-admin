@@ -23,6 +23,8 @@ import Layout from "./components/layouts/Layout";
 import Release from "./views/releases/Show";
 import Releases from "./views/releases/Index";
 import Vendors from "./views/vendors/Index";
+import Videos from "./views/videos/Index";
+import Video from "./views/videos/Show";
 import "./sass/app.scss";
 
 setGlobal({
@@ -71,6 +73,8 @@ class App extends Component {
             <Route path="/vendors" component={Vendors} />
             <Route path="/vendor/create" component={CreateVendor} />
             <Route path="/vendor/:id/edit" component={EditVendor} />
+            <Route path="/videos" component={Videos} />
+            <Route exact path="/video/:id" component={Video} />
           </AnimatedSwitch>
         </Layout>
       </BrowserRouter>
