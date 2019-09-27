@@ -6,7 +6,7 @@ import ArtistBreadcrumbs from "../../components/artists/ArtistBreadcrumbs";
 import ArtistShowColumns from "../../components/artists/ArtistShowColumns";
 import Breadcrumb from "../../components/common/Breadcrumb";
 import IconButton from "../../components/common/IconButton";
-import IconDeleteButton from "../../components/common/IconDeleteButton";
+import DeleteModalButton from "../../components/common/DeleteModalButton";
 import ActionMenu from "../../components/common/ActionMenu";
 import Notification from "../../components/common/Notification";
 import authUser from "../../components/auth/authUser";
@@ -114,10 +114,7 @@ class Show extends Component {
           icon="edit"
           label="Edit"
         />
-        <IconDeleteButton
-          className="is-danger"
-          icon="minus-circle"
-          label="Delete"
+        <DeleteModalButton
           onSubmit={this.handleDelete}
         />
         <IconButton

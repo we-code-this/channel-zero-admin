@@ -4,7 +4,7 @@ import Helmet from "react-helmet";
 import ActionMenu from "../../components/common/ActionMenu";
 import Breadcrumb from "../../components/common/Breadcrumb";
 import IconButton from "../../components/common/IconButton";
-import IconDeleteButton from "../../components/common/IconDeleteButton";
+import DeleteModalButton from "../../components/common/DeleteModalButton";
 import PublishButton from "../../components/common/PublishButton";
 import Notification from "../../components/common/Notification";
 import ReleaseBreadcrumbs from "../../components/releases/ReleaseBreadcrumbs";
@@ -66,10 +66,7 @@ class Show extends Component {
           icon="edit"
           label="Edit"
         />
-        <IconDeleteButton
-          className="is-danger"
-          icon="minus-circle"
-          label="Delete"
+        <DeleteModalButton
           onSubmit={this.handleDelete}
         />
         <PublishButton

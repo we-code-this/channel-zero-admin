@@ -1,6 +1,7 @@
 import React from "react";
 import IconButton from "./IconButton";
 import IconDeleteButton from "./IconDeleteButton";
+import DeleteModalButton from "./DeleteModalButton";
 
 const TableActionButtons = props => (
   <div className="table-action-buttons">
@@ -11,10 +12,8 @@ const TableActionButtons = props => (
         icon="edit"
         label="Edit"
       />
-      <IconDeleteButton
-        className="is-danger is-small"
-        icon="minus-circle"
-        label="Delete"
+      <DeleteModalButton
+        small
         onSubmit={props.onSubmit}
       />
     </div>

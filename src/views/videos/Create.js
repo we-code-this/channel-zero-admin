@@ -1,25 +1,25 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router";
-import VendorBreadcrumbs from "../../components/vendors/VendorBreadcrumbs";
+import VideoBreadcrumbs from "../../components/videos/VideoBreadcrumbs";
 import Breadcrumb from "../../components/common/Breadcrumb";
-import VendorForm from "../../components/vendors/VendorForm";
-import { create, createPath } from "../../models/vendors";
+import VideoForm from "../../components/videos/VideoForm";
+import { create, createPath } from "../../models/videos";
 import authUser from "../../components/auth/authUser";
-import isEditor from "../../components/auth/isEditor";
+import isAuthor from "../../components/auth/isAuthor";
 
 class Create extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      redirectToVendors: false,
-      vendor: {
-        name: "",
-        icon_class: ""
+      redirectToVideos: false,
+      video: {
+        title: "",
+        src: ""
       },
       errors: {
-        name: undefined,
-        icon_class: undefined
+        title: undefined,
+        src: undefined
       }
     };
   }
@@ -27,12 +27,12 @@ class Create extends Component {
   handleSubmit = async e => {
     e.preventDefault();
 
-    const newName = e.target.name.value;
-    const newIconClass = e.target.icon_class.value;
+    const newTitle = e.target.title.value;
+    const newSrc = e.target.src.value;
 
     const result = await create({
-      name: newName,
-      icon_class: newIconClass
+      title: newTitle,
+      src: newSrc
     });
 
     if (result.errors && result.errors.length) {
@@ -45,10 +45,10 @@ class Create extends Component {
 
       this.setState({
         ...this.state,
-        vendor: {
-          ...this.state.vendor,
-          name: newName,
-          icon_class: newIconClass
+        video: {
+          ...this.state.video,
+          title: newTitle,
+          src: newSrc
         },
         errors: {
           ...this.state.errors,
@@ -58,20 +58,20 @@ class Create extends Component {
     } else {
       this.setState({
         ...this.state,
-        vendor: {
-          ...this.state.vendor
+        video: {
+          ...this.state.video
         },
-        redirectToVendors: true
+        redirectToVideos: true
       });
     }
   };
 
   redirect() {
     return (
-      this.state.redirectToVendors && (
+      this.state.redirectToVideos && (
         <Redirect
           to={{
-            pathname: `/vendors`,
+            pathname: `/videos`,
             created: true
           }}
         />
@@ -81,23 +81,23 @@ class Create extends Component {
 
   breadcrumbs() {
     return (
-      <VendorBreadcrumbs>
+      <VideoBreadcrumbs>
         <Breadcrumb to={createPath()} active>
-          Create Vendor
+          Create Video
         </Breadcrumb>
-      </VendorBreadcrumbs>
+      </VideoBreadcrumbs>
     );
   }
 
   render() {
-    const vendor = this.state.vendor;
+    const video = this.state.video;
 
     return (
       <div>
         {this.redirect()}
         {this.breadcrumbs()}
-        <VendorForm
-          vendor={vendor}
+        <VideoForm
+          video={video}
           onSubmit={this.handleSubmit}
           errors={this.state.errors}
         />
@@ -106,4 +106,4 @@ class Create extends Component {
   }
 }
 
-export default authUser(isEditor(Create));
+export default authUser(isAuthor(Create));

@@ -11,6 +11,7 @@ import CreateArtistImage from "./views/artist_images/Create";
 import CreateLabel from "./views/labels/Create";
 import CreateRelease from "./views/releases/Create";
 import CreateVendor from "./views/vendors/Create";
+import CreateVideo from "./views/videos/Create";
 import Dashboard from "./views/Dashboard";
 import EditArtist from "./views/artists/Edit";
 import EditArtistImage from "./views/artist_images/Edit";
@@ -18,6 +19,7 @@ import EditLabel from "./views/labels/Edit";
 import EditRelease from "./views/releases/Edit";
 import EditArticle from "./views/articles/Edit";
 import EditVendor from "./views/vendors/Edit";
+import EditVideo from "./views/videos/Edit";
 import Labels from "./views/labels/Index";
 import Layout from "./components/layouts/Layout";
 import Release from "./views/releases/Show";
@@ -74,7 +76,9 @@ class App extends Component {
             <Route path="/vendor/create" component={CreateVendor} />
             <Route path="/vendor/:id/edit" component={EditVendor} />
             <Route path="/videos" component={Videos} />
+            <Route path="/video/create" component={CreateVideo} />
             <Route exact path="/video/:id" component={Video} />
+            <Route path="/video/:id/edit" component={EditVideo} />
           </AnimatedSwitch>
         </Layout>
       </BrowserRouter>
