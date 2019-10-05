@@ -20,6 +20,7 @@ import EditRelease from "./views/releases/Edit";
 import EditArticle from "./views/articles/Edit";
 import EditVendor from "./views/vendors/Edit";
 import EditVideo from "./views/videos/Edit";
+import Features from "./views/features/Index";
 import Labels from "./views/labels/Index";
 import Layout from "./components/layouts/Layout";
 import Release from "./views/releases/Show";
@@ -64,6 +65,7 @@ class App extends Component {
               component={EditArtistImage}
             />
             <Route path="/artist/:slug/edit" component={EditArtist} />
+            <Route exact path="/features" component={Features} />
             <Route path="/labels" component={Labels} />
             <Route path="/label/create" component={CreateLabel} />
             <Route path="/label/:slug/edit" component={EditLabel} />

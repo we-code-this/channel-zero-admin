@@ -3,6 +3,7 @@ import { NavLink as Link } from "react-router-dom";
 import { Icon } from "react-bulma-components";
 import { indexPath as articleIndex } from "../../models/articles";
 import { indexPath as artistIndex } from "../../models/artists";
+import { indexPath as featureIndex } from "../../models/features";
 
 class Nav extends Component {
   constructor(props) {
@@ -78,6 +79,17 @@ class Nav extends Component {
                 onClick={this.props.onCloseMenu}
               >
                 Artists
+              </Link>
+            </li>
+
+            <li>
+              <Link
+                to={featureIndex()}
+                className="navbar-item"
+                activeClassName="is-active"
+                onClick={this.props.onCloseMenu}
+              >
+                Features
               </Link>
             </li>
 
