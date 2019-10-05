@@ -1,6 +1,5 @@
 import React from "react";
 import IconButton from "./IconButton";
-import IconDeleteButton from "./IconDeleteButton";
 import DeleteModalButton from "./DeleteModalButton";
 
 const TableActionButtons = props => (

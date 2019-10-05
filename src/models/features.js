@@ -91,6 +91,11 @@ export async function togglePublish(id, published) {
 export async function update(id, data) {
   const token = cookies.get(process.env.REACT_APP_COOKIE_NAME);
 
+  const formData = {
+    article_id: data.article_id.value,
+    video_id: data.video_id.value
+  };
+
   const res = await fetch(`${host}/feature`, {
     headers: {
       Accept: "application/json",
@@ -98,7 +103,7 @@ export async function update(id, data) {
       authorization: `Bearer ${token}`
     },
     method: "PATCH",
-    body: JSON.stringify({ id, ...data })
+    body: JSON.stringify({ id, ...formData })
   });
 
   return await res.json();

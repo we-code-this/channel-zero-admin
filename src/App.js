@@ -15,11 +15,13 @@ import CreateVideo from "./views/videos/Create";
 import Dashboard from "./views/Dashboard";
 import EditArtist from "./views/artists/Edit";
 import EditArtistImage from "./views/artist_images/Edit";
+import EditFeature from "./views/features/Edit";
 import EditLabel from "./views/labels/Edit";
 import EditRelease from "./views/releases/Edit";
 import EditArticle from "./views/articles/Edit";
 import EditVendor from "./views/vendors/Edit";
 import EditVideo from "./views/videos/Edit";
+import Feature from "./views/features/Show";
 import Features from "./views/features/Index";
 import Labels from "./views/labels/Index";
 import Layout from "./components/layouts/Layout";
@@ -66,6 +68,8 @@ class App extends Component {
             />
             <Route path="/artist/:slug/edit" component={EditArtist} />
             <Route exact path="/features" component={Features} />
+            <Route exact path="/feature/:id" component={Feature} />
+            <Route path="/feature/:id/edit" component={EditFeature} />
             <Route path="/labels" component={Labels} />
             <Route path="/label/create" component={CreateLabel} />
             <Route path="/label/:slug/edit" component={EditLabel} />

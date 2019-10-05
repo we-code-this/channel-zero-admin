@@ -5,7 +5,7 @@ import Helmet from "react-helmet";
 import VideoBreadcrumbs from "../../components/videos/VideoBreadcrumbs";
 import Breadcrumb from "../../components/common/Breadcrumb";
 import VideoForm from "../../components/videos/VideoForm";
-import { findById, update, editPath, deleteVideo } from "../../models/videos";
+import { findById, update, editPath } from "../../models/videos";
 import authUser from "../../components/auth/authUser";
 import isEditor from "../../components/auth/isEditor";
 

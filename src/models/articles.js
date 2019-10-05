@@ -88,6 +88,11 @@ export async function get(params = {}) {
   return await res.json();
 }
 
+export async function getForSelect() {
+  const res = await fetch(`${host}/articles/by/title`);
+  return await res.json();
+}
+
 export function imageUrl(filename) {
   const hash = Date.now();
   return `/files/articles/${filename}?${hash}`;

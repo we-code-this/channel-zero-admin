@@ -5,6 +5,7 @@ import { Columns } from "react-bulma-components";
 
 const DescriptionColumn = props => (
   <Columns.Column className="description">
+    {props.children && props.children}
     <Markdown>{he.decode(props.description)}</Markdown>
   </Columns.Column>
 );
