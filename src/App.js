@@ -8,7 +8,9 @@ import Artists from "./views/artists/Index";
 import CreateArticle from "./views/articles/Create";
 import CreateArtist from "./views/artists/Create";
 import CreateArtistImage from "./views/artist_images/Create";
+import CreateFeature from "./views/features/Create";
 import CreateLabel from "./views/labels/Create";
+import CreatePromo from "./views/promos/Create";
 import CreateRelease from "./views/releases/Create";
 import CreateVendor from "./views/vendors/Create";
 import CreateVideo from "./views/videos/Create";
@@ -17,6 +19,7 @@ import EditArtist from "./views/artists/Edit";
 import EditArtistImage from "./views/artist_images/Edit";
 import EditFeature from "./views/features/Edit";
 import EditLabel from "./views/labels/Edit";
+import EditPromo from "./views/promos/Edit";
 import EditRelease from "./views/releases/Edit";
 import EditArticle from "./views/articles/Edit";
 import EditVendor from "./views/vendors/Edit";
@@ -25,6 +28,8 @@ import Feature from "./views/features/Show";
 import Features from "./views/features/Index";
 import Labels from "./views/labels/Index";
 import Layout from "./components/layouts/Layout";
+import Promo from "./views/promos/Show";
+import Promos from "./views/promos/Index";
 import Release from "./views/releases/Show";
 import Releases from "./views/releases/Index";
 import Vendors from "./views/vendors/Index";
@@ -68,11 +73,16 @@ class App extends Component {
             />
             <Route path="/artist/:slug/edit" component={EditArtist} />
             <Route exact path="/features" component={Features} />
+            <Route path="/feature/create" component={CreateFeature} />
             <Route exact path="/feature/:id" component={Feature} />
             <Route path="/feature/:id/edit" component={EditFeature} />
             <Route path="/labels" component={Labels} />
             <Route path="/label/create" component={CreateLabel} />
             <Route path="/label/:slug/edit" component={EditLabel} />
+            <Route exact path="/promos" component={Promos} />
+            <Route path="/promo/create" component={CreatePromo} />
+            <Route path="/promo/:id/edit" component={EditPromo} />
+            <Route exact path="/promo/:id" component={Promo} />
             <Route exact path="/releases" component={Releases} />
             <Route path="/releases/:page" component={Releases} />
             <Route path="/release/create" component={CreateRelease} />

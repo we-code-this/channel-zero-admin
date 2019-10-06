@@ -14,5 +14,5 @@ it("should render with correct number of links", () => {
   ).render();
 
   expect(wrapper.hasClass("admin-menu")).toBeTruthy();
-  expect(wrapper.find("a").length).toEqual(7);
+  expect(wrapper.find("a").length).toEqual(10);
 });

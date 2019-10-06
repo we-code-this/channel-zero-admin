@@ -4,6 +4,7 @@ import { Icon } from "react-bulma-components";
 import { indexPath as articleIndex } from "../../models/articles";
 import { indexPath as artistIndex } from "../../models/artists";
 import { indexPath as featureIndex } from "../../models/features";
+import { indexPath as promoIndex } from "../../models/promos";
 
 class Nav extends Component {
   constructor(props) {
@@ -101,6 +102,17 @@ class Nav extends Component {
                 onClick={this.props.onCloseMenu}
               >
                 Labels
+              </Link>
+            </li>
+
+            <li>
+              <Link
+                to={promoIndex()}
+                className="navbar-item"
+                activeClassName="is-active"
+                onClick={this.props.onCloseMenu}
+              >
+                Promos
               </Link>
             </li>
 

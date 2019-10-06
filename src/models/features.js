@@ -12,6 +12,11 @@ export async function count() {
 export async function create(data) {
   const token = cookies.get(process.env.REACT_APP_COOKIE_NAME);
 
+  const formData = {
+    article_id: data.article_id.value,
+    video_id: data.video_id.value
+  };
+
   const res = await fetch(`${host}/feature`, {
     headers: {
       Accept: "application/json",
@@ -19,7 +24,7 @@ export async function create(data) {
       authorization: `Bearer ${token}`
     },
     method: "POST",
-    body: JSON.stringify(data)
+    body: JSON.stringify(formData)
   });
 
   return await res.json();

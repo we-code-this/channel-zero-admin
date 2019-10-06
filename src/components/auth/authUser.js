@@ -13,10 +13,13 @@ function authUser(Component) {
                 if (token) {
                     const decoded = jwtDecode(token);
 
-                    setGlobal({
+                    let currentTime = new Date().getTime() / 1000;
+                    if (currentTime < decoded.exp) {
+                      setGlobal({
                         token,
                         groups: decoded.groups
-                    });
+                      }); 
+                    }
                 }
             }
         }

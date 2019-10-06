@@ -38,6 +38,10 @@
 .left-column {
   padding: 0 0 1rem;
 
+  .image-gallery, .image-container {
+    background-color: transparent;
+  }
+
   @media (min-width: $tablet) {
     padding: 0 1rem 1rem;
   }
