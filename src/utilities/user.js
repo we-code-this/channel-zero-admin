@@ -1,15 +1,18 @@
 import jwtDecode from 'jwt-decode';
 
 export const isAdmin = (groups) => {
-    return groups.hasOwnProperty(process.env.REACT_APP_ADMIN_GROUP);
+  const group = JSON.parse(process.env.REACT_APP_ADMIN_GROUP);
+  return groups.hasOwnProperty(group);
 };
 
 export const isEditor = (groups) => {
-    return groups.hasOwnProperty(process.env.REACT_APP_EDITOR_GROUP);
+  const group = JSON.parse(process.env.REACT_APP_EDITOR_GROUP);
+  return groups.hasOwnProperty(group);
 };
 
 export const isAuthor = (groups) => {
-    return groups.hasOwnProperty(process.env.REACT_APP_AUTHOR_GROUP);
+  const group = JSON.parse(process.env.REACT_APP_AUTHOR_GROUP);
+  return groups.hasOwnProperty(group);
 };
 
 export const id = (token) => {
