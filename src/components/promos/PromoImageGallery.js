@@ -6,7 +6,7 @@ const PromoImageGallery = props => (
   <Columns gapless className="image-gallery">
     <Columns.Column size={12} className="image-container">
       <img
-        src={imageUrl(props.promo.url)}
+        src={imageUrl(props.promo.image_url)}
         alt={`${props.promo.name}`}
       />
     </Columns.Column>

@@ -23,7 +23,7 @@ class PromoForm extends Component {
     this.state = {
       promo,
       image: undefined,
-      preview_url: promo.filename ? imageUrl(promo.url) : undefined,
+      preview_url: promo.filename ? imageUrl(promo.image_url) : undefined,
       wrong_format: false,
       errors: props.errors
     };
