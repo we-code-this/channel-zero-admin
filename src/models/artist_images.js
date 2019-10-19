@@ -93,7 +93,7 @@ export function editPath(slug, id) {
   return `/artist/${slug}/image/${id}/edit`;
 }
 
-export function imageUrl(filename) {
+export function imageUrl(url) {
   const hash = Date.now();
-  return `/files/artists/${filename}?${hash}`;
+  return `${url}?${hash}`;
 }

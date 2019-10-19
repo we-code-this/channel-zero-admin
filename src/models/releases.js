@@ -122,9 +122,9 @@ export async function findBySlug(slug) {
   return await res.json();
 }
 
-export function imageUrl(filename) {
+export function imageUrl(url) {
   const hash = Date.now();
-  return `/files/releases/${filename}?${hash}`;
+  return `${url}?${hash}`;
 }
 
 export function indexPath() {

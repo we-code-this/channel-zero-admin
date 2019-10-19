@@ -84,9 +84,9 @@ export async function get(params = {}) {
   return await res.json();
 }
 
-export function imageUrl(filename) {
+export function imageUrl(url) {
   const hash = Date.now();
-  return `/files/promos/${filename}?${hash}`;
+  return `${url}?${hash}`;
 }
 
 export function indexPath() {

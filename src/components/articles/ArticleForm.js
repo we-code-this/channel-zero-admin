@@ -23,7 +23,7 @@ class ArticleForm extends Component {
     this.state = {
       article,
       image: undefined,
-      preview_url: article.filename ? imageUrl(article.filename) : undefined,
+      preview_url: article.filename ? imageUrl(article.url) : undefined,
       wrong_format: false,
       errors: props.errors
     };

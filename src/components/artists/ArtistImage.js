@@ -7,7 +7,7 @@ class ArtistImage extends Component {
   render() {
     return (
       <React.Fragment>
-        <img src={imageUrl(this.props.image.filename)} alt={this.props.alt} />
+        <img src={imageUrl(this.props.image.url)} alt={this.props.alt} />
         <div className="buttons has-addons">
           <IconButton
             icon="edit"
