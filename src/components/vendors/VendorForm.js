@@ -44,7 +44,7 @@ class VendorForm extends Component {
     const vendor = this.state.vendor;
 
     return (
-      <form onSubmit={this.props.onSubmit} className="form">
+      <form onSubmit={this.props.onSubmit} className="form vendor-form">
         <div className="columns">
           <div className="column is-three-quarters">
             <TextInput

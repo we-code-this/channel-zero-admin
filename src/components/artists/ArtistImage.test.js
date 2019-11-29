@@ -12,7 +12,7 @@ describe("ArtistImage", () => {
       <MemoryRouter>
         <ArtistImage
           artistSlug="artist"
-          image={{ id: 1, filename: "test.jpg" }}
+          image={{ id: 1, url: "/test.jpg" }}
           alt="Test"
         />
       </MemoryRouter>

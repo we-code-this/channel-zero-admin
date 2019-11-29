@@ -1,32 +1,58 @@
-import React from "react";
+import React, { setGlobal } from "reactn";
 import Enzyme, { shallow } from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 import { MemoryRouter } from "react-router";
 import LabelTable from "./LabelTable";
+import { adminGlobals, emptyGlobals } from "../../utilities/testing";
 
 Enzyme.configure({ adapter: new Adapter() });
 
-describe("LabelTable", () => {
-  it("should render", () => {
-    const wrapper = shallow(
-      <MemoryRouter>
-        <LabelTable
-          labels={[
-            {
-              id: 1,
-              name: "Label 1",
-              slug: "label-1",
-              created_at: "2019-01-01"
-            }
-          ]}
-          page={1}
-          pageCount={1}
-          perPage={1}
-          path="/"
-        />
-      </MemoryRouter>
-    ).render();
+function createWrapper(pageCount = 1, itemCount = 2) {
+  let labels = [
+    {
+      id: 1,
+      name: "Label 1",
+      slug: "label-1",
+      created_at: "2019-01-01"
+    }
+  ];
 
+  if(itemCount === 2) {
+    labels.push(
+      {
+        id: 2,
+        title: "Label 2",
+        slug: "label-2",
+        created_at: "2019-01-01"
+      }
+    );
+  }
+
+  return shallow(
+    <MemoryRouter>
+      <LabelTable
+        labels={labels}
+        page={1}
+        pageCount={pageCount}
+        perPage={1}
+        path="/"
+      />
+    </MemoryRouter>
+  ).render();
+}
+
+describe("labels/LabelTable", () => {
+  beforeEach(() => {
+    setGlobal(adminGlobals());
+  });
+  
+  afterEach(() => {
+    setGlobal(emptyGlobals());
+  });
+
+  it("should render", () => {
+    const wrapper = createWrapper(1, 1);
+    
     expect(wrapper.first().find(".table").length).toEqual(1);
     expect(wrapper.find("thead").length).toEqual(1);
     expect(wrapper.find("thead tr").length).toEqual(1);
@@ -38,60 +64,12 @@ describe("LabelTable", () => {
   });
 
   it("should render all provided labels", () => {
-    const wrapper = shallow(
-      <MemoryRouter>
-        <LabelTable
-          labels={[
-            {
-              id: 1,
-              name: "Label 1",
-              slug: "label-1",
-              created_at: "2019-01-01"
-            },
-            {
-              id: 2,
-              title: "Label 2",
-              slug: "label-2",
-              created_at: "2019-01-01"
-            }
-          ]}
-          page={1}
-          pageCount={1}
-          perPage={2}
-          path="/"
-        />
-      </MemoryRouter>
-    ).render();
-
+    const wrapper = createWrapper();
     expect(wrapper.find("tbody tr").length).toEqual(2);
   });
 
   it("should render pagination when pageCount equals 2", () => {
-    const wrapper = shallow(
-      <MemoryRouter>
-        <LabelTable
-          labels={[
-            {
-              id: 1,
-              name: "Label 1",
-              slug: "label-1",
-              created_at: "2019-01-01"
-            },
-            {
-              id: 2,
-              title: "Label 2",
-              slug: "label-2",
-              created_at: "2019-01-01"
-            }
-          ]}
-          page={1}
-          pageCount={2}
-          perPage={1}
-          path="/"
-        />
-      </MemoryRouter>
-    ).render();
-
+    const wrapper = createWrapper(2);
     expect(wrapper.find(".pagination-list").length).toEqual(1);
   });
 });

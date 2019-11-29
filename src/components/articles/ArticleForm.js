@@ -94,7 +94,7 @@ class ArticleForm extends Component {
       <form
         onSubmit={this.props.onSubmit}
         encType="multipart/form-data"
-        className="form"
+        className="form article-form"
       >
         <div className="columns">
           <div className="column">

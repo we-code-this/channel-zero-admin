@@ -1,55 +1,127 @@
-import React from "react";
+import React, { setGlobal } from "reactn";
 import Enzyme, { shallow } from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 import { MemoryRouter } from "react-router";
 import Edit from "./Edit";
+import { authorGlobals, adminGlobals, editorGlobals, emptyGlobals } from "../../utilities/testing";
 
 Enzyme.configure({ adapter: new Adapter() });
 
-describe("vendors/Edit", () => {
-  it("should render", () => {
-    const wrapper = shallow(
-      <MemoryRouter>
-        <Edit
-          vendor={{
-            id: 1,
-            name: "Vendor",
-            icon_class: "icon",
-            created_at: "2019-01-01"
-          }}
-        />
-      </MemoryRouter>
-    ).render();
+function expectEditForm(wrapper) {
+  expect(wrapper.find(".breadcrumb").length).toEqual(1);
+  expect(wrapper.find(".vendor-form").length).toEqual(1);
+  expect(wrapper.find(".login-form").length).toEqual(0);
+  expect(wrapper.hasClass('no-access')).toEqual(false);
+}
 
-    expect(wrapper.find(".breadcrumb").length).toEqual(1);
-    expect(wrapper.find("form").length).toEqual(1);
-    expect(wrapper.find(".control").length).toEqual(4);
-    expect(wrapper.find(".input").length).toEqual(2);
-    expect(wrapper.find("label").length).toEqual(2);
-    expect(
-      wrapper
-        .find("label")
-        .first()
-        .text()
-    ).toEqual("Name");
-    expect(
-      wrapper
-        .find("label")
-        .last()
-        .text()
-    ).toEqual("Icon Class");
-    expect(
-      wrapper
-        .find("input")
-        .first()
-        .val()
-    ).toEqual("Vendor");
-    expect(
-      wrapper
-        .find("input")
-        .last()
-        .val()
-    ).toEqual("icon");
-    expect(wrapper.find("button").length).toEqual(2);
+function expectLoginForm(wrapper) {
+  expect(wrapper.find(".breadcrumb").length).toEqual(0);
+  expect(wrapper.find(".vendor-form").length).toEqual(0);
+  expect(wrapper.find(".login-form").length).toEqual(1);
+  expect(wrapper.hasClass('no-access')).toEqual(false);
+}
+
+describe("vendors/Edit", () => {
+  describe("logged in as admin", () => {
+    beforeEach(() => {
+      setGlobal(adminGlobals());
+    });
+    
+    afterEach(() => {
+      setGlobal(emptyGlobals());
+    });
+
+    it("should render Edit component", () => {
+      const wrapper = shallow(
+        <MemoryRouter>
+          <Edit
+            vendor={{
+              id: 1,
+              name: "Vendor",
+              icon_class: "icon",
+              created_at: "2019-01-01"
+            }}
+          />
+        </MemoryRouter>
+      ).render();
+  
+      expectEditForm(wrapper);
+    });
+  });
+
+  describe("logged in as editor", () => {
+    beforeEach(() => {
+      setGlobal(editorGlobals());
+    });
+    
+    afterEach(() => {
+      setGlobal(emptyGlobals());
+    });
+
+    it("should render Edit component", () => {
+      const wrapper = shallow(
+        <MemoryRouter>
+          <Edit
+            vendor={{
+              id: 1,
+              name: "Vendor",
+              icon_class: "icon",
+              created_at: "2019-01-01"
+            }}
+          />
+        </MemoryRouter>
+      ).render();
+  
+      expectEditForm(wrapper);
+    });
+  });
+
+  describe("logged in as author", () => {
+    beforeEach(() => {
+      setGlobal(authorGlobals());
+    });
+    
+    afterEach(() => {
+      setGlobal(emptyGlobals());
+    });
+
+    it("should render NoAccess component", () => {
+      const wrapper = shallow(
+        <MemoryRouter>
+          <Edit
+            vendor={{
+              id: 1,
+              name: "Vendor",
+              icon_class: "icon",
+              created_at: "2019-01-01"
+            }}
+          />
+        </MemoryRouter>
+      ).render();
+  
+      expect(wrapper.find(".breadcrumb").length).toEqual(0);
+      expect(wrapper.find(".vendor-form").length).toEqual(0);
+      expect(wrapper.find(".login-form").length).toEqual(0);
+      expect(wrapper.hasClass('no-access')).toEqual(true);
+    });
+  });
+
+  describe("not logged in", () => {
+    it("should render LoginForm", () => {
+      const wrapper = shallow(
+        <MemoryRouter>
+          <Edit
+            vendor={{
+              id: 1,
+              name: "Vendor",
+              icon_class: "icon",
+              created_at: "2019-01-01"
+            }}
+          />
+        </MemoryRouter>
+      ).render();
+  
+      expectLoginForm(wrapper);
+    });
   });
 });

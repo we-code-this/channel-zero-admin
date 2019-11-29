@@ -61,7 +61,7 @@ class LoginForm extends Component {
 
     render() {
         return (
-            <form onSubmit={this.handleSubmit}>
+            <form onSubmit={this.handleSubmit} className="login-form">
                 <Icon className="login-logo">
                     <svg className="svg-icon">
                     <use xlinkHref="#icon-cz" />

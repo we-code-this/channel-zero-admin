@@ -2,12 +2,12 @@ import React from "react";
 import Helmet from "react-helmet";
 
 const NoAccess = () => (
-    <React.Fragment>
+    <div className="no-access">
         <Helmet>
           <title>No Access</title>
         </Helmet>
         <p>Sorry, you don’t have access.</p>
-    </React.Fragment>
+    </div>
 );
   
   export default NoAccess;

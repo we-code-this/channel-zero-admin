@@ -25,7 +25,6 @@ class Show extends Component {
   constructor(props) {
     super(props);
 
-    this._canEditOrDelete = false;
     this._isMounted = false;
 
     const updated = props.location.updated ? props.location.updated : false;
@@ -45,16 +44,11 @@ class Show extends Component {
     
     if (!this.props.release) {
       release = await findBySlug(this.props.match.params.slug);
-      this._canEditOrDelete = canEditOrDelete(this.global.token, this.global.groups, release.user_id);
 
       if (this._isMounted) {
         this.setState({ ...this.state, release });
       }
     }
-  }
-
-  componentWillUnmount() {
-    this._canEditOrDelete = false;
   }
 
   actionMenu = () => {
@@ -116,7 +110,7 @@ class Show extends Component {
 
   handleDelete = async e => {
     e.preventDefault();
-    if (this._canEditOrDelete) {
+    if (canEditOrDelete(this.global.token, this.global.groups, this.state.release.user_id)) {
       await deleteRelease(this.state.release.id);
       this.setState({ ...this.state, deleted: true });
       this.forceUpdate();
@@ -125,7 +119,7 @@ class Show extends Component {
 
   handlePublish = async e => {
     e.preventDefault();
-    if (this._canEditOrDelete) {
+    if (canEditOrDelete(this.global.token, this.global.groups, this.state.release.user_id)) {
       const release = await togglePublish(
         this.state.release.id,
         this.state.release.published
@@ -155,7 +149,7 @@ class Show extends Component {
             <Helmet>
               <title>{`${release.artist.name} - ${release.title}`}</title>
             </Helmet>
-            {this._canEditOrDelete && this.actionMenu()}
+            {canEditOrDelete(this.global.token, this.global.groups, release.user_id) && this.actionMenu()}
             {this.breadcrumbs()}
             <Notification
               show={this.showNotification()}

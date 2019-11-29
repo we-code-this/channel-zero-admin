@@ -102,7 +102,7 @@ class ReleaseForm extends Component {
       <form
         onSubmit={this.props.onSubmit}
         encType="multipart/form-data"
-        className="form"
+        className="form release-form"
       >
         <div className="columns">
           <div className="column is-one-quarter">
