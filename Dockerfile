@@ -18,8 +18,8 @@ ENV REACT_APP_AUTHOR_GROUP $REACT_APP_AUTHOR_GROUP
 WORKDIR /app
 ENV PATH /app/node_modules/.bin:$PATH
 COPY package.json /app/package.json
-RUN npm install --silent
-RUN npm install react-scripts@2.1.5 -g --silent
+RUN npm install
+RUN npm install react-scripts@2.1.5 -g
 COPY . /app
 RUN npm run build
 

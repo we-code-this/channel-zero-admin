@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "devDependencies": {
-    "fsevents": "^1.2.4",
     "react-scripts": "2.1.5"
   },
   "dependencies": {
