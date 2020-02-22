@@ -20,7 +20,8 @@ class ReleaseForm extends Component {
           artist_id: undefined,
           label_id: undefined,
           title: "",
-          description: ""
+          description: "",
+          catalog_number: "",
         };
 
     this.state = {
@@ -83,6 +84,11 @@ class ReleaseForm extends Component {
     this.setState({ ...this.state, release });
   };
 
+  handleCatalogNumberChange = e => {
+    const release = { ...this.state.release, catalog_number: e.target.value };
+    this.setState({ ...this.state, release });
+  };
+
   valid = type => {
     let valid = false;
 
@@ -115,6 +121,18 @@ class ReleaseForm extends Component {
             <LabelSelect
               onChange={this.handleLabelChange}
               value={this.state.release.label_id}
+            />
+          </div>
+          <div className="column is-one-quarter">
+            <TextInput
+              label="Catalog Number"
+              onChange={this.handleCatalogNumberChange}
+              value={this.state.release.catalog_number}
+              error={
+                this.state.errors && this.state.errors.catalog_number
+                  ? this.state.errors.catalog_number
+                  : undefined
+              }
             />
           </div>
           <div className="column">

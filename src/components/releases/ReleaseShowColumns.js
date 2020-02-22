@@ -11,7 +11,8 @@ const ReleaseShowColumns = props => (
       <Metadata
         data={[
           { key: "Label", value: props.release.label.name },
-          { key: "Published", value: props.release.published ? "Yes" : "No" }
+          { key: "Published", value: props.release.published ? "Yes" : "No" },
+          { key: "Catalog Number", value: props.release.catalog_number }
         ]}
       />
     </ShowColumns>
