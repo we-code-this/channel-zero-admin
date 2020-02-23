@@ -18,6 +18,12 @@
       border-color: #999;
     }
   }
+
+  .input {
+    .react-date-picker__wrapper {
+      border: none;
+    }
+  }
 }
 
 .image-preview {

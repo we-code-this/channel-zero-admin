@@ -19,6 +19,7 @@
     "normalize.css": "^8.0.1",
     "react": "^16.12.0",
     "react-bulma-components": "^2.3.0",
+    "react-date-picker": "^7.10.0",
     "react-dom": "^16.12.0",
     "react-helmet": "^5.2.1",
     "react-mde": "^7.0.3",

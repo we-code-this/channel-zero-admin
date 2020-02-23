@@ -18,6 +18,7 @@ export async function create(data) {
   form.append("title", data.title.value);
   form.append("description", data.description.value);
   form.append("catalog_number", data.catalog_number.value);
+  form.append("release_date", data.release_date.value);
 
   const token = cookies.get(process.env.REACT_APP_COOKIE_NAME);
 
@@ -55,6 +56,7 @@ export async function update(id, data) {
   form.append("title", data.title.value);
   form.append("description", data.description.value);
   form.append("catalog_number", data.catalog_number.value);
+  form.append("release_date", data.release_date.value);  
 
   const token = cookies.get(process.env.REACT_APP_COOKIE_NAME);
 

@@ -3,6 +3,7 @@ import React, { Component } from "react";
 import { withRouter } from "react-router";
 import MarkdownEditor from "../common/forms/MarkdownEditor";
 import TextInput from "../common/forms/TextInput";
+import DatePicker from "../common/forms/DatePicker";
 import ImageFileInputWithPreview from "../common/forms/ImageFileInputWithPreview";
 import SubmitWithCancel from "../common/forms/SubmitWithCancel";
 import ArtistSelect from "../artists/ArtistSelect";
@@ -22,6 +23,7 @@ class ReleaseForm extends Component {
           title: "",
           description: "",
           catalog_number: "",
+          release_date: "",
         };
 
     this.state = {
@@ -89,6 +91,11 @@ class ReleaseForm extends Component {
     this.setState({ ...this.state, release });
   };
 
+  handleReleaseDateChange = e => {
+    const release = { ...this.state.release, release_date: e.target.value };
+    this.setState({ ...this.state, release });
+  };
+
   valid = type => {
     let valid = false;
 
@@ -135,6 +142,15 @@ class ReleaseForm extends Component {
               }
             />
           </div>
+          <div className="column is-one-quarter">
+            <DatePicker
+              label="Release Date"
+              onChange={this.handleReleaseDateChange}
+              value={this.state.release.release_date}
+            />
+          </div>
+        </div>
+        <div className="columns">
           <div className="column">
             <TextInput
               label="Title"

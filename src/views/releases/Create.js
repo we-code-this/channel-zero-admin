@@ -18,7 +18,9 @@ class Create extends Component {
       errors: {
         image: undefined,
         title: undefined,
-        description: undefined
+        description: undefined,
+        catalog_number: undefined,
+        release_date: undefined,
       }
     };
   }
