@@ -8,8 +8,6 @@ class ReleaseTypeSelect extends Component {
       types: [
         { id: 1, name: 'Album' },
         { id: 2, name: 'Single' },
-        { id: 3, name: 'DVD' },
-        { id: 4, name: 'Book' },
         { id: 5, name: 'HIPHOPGODS Presents' },
         { id: 6, name: 'Marc Reddick Presents' },
         { id: 7, name: 'SLAMjamz Compilations & Projects' },
