@@ -18,6 +18,7 @@ const ReleaseShowColumns = props => {
             { key: "Published", value: props.release.published ? "Yes" : "No" },
             { key: "Catalog Number", value: props.release.catalog_number },
             { key: "Release Date", value: releaseDate },
+            { key: "Release Type", value: props.release.release_type },
           ]}
         />
       </ShowColumns>

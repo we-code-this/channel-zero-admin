@@ -1,5 +1,6 @@
 import _ from "lodash";
 import React, { Component } from "react";
+import moment from 'moment';
 import { withRouter } from "react-router";
 import MarkdownEditor from "../common/forms/MarkdownEditor";
 import TextInput from "../common/forms/TextInput";
@@ -8,6 +9,7 @@ import ImageFileInputWithPreview from "../common/forms/ImageFileInputWithPreview
 import SubmitWithCancel from "../common/forms/SubmitWithCancel";
 import ArtistSelect from "../artists/ArtistSelect";
 import LabelSelect from "../labels/LabelSelect";
+import ReleaseTypeSelect from "../releases/ReleaseTypeSelect";
 import { validTypes } from "../../config/images";
 import { imageUrl } from "../../models/releases";
 
@@ -19,11 +21,12 @@ class ReleaseForm extends Component {
       ? props.release
       : {
           artist_id: undefined,
-          label_id: undefined,
+          label_id: 1,
           title: "",
           description: "",
           catalog_number: "",
-          release_date: "",
+          release_date: moment().format('YYYY-MM-DD'),
+          release_type: "Album",
         };
 
     this.state = {
@@ -96,6 +99,11 @@ class ReleaseForm extends Component {
     this.setState({ ...this.state, release });
   };
 
+  handleReleaseTypeChange = e => {
+    const release = { ...this.state.release, release_type: e.target.value };
+    this.setState({ ...this.state, release });
+  };
+
   valid = type => {
     let valid = false;
 
@@ -143,14 +151,20 @@ class ReleaseForm extends Component {
             />
           </div>
           <div className="column is-one-quarter">
+              <ReleaseTypeSelect
+                onChange={this.handleReleaseTypeChange}
+                value={this.state.release.release_type}
+              />
+          </div>
+        </div>
+        <div className="columns">
+          <div className="column is-one-quarter">
             <DatePicker
               label="Release Date"
               onChange={this.handleReleaseDateChange}
               value={this.state.release.release_date}
             />
           </div>
-        </div>
-        <div className="columns">
           <div className="column">
             <TextInput
               label="Title"
