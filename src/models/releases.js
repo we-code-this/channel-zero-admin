@@ -46,6 +46,12 @@ export async function create(data) {
   }
 }
 
+export async function discCount(id) {
+  const res = await fetch(`${host}/release/${id}/discs/count`);
+
+  return (await res.json())[0].count;
+};
+
 export async function update(id, data) {
   let form = new FormData();
   if (data.image.files.length) {

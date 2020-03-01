@@ -8,7 +8,7 @@ class ShowColumns extends Component {
     return (
       <Columns className="show-columns">
         {this.props.showLeft && <LeftColumn>{this.props.children}</LeftColumn>}
-        <DescriptionColumn description={this.props.description} />
+        <DescriptionColumn description={this.props.description} />        
       </Columns>
     );
   }

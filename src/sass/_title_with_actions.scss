@@ -1,0 +1,9 @@
+.title-with-actions {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+
+  .title {
+    margin: 0 0 0 .5rem;
+  }
+}

@@ -17,6 +17,8 @@ import {
   togglePublish,
   deleteRelease
 } from "../../models/releases";
+import { createPath as createDiscPath, deleteDisc } from "../../models/discs";
+import { deleteTrack } from "../../models/tracks";
 import { showPath as showArtistPath } from "../../models/artists";
 import authUser from "../../components/auth/authUser";
 import { canEditOrDelete } from "../../utilities/user";
@@ -29,11 +31,21 @@ class Show extends Component {
 
     const updated = props.location.updated ? props.location.updated : false;
     const created = props.location.created ? props.location.created : false;
+    const discCreated = props.location.discCreated ? props.location.discCreated : false;
+    const discUpdated = props.location.discUpdated ? props.location.discUpdated : false;
+    const trackCreated = props.location.trackCreated ? props.location.trackCreated : false;
+    const trackUpdated = props.location.trackUpdated ? props.location.trackUpdated : false;
 
     this.state = {
       deleted: false,
       updated,
       created,
+      discCreated,
+      discUpdated,
+      discDeleted: false,
+      trackCreated,
+      trackUpdated,
+      trackDeleted: false,
       release: this.props.release ? this.props.release : undefined
     };
   }
@@ -67,6 +79,12 @@ class Show extends Component {
           published={this.state.release.published}
           onSubmit={this.handlePublish}
         />
+        <IconButton
+          to={createDiscPath(this.state.release.slug)}
+          className="is-success"
+          icon="plus"
+          label="Disc"
+        />
       </ActionMenu>
     );
   };
@@ -85,7 +103,14 @@ class Show extends Component {
   };
 
   showNotification = () => {
-    return this.state.updated || this.state.created;
+    return this.state.updated || 
+      this.state.created || 
+      this.state.discCreated ||
+      this.state.discUpdated ||
+      this.state.discDeleted ||
+      this.state.trackCreated ||
+      this.state.trackUpdated ||
+      this.state.trackDeleted;
   };
 
   notificationMessage = () => {
@@ -101,6 +126,54 @@ class Show extends Component {
       return (
         <span>
           <strong>{this.state.release.title}</strong> successfully updated!
+        </span>
+      );
+    }
+
+    if (this.state.discCreated) {
+      return (
+        <span>
+          Disc successfully created!
+        </span>
+      );
+    }
+
+    if (this.state.discUpdated) {
+      return (
+        <span>
+          Disc successfully updated!
+        </span>
+      );
+    }
+
+    if (this.state.discDeleted) {
+      return (
+        <span>
+          Disc successfully deleted.
+        </span>
+      );
+    }
+
+    if (this.state.trackCreated) {
+      return (
+        <span>
+          Track successfully created!
+        </span>
+      );
+    }
+
+    if (this.state.trackUpdated) {
+      return (
+        <span>
+          Track successfully updated!
+        </span>
+      );
+    }
+
+    if (this.state.trackDeleted) {
+      return (
+        <span>
+          Track successfully deleted.
         </span>
       );
     }
@@ -133,8 +206,35 @@ class Show extends Component {
     this.setState({
       ...this.state,
       updated: false,
-      created: false
+      created: false,
+      discCreated: false,
+      discUpdated: false,
+      discDeleted: false,
+      trackCreated: false,
+      trackUpdated: false,
+      trackDeleted: false,
     });
+  };
+
+  handleDiscDelete = async e => {
+    e.preventDefault();
+    await deleteDisc(e.target.id.value);
+
+    const release = await findBySlug(this.props.match.params.slug);
+
+    this.setState({ ...this.state, release, discDeleted: true })
+    this.forceUpdate();
+  };
+
+  handleTrackDelete = async e => {
+    e.preventDefault();
+
+    await deleteTrack(e.target.id.value);
+
+    const release = await findBySlug(this.props.match.params.slug);
+
+    this.setState({ ...this.state, release, trackDeleted: true })
+    this.forceUpdate();
   };
 
   render() {
@@ -159,7 +259,11 @@ class Show extends Component {
               {this.notificationMessage()}
             </Notification>
             <h2 className="title is-2">{release.title}</h2>
-            <ReleaseShowColumns release={release} />
+            <ReleaseShowColumns 
+              release={release} 
+              onDiscDelete={this.handleDiscDelete} 
+              onTrackDelete={this.handleTrackDelete}
+            />
           </div>
         );
       } else {

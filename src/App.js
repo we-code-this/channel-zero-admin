@@ -12,16 +12,20 @@ import CreateFeature from "./views/features/Create";
 import CreateLabel from "./views/labels/Create";
 import CreatePromo from "./views/promos/Create";
 import CreateRelease from "./views/releases/Create";
+import CreateReleaseDisc from "./views/discs/Create";
+import CreateReleaseTrack from "./views/tracks/Create";
 import CreateVendor from "./views/vendors/Create";
 import CreateVideo from "./views/videos/Create";
 import Dashboard from "./views/Dashboard";
+import EditArticle from "./views/articles/Edit";
 import EditArtist from "./views/artists/Edit";
 import EditArtistImage from "./views/artist_images/Edit";
 import EditFeature from "./views/features/Edit";
 import EditLabel from "./views/labels/Edit";
 import EditPromo from "./views/promos/Edit";
 import EditRelease from "./views/releases/Edit";
-import EditArticle from "./views/articles/Edit";
+import EditReleaseDisc from "./views/discs/Edit";
+import EditReleaseTrack from "./views/tracks/Edit";
 import EditVendor from "./views/vendors/Edit";
 import EditVideo from "./views/videos/Edit";
 import Feature from "./views/features/Show";
@@ -88,6 +92,10 @@ class App extends Component {
             <Route path="/release/create" component={CreateRelease} />
             <Route exact path="/release/:slug" component={Release} />
             <Route path="/release/:slug/edit" component={EditRelease} />
+            <Route path="/release/:slug/disc/create" component={CreateReleaseDisc} />
+            <Route path="/release/:slug/disc/:id/edit" component={EditReleaseDisc} />
+            <Route path="/release/:slug/disc/:id/track/create" component={CreateReleaseTrack} />
+            <Route path="/release/:release_slug/disc/:disc_id/track/:slug/edit" component={EditReleaseTrack} />
             <Route path="/vendors" component={Vendors} />
             <Route path="/vendor/create" component={CreateVendor} />
             <Route path="/vendor/:id/edit" component={EditVendor} />

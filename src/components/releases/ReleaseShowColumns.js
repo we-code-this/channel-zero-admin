@@ -1,16 +1,19 @@
 import React from "react";
-import { Columns } from "react-bulma-components";
 import moment from "moment";
-import ShowColumns from "../common/ShowColumns";
+import he from "he";
+import { Columns } from "react-bulma-components";
+import Markdown from "markdown-to-jsx";
+import LeftColumn from "../common/LeftColumn";
 import Metadata from "../common/Metadata";
 import ReleaseImageGallery from "./ReleaseImageGallery";
+import ReleaseTracklist from "./ReleaseTracklist";
 
 const ReleaseShowColumns = props => {
   const releaseDate = moment(props.release.release_date).format('MMMM Do, YYYY');
 
   return (
     <Columns className="show-columns">
-      <ShowColumns description={props.release.description}>
+      <LeftColumn>
         <ReleaseImageGallery release={props.release} />
         <Metadata
           data={[
@@ -21,7 +24,20 @@ const ReleaseShowColumns = props => {
             { key: "Release Type", value: props.release.release_type },
           ]}
         />
-      </ShowColumns>
+      </LeftColumn>
+      <Columns.Column className="description">
+        <Markdown>{he.decode(props.release.description)}</Markdown>
+
+        {props.release.discs && 
+          <ReleaseTracklist 
+            discs={props.release.discs} 
+            slug={props.release.slug} 
+            onDiscDelete={props.onDiscDelete}
+            onTrackDelete={props.onTrackDelete}
+            user_id={props.release.user_id}
+          />
+        }
+      </Columns.Column>
     </Columns>
   );
 };
