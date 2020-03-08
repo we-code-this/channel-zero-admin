@@ -14,7 +14,7 @@ class ArtistImageForm extends Component {
       artist_id: props.artist_id,
       image: this.props.image,
       preview_url: this.props.image
-        ? imageUrl(this.props.image.url)
+        ? imageUrl(this.props.image.url.large)
         : undefined,
       wrong_format: false,
       errors: props.errors
