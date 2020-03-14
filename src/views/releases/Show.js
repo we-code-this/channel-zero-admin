@@ -19,10 +19,12 @@ import {
 } from "../../models/releases";
 import { createPath as createDiscPath, deleteDisc } from "../../models/discs";
 import { createPath as createCreditPath, deleteCredit } from "../../models/credits";
+import { createPath as createEndorsementPath, deleteEndorsement } from "../../models/endorsements";
 import { deleteTrack } from "../../models/tracks";
 import { showPath as showArtistPath } from "../../models/artists";
 import authUser from "../../components/auth/authUser";
 import { canEditOrDelete } from "../../utilities/user";
+import { scrollToTop } from "../../utilities/scroll";
 
 class Show extends Component {
   constructor(props) {
@@ -38,6 +40,8 @@ class Show extends Component {
     const trackUpdated = props.location.trackUpdated ? props.location.trackUpdated : false;
     const creditCreated = props.location.creditCreated ? props.location.creditCreated : false;
     const creditUpdated = props.location.creditUpdated ? props.location.creditUpdated : false;
+    const endorsementCreated = props.location.endorsementCreated ? props.location.endorsementCreated : false;
+    const endorsementUpdated = props.location.endorsementUpdated ? props.location.endorsementUpdated : false;
 
     this.state = {
       deleted: false,
@@ -52,6 +56,9 @@ class Show extends Component {
       creditCreated,
       creditUpdated,
       creditDeleted: false,
+      endorsementCreated,
+      endorsementUpdated,
+      endorsementDeleted: false,
       release: this.props.release ? this.props.release : undefined
     };
   }
@@ -97,6 +104,12 @@ class Show extends Component {
           icon="plus"
           label="Credit"
         />
+        <IconButton
+          to={createEndorsementPath(this.state.release.slug)}
+          className="is-info"
+          icon="plus"
+          label="Endorsement"
+        />
       </ActionMenu>
     );
   };
@@ -125,7 +138,10 @@ class Show extends Component {
       this.state.trackDeleted ||
       this.state.creditCreated ||
       this.state.creditUpdated ||
-      this.state.creditDeleted;
+      this.state.creditDeleted ||
+      this.state.endorsementCreated ||
+      this.state.endorsementUpdated ||
+      this.state.endorsementDeleted;
   };
 
   notificationMessage = () => {
@@ -217,6 +233,30 @@ class Show extends Component {
       );
     }
 
+    if (this.state.endorsementCreated) {
+      return (
+        <span>
+          Release Endorsement successfully created!
+        </span>
+      );
+    }
+
+    if (this.state.endorsementUpdated) {
+      return (
+        <span>
+          Release Endorsement successfully updated!
+        </span>
+      );
+    }
+
+    if (this.state.endorsementDeleted) {
+      return (
+        <span>
+          Release Endorsement successfully deleted.
+        </span>
+      );
+    }
+
     return "";
   };
 
@@ -252,6 +292,12 @@ class Show extends Component {
       trackCreated: false,
       trackUpdated: false,
       trackDeleted: false,
+      creditCreated: false,
+      creditUpdated: false,
+      creditDeleted: false,
+      endorsementCreated: false,
+      endorsementUpdated: false,
+      endorsementDeleted: false,
     });
   };
 
@@ -262,8 +308,9 @@ class Show extends Component {
 
     const release = await findBySlug(this.props.match.params.slug);
 
-    this.setState({ ...this.state, release, creditDeleted: true })
+    this.setState({ ...this.state, release, creditDeleted: true });
     this.forceUpdate();
+    scrollToTop();
   };
 
   handleDiscDelete = async e => {
@@ -274,6 +321,19 @@ class Show extends Component {
 
     this.setState({ ...this.state, release, discDeleted: true })
     this.forceUpdate();
+    scrollToTop();
+  };
+
+  handleEndorsementDelete = async e => {
+    e.preventDefault();
+
+    await deleteEndorsement(e.target.id.value);
+
+    const release = await findBySlug(this.props.match.params.slug);
+    
+    this.setState({ ...this.state, release, endorsementDeleted: true });
+    this.forceUpdate();
+    scrollToTop();
   };
 
   handleTrackDelete = async e => {
@@ -285,6 +345,7 @@ class Show extends Component {
 
     this.setState({ ...this.state, release, trackDeleted: true })
     this.forceUpdate();
+    scrollToTop();
   };
 
   render() {
@@ -311,9 +372,10 @@ class Show extends Component {
             <h2 className="title is-2">{release.title}</h2>
             <ReleaseShowColumns 
               release={release} 
-              onDiscDelete={this.handleDiscDelete} 
-              onTrackDelete={this.handleTrackDelete}
               onCreditDelete={this.handleCreditDelete}
+              onDiscDelete={this.handleDiscDelete}
+              onEndorsementDelete={this.handleEndorsementDelete}
+              onTrackDelete={this.handleTrackDelete}
             />
           </div>
         );

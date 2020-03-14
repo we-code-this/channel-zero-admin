@@ -2,9 +2,9 @@ import React, { Component } from "react";
 import { Redirect } from "react-router";
 import ReleaseBreadcrumbs from "../../components/releases/ReleaseBreadcrumbs";
 import Breadcrumb from "../../components/common/Breadcrumb";
-import CreditForm from "../../components/credits/CreditForm";
+import EndorsementForm from "../../components/endorsements/EndorsementForm";
 import { scrollToTop } from "../../utilities/scroll";
-import { create, createPath } from "../../models/credits";
+import { create, createPath } from "../../models/endorsements";
 import { showPath as showArtistPath } from "../../models/artists";
 import {
   findBySlug,
@@ -22,10 +22,10 @@ class Create extends Component {
     this.state = {
       redirectToRelease: false,
       release: undefined,
-      credit: undefined,
+      endorsement: undefined,
       errors: {
-        label: undefined,
-        value: undefined,
+        review: undefined,
+        reviewer: undefined,
         url: undefined,
       }
     };
@@ -54,7 +54,7 @@ class Create extends Component {
           {this.state.release.title}
         </Breadcrumb>
         <Breadcrumb to={createPath(this.state.release.slug)} active>
-          Create Release Credit
+          Create Release Endorsement
         </Breadcrumb>
       </ReleaseBreadcrumbs>
     );
@@ -66,7 +66,7 @@ class Create extends Component {
         <Redirect
           to={{
             pathname: `/release/${this.state.release.slug}`,
-            creditCreated: true
+            endorsementCreated: true
           }}
         />
       )
@@ -75,8 +75,8 @@ class Create extends Component {
 
   handleSubmit = async e => {
     e.preventDefault();
-    const newLabel = e.target.label.value;
-    const newValue = e.target.value.value;
+    const newReview = e.target.review.value;
+    const newReviewer = e.target.reviewer.value;
     const newUrl = e.target.url.value;
 
     const result = await create(e.target);
@@ -93,8 +93,8 @@ class Create extends Component {
         ...this.state,
         credit: {
           ...this.state.credit,
-          label: newLabel,
-          value: newValue,
+          review: newReview,
+          reviewer: newReviewer,
           url: newUrl,
         },
         errors: {
@@ -109,8 +109,8 @@ class Create extends Component {
         ...this.state,
         credit: {
           ...this.state.credit,
-          label: newLabel,
-          value: newValue,
+          review: newReview,
+          reviewer: newReviewer,
           url: newUrl,
         },
         redirectToRelease: true
@@ -122,10 +122,10 @@ class Create extends Component {
     const { release, errors } = this.state;
 
     return (
-      <div className="create-release-credit">
+      <div className="create-release-endorsement">
         {this.redirect()}
         {this.breadcrumbs()}
-        {release && <CreditForm
+        {release && <EndorsementForm
           release={release}
           onSubmit={this.handleSubmit}
           errors={errors}

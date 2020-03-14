@@ -2,34 +2,35 @@ import React, { Fragment } from "react";
 import he from "he";
 import IconButton from "../common/IconButton";
 import IconDeleteButton from "../common/IconDeleteButton";
-import { editPath } from "../../models/credits";
+import { editPath } from "../../models/endorsements";
 
-const CreditList = ({ credits, releaseSlug, onDelete }) => {
+const EndorsementList = ({ endorsements, releaseSlug, onDelete }) => {
   return (
-    <div className="credit-list">
-      {credits.length > 0 && (
+    <div className="endorsement-list">
+      {endorsements.length > 0 && (
         <Fragment>
-          <h3 className="title is-3">Credits</h3>
+          <h3 className="title is-3">Endorsements</h3>
           <ul className="metadata">
-          {credits.map(credit => (
-            <li key={`meta-${credit.label}`} className="credit-item">
-              <span className="credit-info">
-                <strong>{credit.label}:</strong> {
-                  credit.url ? <a href={credit.url}>{he.decode(credit.value)}</a> : 
-                  he.decode(credit.value)
+          {endorsements.map(endorsement => (
+            <li key={`endorsement-${endorsement.id}`} className="endorsement-item">
+              <span className="endorsement-info">
+                {he.decode(endorsement.review)} — {
+                  endorsement.url ? 
+                  <a href={endorsement.url}>{he.decode(endorsement.reviewer)}</a> : 
+                  he.decode(endorsement.reviewer)
                 }
               </span>
-              <span className="credit-actions">
+              <span className="endorsement-actions">
                 <div className="buttons has-addons">
                   <IconButton
                     icon="edit"
                     className="is-primary is-small"
                     label="Edit"
                     showLabel={false}
-                    to={editPath(credit.id, releaseSlug)}
+                    to={editPath(endorsement.id, releaseSlug)}
                   />
                   <IconDeleteButton
-                    id={credit.id}
+                    id={endorsement.id}
                     className="is-danger is-small"
                     icon="minus-circle"
                     label="Delete"
@@ -47,4 +48,4 @@ const CreditList = ({ credits, releaseSlug, onDelete }) => {
   );
 };
 
-export default CreditList;
+export default EndorsementList;

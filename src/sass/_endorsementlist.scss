@@ -1,0 +1,16 @@
+.endorsement-list {
+  .title.is-3 {
+    margin: 1.5rem 0 .25rem;
+  }
+}
+
+.endorsement-item {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+  margin-bottom: .25rem;
+}
+
+.endorsement-actions {
+  margin-right: .25rem;
+}

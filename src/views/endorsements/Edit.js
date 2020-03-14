@@ -4,7 +4,7 @@ import { Redirect } from "react-router";
 import Helmet from "react-helmet";
 import ReleaseBreadcrumbs from "../../components/releases/ReleaseBreadcrumbs";
 import Breadcrumb from "../../components/common/Breadcrumb";
-import CreditForm from "../../components/credits/CreditForm";
+import EndorsementForm from "../../components/endorsements/EndorsementForm";
 import authUser from "../../components/auth/authUser";
 import isAuthor from "../../components/auth/isAuthor";
 import { canEditOrDelete } from "../../utilities/user";
@@ -14,7 +14,7 @@ import {
   findBySlug,
   showPath as showReleasePath
 } from "../../models/releases";
-import { findById, editPath, update } from '../../models/credits';
+import { findById, editPath, update } from '../../models/endorsements';
 
 class Edit extends Component {
   constructor(props) {
@@ -26,10 +26,10 @@ class Edit extends Component {
     this.state = {
       redirectToRelease: false,
       release: undefined,
-      credit: undefined,
+      endorsement: undefined,
       errors: {
-        label: undefined,
-        value: undefined,
+        review: undefined,
+        reviewer: undefined,
         url: undefined,
       }
     };
@@ -43,9 +43,9 @@ class Edit extends Component {
       
       this._canEditOrDelete = canEditOrDelete(this.global.token, this.global.groups, release.user_id);
 
-      const credit = await findById(this.props.match.params.id);
+      const endorsement = await findById(this.props.match.params.id);
 
-      this.setState({ ...this.state, release, credit });
+      this.setState({ ...this.state, release, endorsement });
     }
   }
 
@@ -53,7 +53,7 @@ class Edit extends Component {
     e.preventDefault();
 
     if (this._canEditOrDelete) {
-      const result = await update(this.state.credit.id, e.target);
+      const result = await update(this.state.endorsement.id, e.target);
 
       if (result.errors.length) {
         const resultErrors = {};
@@ -90,27 +90,27 @@ class Edit extends Component {
         <Breadcrumb to={showReleasePath(this.state.release.slug)}>
           {this.state.release.title}
         </Breadcrumb>
-        <Breadcrumb to={editPath(this.state.credit.id, this.state.release.slug)} active>
-          Edit {this.state.credit.label}: {this.state.credit.value}
+        <Breadcrumb to={editPath(this.state.endorsement.id, this.state.release.slug)} active>
+          Edit Endorsement
         </Breadcrumb>
       </ReleaseBreadcrumbs>
     );
   }
 
   renderForm() {
-    const { release, credit, errors } = this.state;
+    const { release, endorsement, errors } = this.state;
 
     return (
       <div>
         <Helmet>
-          <title>{`Edit ${he.decode(credit.label)}: ${he.decode(credit.value)}`}</title>
+          <title>{`Edit Endorsement`}</title>
         </Helmet>
         {this.redirect()}
         {this.breadcrumbs()}
 
-        {(release && credit) && <CreditForm
+        {(release && endorsement) && <EndorsementForm
           release={release}
-          credit={credit}
+          endorsement={endorsement}
           onSubmit={this.handleSubmit}
           errors={errors}
         />}
@@ -124,7 +124,7 @@ class Edit extends Component {
         <Redirect
           to={{
             pathname: `/release/${this.state.release.slug}`,
-            creditUpdated: true
+            endorsementUpdated: true
           }}
         />
       )
@@ -132,9 +132,9 @@ class Edit extends Component {
   }
 
   render() {
-    const credit = this.state.credit;
+    const endorsement = this.state.endorsement;
 
-    if (credit) {
+    if (endorsement) {
       return this._canEditOrDelete ? this.renderForm() : <Redirect to="/releases" />;
     } else {
       return "";

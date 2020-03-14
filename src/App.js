@@ -14,6 +14,7 @@ import CreatePromo from "./views/promos/Create";
 import CreateRelease from "./views/releases/Create";
 import CreateReleaseDisc from "./views/discs/Create";
 import CreateReleaseCredit from "./views/credits/Create";
+import CreateReleaseEndorsement from "./views/endorsements/Create";
 import CreateReleaseTrack from "./views/tracks/Create";
 import CreateVendor from "./views/vendors/Create";
 import CreateVideo from "./views/videos/Create";
@@ -27,6 +28,7 @@ import EditPromo from "./views/promos/Edit";
 import EditRelease from "./views/releases/Edit";
 import EditReleaseCredit from "./views/credits/Edit";
 import EditReleaseDisc from "./views/discs/Edit";
+import EditReleaseEndorsement from "./views/endorsements/Edit";
 import EditReleaseTrack from "./views/tracks/Edit";
 import EditVendor from "./views/vendors/Edit";
 import EditVideo from "./views/videos/Edit";
@@ -98,6 +100,8 @@ class App extends Component {
             <Route path="/release/:slug/disc/:id/edit" component={EditReleaseDisc} />
             <Route path="/release/:slug/credit/create" component={CreateReleaseCredit} />
             <Route path="/release/:slug/credit/:id/edit" component={EditReleaseCredit} />
+            <Route path="/release/:slug/endorsement/create" component={CreateReleaseEndorsement} />
+            <Route path="/release/:slug/endorsement/:id/edit" component={EditReleaseEndorsement} />
             <Route path="/release/:slug/disc/:id/track/create" component={CreateReleaseTrack} />
             <Route path="/release/:release_slug/disc/:disc_id/track/:slug/edit" component={EditReleaseTrack} />
             <Route path="/vendors" component={Vendors} />

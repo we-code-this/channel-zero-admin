@@ -6,11 +6,12 @@ const cookies = new Cookies();
 export async function create(data) {
   const token = cookies.get(process.env.REACT_APP_COOKIE_NAME);
 
-  const creditData = {
-    release_id: data.release_id.value,
-    label: data.label.value,
-    value: data.value.value,
+  const endorsementData = {
+    related_id: data.related_id.value,
+    review: data.review.value,
+    reviewer: data.reviewer.value,
     url: data.url.value,
+    type: 'release',
   };
 
   let opts = {
@@ -20,17 +21,17 @@ export async function create(data) {
       authorization: `Bearer ${token}`
     },
     method: "POST",
-    body: JSON.stringify(creditData)
+    body: JSON.stringify(endorsementData)
   };
 
   try {
-    const res = await fetch(`${host}/credit`, opts);
+    const res = await fetch(`${host}/endorsement`, opts);
     return await res.json();
   } catch (e) {
     return {
       errors: [
         {
-          field: "label",
+          field: "review",
           message: "An error occurred. Please try again."
         }
       ]
@@ -38,10 +39,14 @@ export async function create(data) {
   }
 }
 
-export async function deleteCredit(id) {
+export function createPath(slug) {
+  return `/release/${slug}/endorsement/create`;
+}
+
+export async function deleteEndorsement(id) {
   const token = cookies.get(process.env.REACT_APP_COOKIE_NAME);
 
-  const res = await fetch(`${host}/credit`, {
+  const res = await fetch(`${host}/endorsement`, {
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
@@ -54,13 +59,22 @@ export async function deleteCredit(id) {
   return await res.json();
 }
 
+export function editPath(id, release_slug) {
+  return `/release/${release_slug}/endorsement/${id}/edit`;
+}
+
+export async function findById(id) {
+  const res = await fetch(`${host}/endorsement/${id}`);
+  return await res.json();
+}
+
 export async function update(id, data) {
   const token = cookies.get(process.env.REACT_APP_COOKIE_NAME);
 
-  const creditData = {
+  const endorsementData = {
     id: id,
-    label: data.label.value,
-    value: data.value.value,
+    review: data.review.value,
+    reviewer: data.reviewer.value,
     url: data.url.value,
   };
 
@@ -71,33 +85,20 @@ export async function update(id, data) {
       authorization: `Bearer ${token}`
     },
     method: "PATCH",
-    body: JSON.stringify(creditData)
+    body: JSON.stringify(endorsementData)
   };
 
   try {
-    const res = await fetch(`${host}/credit`, opts);
+    const res = await fetch(`${host}/endorsement`, opts);
     return await res.json();
   } catch (e) {
     return {
       errors: [
         {
-          field: "label",
+          field: "review",
           message: "An error occurred. Please try again."
         }
       ]
     };
   }
-}
-
-export function createPath(slug) {
-  return `/release/${slug}/credit/create`;
-}
-
-export function editPath(id, release_slug) {
-  return `/release/${release_slug}/credit/${id}/edit`;
-}
-
-export async function findById(id) {
-  const res = await fetch(`${host}/credit/${id}`);
-  return await res.json();
 }

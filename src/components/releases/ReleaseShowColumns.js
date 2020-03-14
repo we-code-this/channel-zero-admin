@@ -8,6 +8,7 @@ import Metadata from "../common/Metadata";
 import ReleaseImageGallery from "./ReleaseImageGallery";
 import ReleaseTracklist from "./ReleaseTracklist";
 import CreditList from "../credits/CreditList";
+import EndorsementList from "../endorsements/EndorsementList";
 
 const ReleaseShowColumns = props => {
   const releaseDate = moment(props.release.release_date).format('MMMM Do, YYYY');
@@ -27,7 +28,11 @@ const ReleaseShowColumns = props => {
         <Metadata
           data={metadata}
         />
-        <CreditList credits={props.release.credits} releaseSlug={props.release.slug} onDelete={props.onCreditDelete} />
+        <CreditList 
+          credits={props.release.credits} 
+          releaseSlug={props.release.slug} 
+          onDelete={props.onCreditDelete}
+        />
       </LeftColumn>
       <Columns.Column className="description">
         <Markdown>{he.decode(props.release.description)}</Markdown>
@@ -39,6 +44,14 @@ const ReleaseShowColumns = props => {
             onDiscDelete={props.onDiscDelete}
             onTrackDelete={props.onTrackDelete}
             user_id={props.release.user_id}
+          />
+        }
+
+        {props.release.endorsements && 
+          <EndorsementList 
+            endorsements={props.release.endorsements}
+            releaseSlug={props.release.slug}
+            onDelete={props.onEndorsementDelete}
           />
         }
       </Columns.Column>

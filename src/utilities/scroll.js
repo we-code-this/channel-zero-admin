@@ -1,7 +1,5 @@
 const scrollToTop = () => {
-  document
-    .getElementById("pageContentContainer")
-    .scrollTo({ top: 0, behavior: "smooth" });
+  window.scrollTo({ top: 0, behavior: "smooth" });
 };
 
 export { scrollToTop };

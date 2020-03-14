@@ -17,6 +17,7 @@
 @import "release_disc";
 @import "disc_tracklist";
 @import "creditlist";
+@import "endorsementlist";
 
 .no-scroll {
   overflow: hidden;
@@ -29,6 +30,10 @@ p, .has-margin-bottom {
 img {
   width: 100%;
   height: auto;
+}
+
+.buttons.has-addons {
+  min-width: 3.3125rem;
 }
 
 .switch-wrapper {
