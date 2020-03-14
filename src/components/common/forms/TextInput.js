@@ -6,9 +6,10 @@ const TextInput = props => {
   const srOnly = props.placeholder ? true : false;
   const placeholder = props.placeholder ? props.label : undefined;
   const inputName = props.name ? props.name : props.label.toLowerCase().replace(" ", "_");
+  const htmlFor = props.name ? props.name : undefined;
 
   return (
-    <Field label={props.label} help={props.help} error={props.error} srOnly={srOnly}>
+    <Field label={props.label} help={props.help} error={props.error} srOnly={srOnly} htmlFor={htmlFor}>
       <input
         name={inputName}
         className={inputClass}

@@ -2,10 +2,11 @@ import React from "react";
 
 const Field = props => {
   const labelClass = props.srOnly ? "label is-sr-only" : "label";
+  const htmlFor = props.htmlFor ? props.htmlFor : props.label.toLowerCase().replace(" ", "_");
 
   return (
     <div className="field">
-      <label className={labelClass} htmlFor={props.label.toLowerCase()}>
+      <label className={labelClass} htmlFor={htmlFor}>
         {props.label}
       </label>
       <div className="control">

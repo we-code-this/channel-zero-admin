@@ -4,17 +4,17 @@ import { Redirect } from "react-router";
 import Helmet from "react-helmet";
 import ReleaseBreadcrumbs from "../../components/releases/ReleaseBreadcrumbs";
 import Breadcrumb from "../../components/common/Breadcrumb";
-import DiscForm from "../../components/discs/DiscForm";
+import CreditForm from "../../components/credits/CreditForm";
 import authUser from "../../components/auth/authUser";
 import isAuthor from "../../components/auth/isAuthor";
 import { canEditOrDelete } from "../../utilities/user";
 import { scrollToTop } from "../../utilities/scroll";
+import { showPath as showArtistPath } from "../../models/artists";
 import {
   findBySlug,
   showPath as showReleasePath
 } from "../../models/releases";
-import { findById, editPath, update } from '../../models/discs';
-import { showPath as showArtistPath } from "../../models/artists";
+import { findById, editPath, update } from '../../models/credits';
 
 class Edit extends Component {
   constructor(props) {
@@ -26,7 +26,7 @@ class Edit extends Component {
     this.state = {
       redirectToRelease: false,
       release: undefined,
-      disc: undefined,
+      credit: undefined,
       errors: {
         name: undefined,
       }
@@ -41,9 +41,9 @@ class Edit extends Component {
       
       this._canEditOrDelete = canEditOrDelete(this.global.token, this.global.groups, release.user_id);
 
-      const disc = await findById(this.props.match.params.id);
+      const credit = await findById(this.props.match.params.id);
 
-      this.setState({ ...this.state, release, disc });
+      this.setState({ ...this.state, release, credit });
     }
   }
 
@@ -51,7 +51,7 @@ class Edit extends Component {
     e.preventDefault();
 
     if (this._canEditOrDelete) {
-      const result = await update(this.state.disc.id, e.target);
+      const result = await update(this.state.credit.id, e.target);
 
       if (result.errors.length) {
         const resultErrors = {};
@@ -80,7 +80,7 @@ class Edit extends Component {
   };
 
   breadcrumbs() {
-    return (
+    return this.state.release && (
       <ReleaseBreadcrumbs>
         <Breadcrumb to={showArtistPath(this.state.release.artist.slug)}>
           {this.state.release.artist.name}
@@ -88,27 +88,27 @@ class Edit extends Component {
         <Breadcrumb to={showReleasePath(this.state.release.slug)}>
           {this.state.release.title}
         </Breadcrumb>
-        <Breadcrumb to={editPath(this.state.disc.id, this.state.release.slug)} active>
-          Edit {this.state.disc.name}
+        <Breadcrumb to={editPath(this.state.credit.id, this.state.release.slug)} active>
+          Edit {this.state.credit.label}: {this.state.credit.value}
         </Breadcrumb>
       </ReleaseBreadcrumbs>
     );
   }
 
   renderForm() {
-    const { release, disc, errors } = this.state;
+    const { release, credit, errors } = this.state;
 
     return (
       <div>
         <Helmet>
-          <title>{`Edit “${he.decode(disc.name)}”`}</title>
+          <title>{`Edit ${he.decode(credit.label)}: ${he.decode(credit.value)}`}</title>
         </Helmet>
         {this.redirect()}
         {this.breadcrumbs()}
 
-        {(release && disc) && <DiscForm
+        {(release && credit) && <CreditForm
           release={release}
-          disc={disc}
+          credit={credit}
           onSubmit={this.handleSubmit}
           errors={errors}
         />}
@@ -122,7 +122,7 @@ class Edit extends Component {
         <Redirect
           to={{
             pathname: `/release/${this.state.release.slug}`,
-            discUpdated: true
+            creditUpdated: true
           }}
         />
       )
@@ -130,9 +130,11 @@ class Edit extends Component {
   }
 
   render() {
-    const disc = this.state.disc;
+    const credit = this.state.credit;
 
-    if (disc) {
+    console.log('test');
+
+    if (credit) {
       return this._canEditOrDelete ? this.renderForm() : <Redirect to="/releases" />;
     } else {
       return "";

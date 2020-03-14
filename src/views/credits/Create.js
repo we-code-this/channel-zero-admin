@@ -1,14 +1,13 @@
-import React, { Fragment, Component } from "react";
+import React, { Component } from "react";
 import { Redirect } from "react-router";
 import ReleaseBreadcrumbs from "../../components/releases/ReleaseBreadcrumbs";
 import Breadcrumb from "../../components/common/Breadcrumb";
-import DiscForm from "../../components/discs/DiscForm";
+import CreditForm from "../../components/credits/CreditForm";
 import { scrollToTop } from "../../utilities/scroll";
-import { create, createPath } from "../../models/discs";
+import { create, createPath } from "../../models/credits";
 import { showPath as showArtistPath } from "../../models/artists";
 import {
   findBySlug,
-  discCount as releaseDiscCount,
   showPath as showReleasePath
 } from "../../models/releases";
 import authUser from "../../components/auth/authUser";
@@ -22,9 +21,8 @@ class Create extends Component {
 
     this.state = {
       redirectToRelease: false,
-      redirectToAddTrack: false,
       release: undefined,
-      disc: undefined,
+      credit: undefined,
       errors: {
         name: undefined,
       }
@@ -37,9 +35,6 @@ class Create extends Component {
     
     if (!this.props.release) {
       release = await findBySlug(this.props.match.params.slug);
-      const discCount = await releaseDiscCount(release.id);
-
-      release.discCount = discCount;
 
       if (this._isMounted) {
         this.setState({ ...this.state, release });
@@ -57,15 +52,30 @@ class Create extends Component {
           {this.state.release.title}
         </Breadcrumb>
         <Breadcrumb to={createPath(this.state.release.slug)} active>
-          Create Release Disc
+          Create Release Credit
         </Breadcrumb>
       </ReleaseBreadcrumbs>
     );
   }
 
+  redirect() {
+    return (
+      this.state.redirectToRelease && (
+        <Redirect
+          to={{
+            pathname: `/release/${this.state.release.slug}`,
+            creditCreated: true
+          }}
+        />
+      )
+    );
+  }
+
   handleSubmit = async e => {
     e.preventDefault();
-    const newName = e.target.name.value;
+    const newLabel = e.target.label.value;
+    const newValue = e.target.value.value;
+    const newUrl = e.target.url.value;
 
     const result = await create(e.target);
 
@@ -79,9 +89,11 @@ class Create extends Component {
 
       this.setState({
         ...this.state,
-        disc: {
-          ...this.state.disc,
-          name: newName,
+        credit: {
+          ...this.state.credit,
+          label: newLabel,
+          value: newValue,
+          url: newUrl,
         },
         errors: {
           ...this.state.errors,
@@ -93,96 +105,29 @@ class Create extends Component {
     } else {
       this.setState({
         ...this.state,
-        disc: {
-          ...this.state.disc,
-          name: newName,
+        credit: {
+          ...this.state.credit,
+          label: newLabel,
+          value: newValue,
+          url: newUrl,
         },
         redirectToRelease: true
       });
     }
   };
 
-  handleAddTrackSubmit = async disc => {
-
-    const result = await create({
-      name: {
-        value: disc.name,
-      },
-      release_id: {
-        value: disc.release_id
-      }
-    });
-
-    if (result.errors && result.errors.length) {
-      const resultErrors = {};
-
-      result.errors.map(error => {
-        resultErrors[error.field] = error.message;
-        return error;
-      });
-
-      this.setState({
-        ...this.state,
-        disc: {
-          ...this.state.disc,
-          name: disc.name,
-        },
-        errors: {
-          ...this.state.errors,
-          ...resultErrors
-        }
-      });
-
-      scrollToTop();
-    } else {
-      this.setState({
-        ...this.state,
-        disc: {
-          ...this.state.disc,
-          id: result.id,
-          name: disc.name,
-        },
-        redirectToAddTrack: true
-      });
-    }
-  };
-
-  redirect() {
-    return (
-      <Fragment>
-        {this.state.redirectToRelease && (
-          <Redirect
-            to={{
-              pathname: `/release/${this.state.release.slug}`,
-              discCreated: true
-            }}
-          />
-        )}
-        {this.state.redirectToAddTrack && (
-          <Redirect
-            to={{
-              pathname: `/release/${this.state.release.slug}/disc/${this.state.disc.id}/track/create`,
-            }}
-          />
-        )}
-      </Fragment>
-    );
-  }
-
   render() {
-    const { release } = this.state;
+    const { release, errors } = this.state;
 
     return (
-      <div className="create-release-disc">
+      <div className="create-release-credit">
         {this.redirect()}
         {this.breadcrumbs()}
-        {release && <DiscForm
+        {release && <CreditForm
           release={release}
           onSubmit={this.handleSubmit}
-          onAddTrackSubmitClick={this.handleAddTrackSubmit}
-          errors={this.state.errors}
+          errors={errors}
         />}
-        
       </div>
     );
   }

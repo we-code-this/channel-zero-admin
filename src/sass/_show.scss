@@ -38,6 +38,10 @@
 .left-column {
   padding: 0 0 1rem;
 
+  .title.is-3 {
+    margin: 1.5rem 0 .25rem;
+  }
+
   .image-gallery, .image-container {
     background-color: transparent;
   }

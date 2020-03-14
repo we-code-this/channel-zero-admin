@@ -18,6 +18,7 @@ import {
   deleteRelease
 } from "../../models/releases";
 import { createPath as createDiscPath, deleteDisc } from "../../models/discs";
+import { createPath as createCreditPath, deleteCredit } from "../../models/credits";
 import { deleteTrack } from "../../models/tracks";
 import { showPath as showArtistPath } from "../../models/artists";
 import authUser from "../../components/auth/authUser";
@@ -35,6 +36,8 @@ class Show extends Component {
     const discUpdated = props.location.discUpdated ? props.location.discUpdated : false;
     const trackCreated = props.location.trackCreated ? props.location.trackCreated : false;
     const trackUpdated = props.location.trackUpdated ? props.location.trackUpdated : false;
+    const creditCreated = props.location.creditCreated ? props.location.creditCreated : false;
+    const creditUpdated = props.location.creditUpdated ? props.location.creditUpdated : false;
 
     this.state = {
       deleted: false,
@@ -46,6 +49,9 @@ class Show extends Component {
       trackCreated,
       trackUpdated,
       trackDeleted: false,
+      creditCreated,
+      creditUpdated,
+      creditDeleted: false,
       release: this.props.release ? this.props.release : undefined
     };
   }
@@ -85,6 +91,12 @@ class Show extends Component {
           icon="plus"
           label="Disc"
         />
+        <IconButton
+          to={createCreditPath(this.state.release.slug)}
+          className="is-link"
+          icon="plus"
+          label="Credit"
+        />
       </ActionMenu>
     );
   };
@@ -110,7 +122,10 @@ class Show extends Component {
       this.state.discDeleted ||
       this.state.trackCreated ||
       this.state.trackUpdated ||
-      this.state.trackDeleted;
+      this.state.trackDeleted ||
+      this.state.creditCreated ||
+      this.state.creditUpdated ||
+      this.state.creditDeleted;
   };
 
   notificationMessage = () => {
@@ -178,6 +193,30 @@ class Show extends Component {
       );
     }
 
+    if (this.state.creditCreated) {
+      return (
+        <span>
+          Release Credit successfully created!
+        </span>
+      );
+    }
+
+    if (this.state.creditUpdated) {
+      return (
+        <span>
+          Release Credit successfully updated!
+        </span>
+      );
+    }
+
+    if (this.state.creditDeleted) {
+      return (
+        <span>
+          Release Credit successfully deleted.
+        </span>
+      );
+    }
+
     return "";
   };
 
@@ -214,6 +253,17 @@ class Show extends Component {
       trackUpdated: false,
       trackDeleted: false,
     });
+  };
+
+  handleCreditDelete = async e => {
+    e.preventDefault();
+
+    await deleteCredit(e.target.id.value);
+
+    const release = await findBySlug(this.props.match.params.slug);
+
+    this.setState({ ...this.state, release, creditDeleted: true })
+    this.forceUpdate();
   };
 
   handleDiscDelete = async e => {
@@ -263,6 +313,7 @@ class Show extends Component {
               release={release} 
               onDiscDelete={this.handleDiscDelete} 
               onTrackDelete={this.handleTrackDelete}
+              onCreditDelete={this.handleCreditDelete}
             />
           </div>
         );
