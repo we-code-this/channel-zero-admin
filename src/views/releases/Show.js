@@ -20,6 +20,7 @@ import {
 import { createPath as createDiscPath, deleteDisc } from "../../models/discs";
 import { createPath as createCreditPath, deleteCredit } from "../../models/credits";
 import { createPath as createEndorsementPath, deleteEndorsement } from "../../models/endorsements";
+import { createPath as createReleaseVendorPath, deleteVendor } from "../../models/release_vendors";
 import { deleteTrack } from "../../models/tracks";
 import { showPath as showArtistPath } from "../../models/artists";
 import authUser from "../../components/auth/authUser";
@@ -42,6 +43,8 @@ class Show extends Component {
     const creditUpdated = props.location.creditUpdated ? props.location.creditUpdated : false;
     const endorsementCreated = props.location.endorsementCreated ? props.location.endorsementCreated : false;
     const endorsementUpdated = props.location.endorsementUpdated ? props.location.endorsementUpdated : false;
+    const vendorCreated = props.location.vendorCreated ? props.location.vendorCreated : false;
+    const vendorUpdated = props.location.vendorUpdated ? props.location.vendorUpdated : false;
 
     this.state = {
       deleted: false,
@@ -59,6 +62,9 @@ class Show extends Component {
       endorsementCreated,
       endorsementUpdated,
       endorsementDeleted: false,
+      vendorCreated,
+      vendorUpdated,
+      vendorDeleted: false,
       release: this.props.release ? this.props.release : undefined
     };
   }
@@ -110,6 +116,12 @@ class Show extends Component {
           icon="plus"
           label="Endorsement"
         />
+        <IconButton
+          to={createReleaseVendorPath(this.state.release.slug)}
+          className="is-success"
+          icon="plus"
+          label="Vendor Location"
+        />
       </ActionMenu>
     );
   };
@@ -141,7 +153,10 @@ class Show extends Component {
       this.state.creditDeleted ||
       this.state.endorsementCreated ||
       this.state.endorsementUpdated ||
-      this.state.endorsementDeleted;
+      this.state.endorsementDeleted ||
+      this.state.vendorCreated ||
+      this.state.vendorUpdated ||
+      this.state.vendorDeleted;
   };
 
   notificationMessage = () => {
@@ -257,6 +272,31 @@ class Show extends Component {
       );
     }
 
+
+    if (this.state.vendorCreated) {
+      return (
+        <span>
+          Release Vendor Location successfully added!
+        </span>
+      );
+    }
+
+    if (this.state.vendorUpdated) {
+      return (
+        <span>
+          Release Vendor Location successfully updated!
+        </span>
+      );
+    }
+
+    if (this.state.vendorDeleted) {
+      return (
+        <span>
+          Release Vendor Location successfully deleted.
+        </span>
+      );
+    }
+
     return "";
   };
 
@@ -348,6 +388,18 @@ class Show extends Component {
     scrollToTop();
   };
 
+  handleVendorDelete = async e => {
+    e.preventDefault();
+
+    await deleteVendor(e.target.id.value);
+
+    const release = await findBySlug(this.props.match.params.slug);
+
+    this.setState({ ...this.state, release, vendorDeleted: true });
+    this.forceUpdate();
+    scrollToTop();
+  };
+
   render() {
     const release = this.state.release;
 
@@ -376,6 +428,7 @@ class Show extends Component {
               onDiscDelete={this.handleDiscDelete}
               onEndorsementDelete={this.handleEndorsementDelete}
               onTrackDelete={this.handleTrackDelete}
+              onVendorDelete={this.handleVendorDelete}
             />
           </div>
         );

@@ -9,6 +9,7 @@ import ReleaseImageGallery from "./ReleaseImageGallery";
 import ReleaseTracklist from "./ReleaseTracklist";
 import CreditList from "../credits/CreditList";
 import EndorsementList from "../endorsements/EndorsementList";
+import ReleaseVendorList from "../releasevendors/ReleaseVendorList";
 
 const ReleaseShowColumns = props => {
   const releaseDate = moment(props.release.release_date).format('MMMM Do, YYYY');
@@ -32,6 +33,11 @@ const ReleaseShowColumns = props => {
           credits={props.release.credits} 
           releaseSlug={props.release.slug} 
           onDelete={props.onCreditDelete}
+        />
+        <ReleaseVendorList
+          vendors={props.release.vendors}
+          releaseSlug={props.release.slug}
+          onDelete={props.onVendorDelete}
         />
       </LeftColumn>
       <Columns.Column className="description">

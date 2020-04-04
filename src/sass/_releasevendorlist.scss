@@ -1,0 +1,15 @@
+.vendor-item {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+    margin-bottom: .25rem;
+
+    .icon {
+        vertical-align: top;
+    }
+  }
+  
+  .vendor-actions {
+    margin-right: .25rem;
+  }
+  

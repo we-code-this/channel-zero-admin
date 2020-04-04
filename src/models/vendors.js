@@ -62,6 +62,11 @@ export async function get(params = {}) {
   return await res.json();
 }
 
+export async function getForSelect() {
+  const res = await fetch(`${host}/vendors/by/name`);
+  return await res.json();
+}
+
 export function indexPath() {
   return "/vendors";
 }
