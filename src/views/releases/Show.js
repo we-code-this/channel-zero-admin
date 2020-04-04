@@ -338,6 +338,9 @@ class Show extends Component {
       endorsementCreated: false,
       endorsementUpdated: false,
       endorsementDeleted: false,
+      vendorCreated: false,
+      vendorUpdated: false,
+      vendorDeleted: false,
     });
   };
 
