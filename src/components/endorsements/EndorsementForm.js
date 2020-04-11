@@ -2,6 +2,7 @@ import _ from "lodash";
 import React, { Component } from "react";
 import he from "he";
 import { withRouter } from "react-router";
+import MarkdownEditor from "../common/forms/MarkdownEditor";
 import TextInput from "../common/forms/TextInput";
 import SubmitWithCancel from "../common/forms/SubmitWithCancel";
 
@@ -42,9 +43,8 @@ class EndorsementForm extends Component {
     this.props.history.goBack();
   };
 
-  handleReviewChange = e => {
-    const endorsement = { ...this.state.endorsement, review: e.target.value };
-
+  handleReviewChange = value => {
+    const endorsement = { ...this.state.endorsement, review: value };
     this.setState({ ...this.state, endorsement });
   };
 
@@ -69,18 +69,6 @@ class EndorsementForm extends Component {
         <input type="hidden" name="related_id" value={this.state.endorsement.related_id} />
 
         <div className="columns">
-          <div className="column is-half">
-            <TextInput
-              label="Review"
-              onChange={this.handleReviewChange}
-              value={this.state.endorsement.review}
-              error={
-                this.state.errors && this.state.errors.review
-                  ? this.state.errors.review
-                  : undefined
-              }
-            />
-          </div>
           <div className="column is-quarter">
             <TextInput
               label="Reviewer"
@@ -93,7 +81,7 @@ class EndorsementForm extends Component {
               }
             />
           </div>
-          <div className="column is-quarter">
+          <div className="column is-three-quarters">
             <TextInput
               label="URL"
               onChange={this.handleUrlChange}
@@ -106,6 +94,16 @@ class EndorsementForm extends Component {
             />
           </div>
         </div>
+        <MarkdownEditor
+          label="Review"
+          onChange={this.handleReviewChange}
+          value={this.state.endorsement.review}
+          error={
+            this.state.errors && this.state.errors.review
+              ? this.state.errors.review
+              : undefined
+          }
+        />
         
         <SubmitWithCancel onClick={this.handleCancelClick} />
       </form>

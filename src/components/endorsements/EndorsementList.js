@@ -1,5 +1,6 @@
 import React, { Fragment } from "react";
 import he from "he";
+import Markdown from "markdown-to-jsx";
 import IconButton from "../common/IconButton";
 import IconDeleteButton from "../common/IconDeleteButton";
 import { editPath } from "../../models/endorsements";
@@ -14,7 +15,7 @@ const EndorsementList = ({ endorsements, releaseSlug, onDelete }) => {
           {endorsements.map(endorsement => (
             <li key={`endorsement-${endorsement.id}`} className="endorsement-item">
               <span className="endorsement-info">
-                {he.decode(endorsement.review)} — {
+                <Markdown>{he.decode(endorsement.review)}</Markdown> — {
                   endorsement.url ? 
                   <a href={endorsement.url}>{he.decode(endorsement.reviewer)}</a> : 
                   he.decode(endorsement.reviewer)
