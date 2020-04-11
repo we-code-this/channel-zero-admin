@@ -1,6 +1,7 @@
 import React, { Component } from "reactn";
 import { Redirect } from "react-router-dom";
 import Helmet from "react-helmet";
+import he from "he";
 import ActionMenu from "../../components/common/ActionMenu";
 import Breadcrumb from "../../components/common/Breadcrumb";
 import IconButton from "../../components/common/IconButton";
@@ -130,10 +131,10 @@ class Show extends Component {
     return (
       <ReleaseBreadcrumbs>
         <Breadcrumb to={showArtistPath(this.state.release.artist.slug)}>
-          {this.state.release.artist.name}
+          {he.decode(this.state.release.artist.name)}
         </Breadcrumb>
         <Breadcrumb to={showPath(this.state.release.slug)} active>
-          {this.state.release.title}
+          {he.decode(this.state.release.title)}
         </Breadcrumb>
       </ReleaseBreadcrumbs>
     );
@@ -413,7 +414,7 @@ class Show extends Component {
         return (
           <div>
             <Helmet>
-              <title>{`${release.artist.name} - ${release.title}`}</title>
+              <title>{`${release.artist.name} - ${he.decode(release.title)}`}</title>
             </Helmet>
             {canEditOrDelete(this.global.token, this.global.groups, release.user_id) && this.actionMenu()}
             {this.breadcrumbs()}
@@ -424,7 +425,7 @@ class Show extends Component {
             >
               {this.notificationMessage()}
             </Notification>
-            <h2 className="title is-2">{release.title}</h2>
+            <h2 className="title is-2">{he.decode(release.title)}</h2>
             <ReleaseShowColumns 
               release={release} 
               onCreditDelete={this.handleCreditDelete}
