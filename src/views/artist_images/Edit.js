@@ -5,6 +5,7 @@ import ArtistBreadcrumbs from "../../components/artists/ArtistBreadcrumbs";
 import Breadcrumb from "../../components/common/Breadcrumb";
 import ArtistImageForm from "../../components/artists/ArtistImageForm";
 import { showPath, findBySlug } from "../../models/artists";
+import { scrollToTop } from "../../utilities/scroll";
 import authUser from "../../components/auth/authUser";
 import { edit, createPath } from "../../models/artist_images";
 import isAdmin from "../../components/auth/isAdmin";
@@ -51,10 +52,22 @@ class Edit extends Component {
   handleSubmit = async e => {
     e.preventDefault();
 
+    this.setGlobal({
+      ...this.global,
+      uploading: true
+    });
+
+    scrollToTop();
+
     if (e.target.image.value) {
       const result = await edit(e.target);
 
-      if (result.errors.length) {
+      this.setGlobal({
+        ...this.global,
+        uploading: false
+      });
+
+      if (result.errors && result.errors.length) {
         const resultErrors = {};
 
         result.errors.map(error => {
@@ -70,6 +83,11 @@ class Edit extends Component {
           }
         });
       } else {
+        this.setGlobal({
+          ...this.global,
+          uploading: false
+        });
+
         this.setState({
           ...this.state,
           redirectToArtist: true

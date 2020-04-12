@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component } from "reactn";
 import { Redirect } from "react-router";
 import ArticleBreadcrumbs from "../../components/articles/ArticleBreadcrumbs";
 import Breadcrumb from "../../components/common/Breadcrumb";
@@ -26,35 +26,48 @@ class Create extends Component {
 
   handleSubmit = async e => {
     e.preventDefault();
+
+    this.setGlobal({
+      ...this.global,
+      uploading: true
+    });
+
+    scrollToTop();
+
     const newTitle = e.target.title.value;
     const newSummary = e.target.summary.value;
     const newDescription = e.target.description.value;
 
     const result = await create(e.target);
 
+    this.setGlobal({
+      ...this.global,
+      uploading: false
+    });
+
     if (result.errors && result.errors.length) {
-    const resultErrors = {};
+      const resultErrors = {};
 
-    result.errors.map(error => {
-        resultErrors[error.field] = error.message;
-        return error;
-    });
+      result.errors.map(error => {
+          resultErrors[error.field] = error.message;
+          return error;
+      });
 
-    this.setState({
-        ...this.state,
-        article: {
-        ...this.state.article,
-        name: newTitle,
-        summary: newSummary,
-        description: newDescription
-        },
-        errors: {
-        ...this.state.errors,
-        ...resultErrors
-        }
-    });
+      this.setState({
+          ...this.state,
+          article: {
+          ...this.state.article,
+          name: newTitle,
+          summary: newSummary,
+          description: newDescription
+          },
+          errors: {
+          ...this.state.errors,
+          ...resultErrors
+          }
+      });
 
-    scrollToTop();
+      scrollToTop();
     } else {
     this.setState({
         ...this.state,

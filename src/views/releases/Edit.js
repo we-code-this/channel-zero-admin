@@ -50,8 +50,20 @@ class Edit extends Component {
   handleSubmit = async e => {
     e.preventDefault();
 
+    this.setGlobal({
+      ...this.global,
+      uploading: true
+    });
+
+    scrollToTop();
+
     if (this._canEditOrDelete) {
       const result = await update(this.state.release.id, e.target);
+
+      this.setGlobal({
+        ...this.global,
+        uploading: false
+      });
 
       if (result.errors.length) {
         const resultErrors = {};
@@ -71,6 +83,11 @@ class Edit extends Component {
   
         scrollToTop();
       } else {
+        this.setGlobal({
+          ...this.global,
+          uploading: false
+        });
+        
         this.setState({
           ...this.state,
           redirectToRelease: true

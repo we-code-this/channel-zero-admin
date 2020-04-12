@@ -1,77 +1,69 @@
-import React, { Component } from "reactn";
+import React, { useGlobal, useState, setGlobal } from "reactn";
 import { Redirect } from "react-router";
 import { withRouter } from "react-router-dom";
 import Helmet from "react-helmet";
 import Icons from "../common/Icons";
 import Header from "../common/Header";
 import Nav from "../common/Nav";
-import logout from "../../utilities/logout";
+import logoutUser from "../../utilities/logout";
+import Uploading from "../common/Uploading";
 
-class Layout extends Component {
-  constructor(props) {
-    super(props);
+const Layout = (props) => {
+  const pageName = "Channel Zero Admin";
+  const [global] = useGlobal();
+  const [page] = useState(props.page ? props.page : pageName);
+  const [title] = useState(props.title ? props.title : pageName);
+  const [nav, setNav] = useState(false);
 
-    const pageName = "Channel Zero Admin";
-
-    this.state = {
-      page: props.page ? props.page : pageName,
-      title: props.title ? props.title : pageName,
-      nav: false
-    };
-  }
-
-  logout = async (e) => {
+  const logout = async (e) => {
     e.preventDefault();
-    console.log('this.global:', this.global);
-    await logout(this);
-    console.log('this.global:', this.global);
+    await logoutUser(global, setGlobal);
     return <Redirect to="/" />;
   };
 
-  toggleNav = () => {
-    this.setState({ ...this.state, nav: !this.state.nav });
+  const toggleNav = () => {
+    setNav(!nav);
   };
 
-  renderAdmin = () => {
+  const renderAdmin = () => {
     return (
       <React.Fragment>
-        <div className="admin">
-          <Header title={this.state.page} onOpenMenu={this.toggleNav} onLogout={this.logout} />
+        <div className={global.uploading ? 'admin uploading-active' : 'admin'}>
+          <Header title={page} onOpenMenu={toggleNav} onLogout={logout} />
           <section className="admin-main">
             <div className="page-content" id="pageContentContainer">
-              <div className="admin-content-panel">{this.props.children}</div>
+              <div className="admin-content-panel">{props.children}</div>
             </div>
           </section>
         </div>
-        {this.state.nav && <Nav onCloseMenu={this.toggleNav} />}
+        {nav && <Nav onCloseMenu={toggleNav} />}
       </React.Fragment>
     );
   };
 
-  renderLogin = () => {
+  const renderLogin = () => {
     return (
       <div className="login">
-        {this.props.children}
+        {props.children}
       </div>
     );
   };
 
-  render() {
-    return (
-      <React.Fragment>
-        <Helmet titleTemplate={`%s - ${this.state.title}`}>
-          <meta charSet="utf-8" />
-          <title>Default</title>
-          <meta
-            name="viewport"
-            content="width=device-width, initial-scale=1, viewport-fit=cover"
-          />
-        </Helmet>
-        {this.global.token ? this.renderAdmin() : this.renderLogin() }
-        <Icons />
-      </React.Fragment>
-    );
-  }
-}
+  return (
+    <React.Fragment>
+      <Helmet titleTemplate={`%s - ${title}`}>
+        <meta charSet="utf-8" />
+        <title>Default</title>
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1, viewport-fit=cover"
+        />
+      </Helmet>
+      {global.token ? renderAdmin() : renderLogin() }
+      <Icons />
+      {global.uploading && <Uploading />}
+    </React.Fragment>
+  );
+};
 
 export default withRouter(Layout);

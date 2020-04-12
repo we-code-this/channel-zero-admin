@@ -20,6 +20,7 @@
 @import "endorsementlist";
 @import "releasevendorlist";
 @import "dashboard";
+@import "uploading";
 
 .no-scroll {
   overflow: hidden;
@@ -137,5 +138,9 @@ img {
         padding: 1rem;
       }
     }
+  }
+
+  &.uploading-active {
+    overflow: hidden;
   }
 }

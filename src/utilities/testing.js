@@ -1,27 +1,31 @@
 export function adminGlobals() {
   return {
     token: 'atoken',
-    groups: {admin:true}
+    groups: {admin:true},
+    uploading: false,
   };
 };
 
 export function authorGlobals() {
   return {
     token: 'atoken',
-    groups: {author:true}
+    groups: {author:true},
+    uploading: false,
   };
 };
 
 export function editorGlobals() {
   return {
     token: 'atoken',
-    groups: {editor:true}
+    groups: {editor:true},
+    uploading: false,
   };
 };
 
 export function emptyGlobals() {
   return {
     token: undefined,
-    groups: undefined
+    groups: undefined,
+    uploading: false,
   };
 };

@@ -49,7 +49,8 @@ import "./sass/app.scss";
 
 setGlobal({
   token: undefined,
-  groups: undefined
+  groups: undefined,
+  uploading: false,
 });
 
 class App extends Component {

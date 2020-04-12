@@ -6,6 +6,7 @@ import Breadcrumb from "../../components/common/Breadcrumb";
 import ArtistImageForm from "../../components/artists/ArtistImageForm";
 import { showPath, findBySlug } from "../../models/artists";
 import { create, createPath } from "../../models/artist_images";
+import { scrollToTop } from "../../utilities/scroll";
 import authUser from "../../components/auth/authUser";
 import isAuthor from "../../components/auth/isAuthor";
 import { canEditOrDelete } from "../../utilities/user";
@@ -42,8 +43,20 @@ class Create extends Component {
   handleSubmit = async e => {
     e.preventDefault();
 
+    this.setGlobal({
+      ...this.global,
+      uploading: true
+    });
+
+    scrollToTop();
+
     if (e.target.image.value) {
       const result = await create(e.target);
+
+      this.setGlobal({
+        ...this.global,
+        uploading: false
+      });
 
       if (result.errors) {
         const resultErrors = {};
@@ -61,6 +74,11 @@ class Create extends Component {
           }
         });
       } else {
+        this.setGlobal({
+          ...this.global,
+          uploading: false
+        });
+        
         this.setState({
           ...this.state,
           redirectToArtist: true

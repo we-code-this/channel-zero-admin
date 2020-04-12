@@ -49,8 +49,20 @@ class Edit extends Component {
   handleSubmit = async e => {
     e.preventDefault();
 
+    this.setGlobal({
+      ...this.global,
+      uploading: true
+    });
+
+    scrollToTop();
+
     if (this._canEditOrDelete) {
       const result = await update(this.state.article.id, e.target);
+
+      this.setGlobal({
+        ...this.global,
+        uploading: false
+      });
 
       if (result.errors.length) {
         const resultErrors = {};
