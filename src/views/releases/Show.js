@@ -164,7 +164,7 @@ class Show extends Component {
     if (this.state.created) {
       return (
         <span>
-          <strong>{this.state.release.title}</strong> successfully created!
+          <strong>{he.decode(this.state.release.title)}</strong> successfully created!
         </span>
       );
     }
@@ -172,7 +172,7 @@ class Show extends Component {
     if (this.state.updated) {
       return (
         <span>
-          <strong>{this.state.release.title}</strong> successfully updated!
+          <strong>{he.decode(this.state.release.title)}</strong> successfully updated!
         </span>
       );
     }

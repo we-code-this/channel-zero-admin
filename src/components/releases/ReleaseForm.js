@@ -1,6 +1,7 @@
 import _ from "lodash";
 import React, { Component } from "react";
 import moment from 'moment';
+import he from 'he';
 import { withRouter } from "react-router";
 import MarkdownEditor from "../common/forms/MarkdownEditor";
 import TextInput from "../common/forms/TextInput";
@@ -28,6 +29,9 @@ class ReleaseForm extends Component {
           release_date: moment().format('YYYY-MM-DD'),
           release_type: "Album",
         };
+
+    release.title = he.decode(release.title);
+    release.description = he.decode(release.description);
 
     this.state = {
       release,
