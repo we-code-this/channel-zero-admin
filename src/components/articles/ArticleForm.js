@@ -1,7 +1,9 @@
 import _ from "lodash";
+import moment from 'moment';
 import React, { Component } from "react";
 import { withRouter } from "react-router";
 import MarkdownEditor from "../common/forms/MarkdownEditor";
+import DatePicker from "../common/forms/DatePicker";
 import TextInput from "../common/forms/TextInput";
 import ImageFileInputWithPreview from "../common/forms/ImageFileInputWithPreview";
 import SubmitWithCancel from "../common/forms/SubmitWithCancel";
@@ -17,7 +19,8 @@ class ArticleForm extends Component {
       : {
           title: "",
           summary: "",
-          description: ""
+          description: "",
+          publish_date: moment().format('YYYY-MM-DD'),
         };
 
     this.state = {
@@ -75,6 +78,11 @@ class ArticleForm extends Component {
     this.setState({ ...this.state, article });
   };
 
+  handlePublishDateChange = e => {
+    const article = { ...this.state.article, publish_date: e.target.value };
+    this.setState({ ...this.state, article });
+  };
+
   valid = type => {
     let valid = false;
 
@@ -97,7 +105,7 @@ class ArticleForm extends Component {
         className="form article-form"
       >
         <div className="columns">
-          <div className="column">
+          <div className="column is-three-quarters">
             <TextInput
               label="Title"
               value={this.state.article.title}
@@ -107,6 +115,13 @@ class ArticleForm extends Component {
                   ? this.state.errors.title
                   : undefined
               }
+            />
+          </div>
+          <div className="column is-one-quarter">
+            <DatePicker
+              label="Publish Date"
+              onChange={this.handlePublishDateChange}
+              value={this.state.article.publish_date}
             />
           </div>
         </div>
