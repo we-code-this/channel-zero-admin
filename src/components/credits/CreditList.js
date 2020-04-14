@@ -14,7 +14,7 @@ const CreditList = ({ credits, releaseSlug, onDelete }) => {
           {credits.map(credit => (
             <li key={`meta-${credit.label}`} className="credit-item">
               <span className="credit-info">
-                <strong>{credit.label}:</strong> {
+                <strong>{he.decode(credit.label)}:</strong> {
                   credit.url ? <a href={credit.url}>{he.decode(credit.value)}</a> : 
                   he.decode(credit.value)
                 }
