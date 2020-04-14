@@ -41,7 +41,9 @@ const ReleaseShowColumns = props => {
         />
       </LeftColumn>
       <Columns.Column className="description">
-        <Markdown>{he.decode(props.release.description)}</Markdown>
+        <div className="has-margin-bottom">
+          <Markdown>{he.decode(props.release.description)}</Markdown>
+        </div>
 
         {props.release.discs && 
           <ReleaseTracklist 
