@@ -1,4 +1,5 @@
 import React, { Component } from "reactn";
+import he from "he";
 import { Link } from "react-router-dom";
 import TableActionButtons from "../common/TableActionButtons";
 import { human } from "../../utilities/date";
@@ -20,7 +21,7 @@ class ArticleRow extends Component {
       <tr>
         <td>{article.id}</td>
         <td>
-          <Link to={showPath(article.slug)}>{article.title}</Link>
+          <Link to={showPath(article.slug)}>{he.decode(article.title)}</Link>
         </td>
         <td>{article.published ? "Yes" : "No"}</td>
         <td>{human(article.created_at)}</td>
