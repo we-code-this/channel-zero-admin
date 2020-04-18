@@ -1,6 +1,7 @@
 import React, { Component } from "reactn";
 import { Redirect } from "react-router-dom";
 import Helmet from "react-helmet";
+import he from "he";
 import ActionMenu from "../../components/common/ActionMenu";
 import Breadcrumb from "../../components/common/Breadcrumb";
 import IconButton from "../../components/common/IconButton";
@@ -80,7 +81,7 @@ class Show extends Component {
     return (
       <FeatureBreadcrumbs>
         <Breadcrumb to={showPath(this.state.feature.id)} active>
-          {this.state.feature.article.title} Feature
+          {he.decode(this.state.feature.article.title)} Feature
         </Breadcrumb>
       </FeatureBreadcrumbs>
     );
@@ -149,7 +150,7 @@ class Show extends Component {
         return (
           <div>
             <Helmet>
-              <title>{`${feature.article.title} Feature`}</title>
+              <title>{`${he.decode(feature.article.title)} Feature`}</title>
             </Helmet>
             {this._canEditOrDelete && this.actionMenu()}
             {this.breadcrumbs()}
@@ -160,7 +161,7 @@ class Show extends Component {
             >
               {this.notificationMessage()}
             </Notification>
-            <h2 className="title is-2">{feature.article.title} Feature</h2>
+            <h2 className="title is-2">{he.decode(feature.article.title)} Feature</h2>
             <FeatureShowColumns feature={feature} />
           </div>
         );

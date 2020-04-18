@@ -1,5 +1,6 @@
 import React, { Component } from "reactn";
 import { Link } from "react-router-dom";
+import he from "he";
 import TableActionButtons from "../common/TableActionButtons";
 import { human } from "../../utilities/date";
 import { showPath, editPath, deleteFeature } from "../../models/features";
@@ -20,7 +21,7 @@ class FeatureRow extends Component {
       <tr>
         <td>{feature.id}</td>
         <td>
-          <Link to={showPath(feature.id)}>{`${feature.article.title}`}</Link>
+          <Link to={showPath(feature.id)}>{he.decode(feature.article.title)}</Link>
         </td>
         <td>{feature.published ? "Yes" : "No"}</td>
         <td>{human(feature.created_at)}</td>
