@@ -1,10 +1,13 @@
-import React, { Component } from "react";
+import React, { Component } from "reactn";
 import { NavLink as Link } from "react-router-dom";
 import { Icon } from "react-bulma-components";
 import { indexPath as articleIndex } from "../../models/articles";
 import { indexPath as artistIndex } from "../../models/artists";
 import { indexPath as featureIndex } from "../../models/features";
 import { indexPath as promoIndex } from "../../models/promos";
+import { 
+  isAdmin as userIsAdmin,
+} from "../../utilities/user";
 
 class Nav extends Component {
   constructor(props) {
@@ -138,6 +141,19 @@ class Nav extends Component {
               </Link>
             </li>
 
+            {userIsAdmin(this.global.groups) && (
+              <li>
+                <Link
+                  to="/users"
+                  className="navbar-item"
+                  activeClassName="is-active"
+                  onClick={this.props.onCloseMenu}
+                >
+                  Users
+                </Link>
+              </li>
+            )}
+            
             <li>
               <Link
                 to="/videos"

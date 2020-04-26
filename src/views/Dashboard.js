@@ -1,4 +1,4 @@
-import React from "reactn";
+import React, { useGlobal } from "reactn";
 import Helmet from "react-helmet";
 import authUser from "../components/auth/authUser";
 import { NavLink as Link } from "react-router-dom";
@@ -6,8 +6,12 @@ import { indexPath as articleIndex } from "../models/articles";
 import { indexPath as artistIndex } from "../models/artists";
 import { indexPath as featureIndex } from "../models/features";
 import { indexPath as promoIndex } from "../models/promos";
+import { 
+  isAdmin as userIsAdmin,
+} from "../utilities/user";
 
 const Dashboard = () => {
+  const [ global ] = useGlobal();
   return (
     <div className="dashboard">
       <Helmet>
@@ -81,6 +85,18 @@ const Dashboard = () => {
                 Releases
               </Link>
             </li>
+
+            {userIsAdmin(global.groups) && (
+              <li>
+                <Link
+                  to="/users"
+                  className="dashboard-item"
+                  activeClassName="is-active"
+                >
+                  Users
+                </Link>
+              </li>
+            )}
 
             <li>
               <Link

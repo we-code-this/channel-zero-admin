@@ -17,6 +17,7 @@ import CreateReleaseCredit from "./views/credits/Create";
 import CreateReleaseEndorsement from "./views/endorsements/Create";
 import CreateReleaseTrack from "./views/tracks/Create";
 import CreateReleaseVendor from "./views/releasevendors/Create";
+import CreateUser from "./views/users/Create";
 import CreateVendor from "./views/vendors/Create";
 import CreateVideo from "./views/videos/Create";
 import Dashboard from "./views/Dashboard";
@@ -32,6 +33,7 @@ import EditReleaseDisc from "./views/discs/Edit";
 import EditReleaseEndorsement from "./views/endorsements/Edit";
 import EditReleaseVendor from "./views/releasevendors/Edit";
 import EditReleaseTrack from "./views/tracks/Edit";
+import EditUser from "./views/users/Edit";
 import EditVendor from "./views/vendors/Edit";
 import EditVideo from "./views/videos/Edit";
 import Feature from "./views/features/Show";
@@ -42,6 +44,7 @@ import Promo from "./views/promos/Show";
 import Promos from "./views/promos/Index";
 import Release from "./views/releases/Show";
 import Releases from "./views/releases/Index";
+import Users from "./views/users/Index";
 import Vendors from "./views/vendors/Index";
 import Videos from "./views/videos/Index";
 import Video from "./views/videos/Show";
@@ -109,7 +112,12 @@ class App extends Component {
             <Route path="/release/:slug/endorsement/:id/edit" component={EditReleaseEndorsement} />
             <Route path="/release/:slug/disc/:id/track/create" component={CreateReleaseTrack} />
             <Route path="/release/:release_slug/disc/:disc_id/track/:slug/edit" component={EditReleaseTrack} />
-            <Route path="/vendors" component={Vendors} />
+            <Route exact path="/users" component={Users} />
+            <Route path="/users/:page" component={Users} />
+            <Route path="/user/create" component={CreateUser} />
+            <Route path="/user/:id/edit" component={EditUser} />
+            <Route exact path="/vendors" component={Vendors} />
+            <Route path="/vendors/:page" component={Vendors} />
             <Route path="/vendor/create" component={CreateVendor} />
             <Route path="/vendor/:id/edit" component={EditVendor} />
             <Route path="/videos" component={Videos} />
