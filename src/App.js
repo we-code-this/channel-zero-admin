@@ -38,8 +38,10 @@ import EditVendor from "./views/vendors/Edit";
 import EditVideo from "./views/videos/Edit";
 import Feature from "./views/features/Show";
 import Features from "./views/features/Index";
+import Forgot from "./views/auth/Forgot";
 import Labels from "./views/labels/Index";
 import Layout from "./components/layouts/Layout";
+import Login from "./views/auth/Login";
 import Promo from "./views/promos/Show";
 import Promos from "./views/promos/Index";
 import Release from "./views/releases/Show";
@@ -90,6 +92,7 @@ class App extends Component {
             <Route path="/feature/create" component={CreateFeature} />
             <Route exact path="/feature/:id" component={Feature} />
             <Route path="/feature/:id/edit" component={EditFeature} />
+            <Route path="/forgot" component={Forgot} />
             <Route path="/labels" component={Labels} />
             <Route path="/label/create" component={CreateLabel} />
             <Route path="/label/:slug/edit" component={EditLabel} />

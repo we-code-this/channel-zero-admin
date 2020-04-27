@@ -67,4 +67,17 @@
             height: auto;
         }
     }
+
+    .forgot-password-link {
+        text-align: center;
+        margin-top: 1rem;
+        
+        a {
+            color: #fff;
+
+            &:hover, &:focus {
+                text-decoration: underline;
+            }
+        }
+    }
 }
