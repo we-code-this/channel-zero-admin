@@ -1,19 +1,19 @@
 import React, { Component } from "reactn";
 import Helmet from "react-helmet";
-import ForgotForm from "../../components/auth/ForgotForm";
+import ResetForm from "../../components/auth/ResetForm";
 import isGuest from "../../components/auth/isGuest";
 
-class Forgot extends Component {
+class Reset extends Component {
   render() {
       return (
-        <div className="Forgot">
+        <div className="Reset">
           <Helmet>
             <title>Forgot Password</title>
           </Helmet>
-          <ForgotForm />
+          <ResetForm token={this.props.match.params.token} />
         </div>
       );        
   }
 }
 
-export default isGuest(Forgot);
+export default isGuest(Reset);

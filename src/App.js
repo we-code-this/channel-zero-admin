@@ -41,11 +41,11 @@ import Features from "./views/features/Index";
 import Forgot from "./views/auth/Forgot";
 import Labels from "./views/labels/Index";
 import Layout from "./components/layouts/Layout";
-import Login from "./views/auth/Login";
 import Promo from "./views/promos/Show";
 import Promos from "./views/promos/Index";
 import Release from "./views/releases/Show";
 import Releases from "./views/releases/Index";
+import Reset from './views/auth/Reset';
 import Users from "./views/users/Index";
 import Vendors from "./views/vendors/Index";
 import Videos from "./views/videos/Index";
@@ -115,6 +115,7 @@ class App extends Component {
             <Route path="/release/:slug/endorsement/:id/edit" component={EditReleaseEndorsement} />
             <Route path="/release/:slug/disc/:id/track/create" component={CreateReleaseTrack} />
             <Route path="/release/:release_slug/disc/:disc_id/track/:slug/edit" component={EditReleaseTrack} />
+            <Route path="/reset/:token" component={Reset} />
             <Route exact path="/users" component={Users} />
             <Route path="/users/:page" component={Users} />
             <Route path="/user/create" component={CreateUser} />

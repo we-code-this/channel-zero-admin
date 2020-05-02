@@ -7,9 +7,17 @@ const TextInput = props => {
   const placeholder = props.placeholder ? props.label : undefined;
   const inputName = props.name ? props.name : props.label.toLowerCase().replace(" ", "_");
   const htmlFor = props.name ? props.name : undefined;
+  const onDark = props.onDark ? props.onDark : undefined;
 
   return (
-    <Field label={props.label} help={props.help} error={props.error} srOnly={srOnly} htmlFor={htmlFor}>
+    <Field 
+      label={props.label} 
+      help={props.help} 
+      error={props.error} 
+      srOnly={srOnly} 
+      htmlFor={htmlFor} 
+      onDark={onDark}
+    >
       <input
         name={inputName}
         className={inputClass}

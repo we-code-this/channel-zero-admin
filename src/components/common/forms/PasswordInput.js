@@ -5,11 +5,21 @@ const PasswordInput = props => {
   const inputClass = props.error ? "input is-danger" : "input";
   const srOnly = props.placeholder ? true : false;
   const placeholder = props.placeholder ? props.label : undefined;
+  const inputName = props.name ? props.name : props.label.toLowerCase().replace(" ", "_");
+  const htmlFor = props.name ? props.name : undefined;
+  const onDark = props.onDark ? props.onDark : undefined;
 
   return (
-    <Field label={props.label} help={props.help} error={props.error} srOnly={srOnly}>
+    <Field 
+      label={props.label} 
+      help={props.help} 
+      error={props.error} 
+      srOnly={srOnly} 
+      htmlFor={htmlFor}
+      onDark={onDark}
+    >
       <input
-        name={props.label.toLowerCase().replace(" ", "_")}
+        name={inputName}
         className={inputClass}
         type="password"
         value={props.value}

@@ -28,7 +28,7 @@ function authUser(Component) {
             if (this.global.token) {
                 return <Component {...this.props} />
             } else {
-                return <Login />;
+                return <Login {...this.props} />;
             }
         }
     }

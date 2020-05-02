@@ -59,3 +59,8 @@
     }
   }
 }
+
+.is-danger-on-dark {
+  color: lighten($red, 25%);
+  font-weight: 500;
+}
