@@ -7,6 +7,7 @@ import { indexPath as featureIndex } from "../../models/features";
 import { indexPath as promoIndex } from "../../models/promos";
 import { 
   isAdmin as userIsAdmin,
+  isAtLeastEditor as userIsAtLeastEditor,
 } from "../../utilities/user";
 
 class Nav extends Component {
@@ -85,6 +86,19 @@ class Nav extends Component {
                 Artists
               </Link>
             </li>
+
+            {userIsAtLeastEditor(this.global.groups) && (
+              <li>
+                <Link
+                  to="/banners"
+                  className="navbar-item"
+                  activeClassName="is-active"
+                  onClick={this.props.onCloseMenu}
+                >
+                  Banners
+                </Link>
+              </li>
+            )}
 
             <li>
               <Link

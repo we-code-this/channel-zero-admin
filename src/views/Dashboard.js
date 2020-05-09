@@ -8,6 +8,7 @@ import { indexPath as featureIndex } from "../models/features";
 import { indexPath as promoIndex } from "../models/promos";
 import { 
   isAdmin as userIsAdmin,
+  isAtLeastEditor as userIsAtLeastEditor,
 } from "../utilities/user";
 
 const Dashboard = () => {
@@ -45,6 +46,18 @@ const Dashboard = () => {
                 Artists
               </Link>
             </li>
+
+            {userIsAtLeastEditor(global.groups) && (
+              <li>
+                <Link
+                  to="/banners"
+                  className="dashboard-item"
+                  activeClassName="is-active"
+                >
+                  Banners
+                </Link>
+              </li>
+            )}
 
             <li>
               <Link

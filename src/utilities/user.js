@@ -21,6 +21,13 @@ export const id = (token) => {
     return decoded.id;
 };
 
+export const isAtLeastEditor = (groups) => {
+  const admin = isAdmin(groups);
+  const editor = isEditor(groups);
+
+  return (admin || editor);
+};
+
 export const canCreate = (groups) => {
     const admin = isAdmin(groups);
     const editor = isEditor(groups);

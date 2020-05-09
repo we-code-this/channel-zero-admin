@@ -5,9 +5,12 @@ import Article from "./views/articles/Show";
 import Articles from "./views/articles/Index";
 import Artist from "./views/artists/Show";
 import Artists from "./views/artists/Index";
+import Banner from "./views/banners/Show";
+import Banners from "./views/banners/Index";
 import CreateArticle from "./views/articles/Create";
 import CreateArtist from "./views/artists/Create";
 import CreateArtistImage from "./views/artist_images/Create";
+import CreateBanner from "./views/banners/Create";
 import CreateFeature from "./views/features/Create";
 import CreateLabel from "./views/labels/Create";
 import CreatePromo from "./views/promos/Create";
@@ -24,6 +27,7 @@ import Dashboard from "./views/Dashboard";
 import EditArticle from "./views/articles/Edit";
 import EditArtist from "./views/artists/Edit";
 import EditArtistImage from "./views/artist_images/Edit";
+import EditBanner from "./views/banners/Edit";
 import EditFeature from "./views/features/Edit";
 import EditLabel from "./views/labels/Edit";
 import EditPromo from "./views/promos/Edit";
@@ -88,6 +92,11 @@ class App extends Component {
               component={EditArtistImage}
             />
             <Route path="/artist/:slug/edit" component={EditArtist} />
+            <Route exact path="/banners" component={Banners} />
+            <Route path="/banners/:page" component={Banners} />
+            <Route path="/banner/create" component={CreateBanner} />
+            <Route exact path="/banner/:id" component={Banner} />
+            <Route path="/banner/:id/edit" component={EditBanner} />
             <Route exact path="/features" component={Features} />
             <Route path="/feature/create" component={CreateFeature} />
             <Route exact path="/feature/:id" component={Feature} />

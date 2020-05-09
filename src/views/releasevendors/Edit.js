@@ -1,5 +1,4 @@
 import React, { Component } from "reactn";
-import he from "he";
 import { Redirect } from "react-router";
 import Helmet from "react-helmet";
 import ReleaseBreadcrumbs from "../../components/releases/ReleaseBreadcrumbs";

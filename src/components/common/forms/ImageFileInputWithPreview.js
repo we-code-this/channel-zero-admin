@@ -30,7 +30,7 @@ class ImageFileInputWithPreview extends Component {
               <input
                 className="file-input"
                 type="file"
-                name="image"
+                name={this.props.name ? this.props.name : 'image' }
                 onChange={this.props.onChange}
               />
               <span className="file-cta">
@@ -41,10 +41,13 @@ class ImageFileInputWithPreview extends Component {
                     </svg>
                   </Icon>
                 </span>
-                <span className="file-label">Choose a file…</span>
+                <span className="file-label">{this.props.label ? this.props.label : "Choose a file…"}</span>
               </span>
             </label>
           </div>
+          {this.props.hint && (
+            <p className="help"><strong>{this.props.hint}</strong></p>
+          )}
           {this.props.error && (
             <p className="help is-danger">{this.props.error_message}</p>
           )}
