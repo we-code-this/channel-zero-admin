@@ -1,4 +1,4 @@
-import React, { Fragment, Component } from "react";
+import React, { Fragment, Component } from "reactn";
 import { Redirect } from "react-router";
 import ReleaseBreadcrumbs from "../../components/releases/ReleaseBreadcrumbs";
 import Breadcrumb from "../../components/common/Breadcrumb";
@@ -65,9 +65,20 @@ class Create extends Component {
 
   handleSubmit = async e => {
     e.preventDefault();
+
+    this.setGlobal({
+      ...this.global,
+      uploading: true
+    });
+
     const newName = e.target.name.value;
 
     const result = await create(e.target);
+
+    this.setGlobal({
+      ...this.global,
+      uploading: false
+    });
 
     if (result.errors && result.errors.length) {
       const resultErrors = {};
@@ -104,6 +115,11 @@ class Create extends Component {
 
   handleAddTrackSubmit = async disc => {
 
+    this.setGlobal({
+      ...this.global,
+      uploading: true
+    });
+
     const result = await create({
       name: {
         value: disc.name,
@@ -111,6 +127,11 @@ class Create extends Component {
       release_id: {
         value: disc.release_id
       }
+    });
+
+    this.setGlobal({
+      ...this.global,
+      uploading: false
     });
 
     if (result.errors && result.errors.length) {

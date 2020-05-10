@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component } from "reactn";
 import he from "he";
 import { Redirect } from "react-router";
 import Helmet from "react-helmet";
@@ -43,12 +43,22 @@ class Edit extends Component {
   handleSubmit = async e => {
     e.preventDefault();
 
+    this.setGlobal({
+      ...this.global,
+      uploading: true
+    });
+
     const newName = e.target.name.value;
     const newIconClass = e.target.icon_class.value;
 
     const result = await update(this.state.vendor.id, {
       name: newName,
       icon_class: newIconClass
+    });
+
+    this.setGlobal({
+      ...this.global,
+      uploading: false
     });
 
     if (result.errors && result.errors.length) {

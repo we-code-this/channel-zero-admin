@@ -51,12 +51,23 @@ class Edit extends Component {
     e.preventDefault();
 
     if (this._canEditOrDelete) {
+      
+      this.setGlobal({
+        ...this.global,
+        uploading: true
+      });
+
       const newName = e.target.name.value;
       const newDescription = e.target.description.value;
   
       const result = await updateBySlug(this.state.artist.slug, {
         name: newName,
         description: newDescription
+      });
+
+      this.setGlobal({
+        ...this.global,
+        uploading: false
       });
   
       if (result.errors.length) {

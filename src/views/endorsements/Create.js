@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component } from "reactn";
 import { Redirect } from "react-router";
 import ReleaseBreadcrumbs from "../../components/releases/ReleaseBreadcrumbs";
 import Breadcrumb from "../../components/common/Breadcrumb";
@@ -75,11 +75,22 @@ class Create extends Component {
 
   handleSubmit = async e => {
     e.preventDefault();
+
+    this.setGlobal({
+      ...this.global,
+      uploading: true
+    });
+
     const newReview = e.target.review.value;
     const newReviewer = e.target.reviewer.value;
     const newUrl = e.target.url.value;
 
     const result = await create(e.target);
+
+    this.setGlobal({
+      ...this.global,
+      uploading: false
+    });
 
     if (result.errors && result.errors.length) {
       const resultErrors = {};

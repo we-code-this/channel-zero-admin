@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component } from "reactn";
 import he from "he";
 import { Redirect } from "react-router";
 import Helmet from "react-helmet";
@@ -43,12 +43,22 @@ class Edit extends Component {
   handleSubmit = async e => {
     e.preventDefault();
 
+    this.setGlobal({
+      ...this.global,
+      uploading: true
+    });
+
     const newTitle = e.target.title.value;
     const newSrc = e.target.src.value;
 
     const result = await update(this.state.video.id, {
       title: newTitle,
       src: newSrc
+    });
+
+    this.setGlobal({
+      ...this.global,
+      uploading: false
     });
 
     if (result.errors && result.errors.length) {

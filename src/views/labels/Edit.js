@@ -50,10 +50,20 @@ class Edit extends Component {
     e.preventDefault();
 
     if (this._canEditOrDelete) {
+      this.setGlobal({
+        ...this.global,
+        uploading: true
+      });
+
       const newName = e.target.name.value;
 
       const result = await updateBySlug(this.state.label.slug, {
         name: newName
+      });
+
+      this.setGlobal({
+        ...this.global,
+        uploading: false
       });
   
       if (result.errors.length) {

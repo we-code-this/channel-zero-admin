@@ -50,7 +50,17 @@ class Edit extends Component {
     e.preventDefault();
 
     if (this._canEditOrDelete) {
+      this.setGlobal({
+        ...this.global,
+        uploading: true
+      });
+
       const result = await update(this.state.vendor.id, e.target);
+
+      this.setGlobal({
+        ...this.global,
+        uploading: false
+      });
 
       if (result.errors.length) {
         const resultErrors = {};

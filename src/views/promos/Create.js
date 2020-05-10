@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component } from "reactn";
 import { Redirect } from "react-router";
 import PromoBreadcrumbs from "../../components/promos/PromoBreadcrumbs";
 import Breadcrumb from "../../components/common/Breadcrumb";
@@ -25,12 +25,23 @@ class Create extends Component {
 
   handleSubmit = async e => {
     e.preventDefault();
+
     const newName = e.target.name.value;
     const newUrl = e.target.url.value;
     const newLocation = e.target.location.value;
 
     if (e.target.image.value) {
+      this.setGlobal({
+        ...this.global,
+        uploading: true
+      });
+
       const result = await create(e.target);
+
+      this.setGlobal({
+        ...this.global,
+        uploading: false
+      });
 
       if (result.errors && result.errors.length) {
         const resultErrors = {};

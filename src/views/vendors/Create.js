@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component } from "reactn";
 import { Redirect } from "react-router";
 import VendorBreadcrumbs from "../../components/vendors/VendorBreadcrumbs";
 import Breadcrumb from "../../components/common/Breadcrumb";
@@ -27,12 +27,22 @@ class Create extends Component {
   handleSubmit = async e => {
     e.preventDefault();
 
+    this.setGlobal({
+      ...this.global,
+      uploading: true
+    });
+
     const newName = e.target.name.value;
     const newIconClass = e.target.icon_class.value;
 
     const result = await create({
       name: newName,
       icon_class: newIconClass
+    });
+
+    this.setGlobal({
+      ...this.global,
+      uploading: false
     });
 
     if (result.errors && result.errors.length) {

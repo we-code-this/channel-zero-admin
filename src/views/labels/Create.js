@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component } from "reactn";
 import { Redirect } from "react-router";
 import LabelBreadcrumbs from "../../components/labels/LabelBreadcrumbs";
 import Breadcrumb from "../../components/common/Breadcrumb";
@@ -25,9 +25,19 @@ class Create extends Component {
   handleSubmit = async e => {
     e.preventDefault();
 
+    this.setGlobal({
+      ...this.global,
+      uploading: true
+    });
+
     const newName = e.target.name.value;
     const result = await create({
       name: newName
+    });
+
+    this.setGlobal({
+      ...this.global,
+      uploading: false
     });
 
     if (result.errors.length) {

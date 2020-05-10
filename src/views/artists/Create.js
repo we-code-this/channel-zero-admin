@@ -29,12 +29,22 @@ class Create extends Component {
   handleSubmit = async e => {
     e.preventDefault();
 
+    this.setGlobal({
+      ...this.global,
+      uploading: true
+    });
+
     const newName = e.target.name.value;
     const newDescription = e.target.description.value;
 
     const result = await create({
       name: newName,
       description: newDescription
+    });
+
+    this.setGlobal({
+      ...this.global,
+      uploading: false
     });
 
     if (result.errors.length) {

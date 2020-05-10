@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component } from "reactn";
 import { Redirect } from "react-router";
 import Helmet from "react-helmet";
 import ReleaseBreadcrumbs from "../../components/releases/ReleaseBreadcrumbs";
@@ -72,10 +72,21 @@ class Create extends Component {
 
   handleSubmit = async e => {
     e.preventDefault();
+
+    this.setGlobal({
+      ...this.global,
+      uploading: true
+    });
+
     const newVendor = e.target.vendor_id.value;
     const newUrl = e.target.url.value;
 
     const result = await create(e.target);
+
+    this.setGlobal({
+      ...this.global,
+      uploading: false
+    });
 
     if (result.errors && result.errors.length) {
       const resultErrors = {};

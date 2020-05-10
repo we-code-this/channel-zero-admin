@@ -54,8 +54,6 @@ class Create extends Component {
         uploading: false
       });
 
-      
-
       if (result.errors && result.errors.length) {
         const resultErrors = {};
 
